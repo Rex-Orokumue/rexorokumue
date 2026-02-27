@@ -104,6 +104,13 @@ Design polish will come later. Right now, the focus is structure and architectur
 - Cleaned up `page.tsx` to render imported components only
 - Foundation is now modular and scalable
 
+### Day 1 – Navbar Integration
+
+- Imported NavBar component to all pages
+- Wrapped each page’s content with <NavBar />
+- Tested navigation across all pages
+- Ensured consistent header experience
+
 ---
 
 ## 🔥 Development Philosophy
