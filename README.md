@@ -118,6 +118,13 @@ Design polish will come later. Right now, the focus is structure and architectur
 - Success and error messages implemented
 - Client-side form with validation
 
+### Day 3 – Projects Page Interactivity
+
+- Created `projects.ts` data file for easy project management
+- Added project images/screenshots
+- Added View Project button linking to live demo
+- Added hover effects for project cards
+
 ---
 
 ## 🔥 Development Philosophy
