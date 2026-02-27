@@ -83,7 +83,7 @@ Improve daily.
 
 ## 📌 Next Steps
 
-- Build Hero Section
+- Build Homepage
 - Create reusable components
 - Add portfolio section
 - Deploy to Vercel
