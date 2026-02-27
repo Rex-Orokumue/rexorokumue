@@ -93,6 +93,17 @@ I am intentionally building the structural foundation first:
 
 Design polish will come later. Right now, the focus is structure and architecture.
 
+### Day 1 – Homepage Components Refactor
+
+- Separated homepage into reusable components:
+  - Hero
+  - What I Do
+  - Projects
+  - Build In Public
+  - Final CTA
+- Cleaned up `page.tsx` to render imported components only
+- Foundation is now modular and scalable
+
 ---
 
 ## 🔥 Development Philosophy
