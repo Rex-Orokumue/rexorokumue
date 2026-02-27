@@ -111,6 +111,13 @@ Design polish will come later. Right now, the focus is structure and architectur
 - Tested navigation across all pages
 - Ensured consistent header experience
 
+### Day 2 – Contact Form Functionality
+
+- Added EmailJS to Contact page
+- Users can now send messages directly from the website
+- Success and error messages implemented
+- Client-side form with validation
+
 ---
 
 ## 🔥 Development Philosophy
