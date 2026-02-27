@@ -70,6 +70,29 @@ Because it is the future of Next.js routing and avoids migration later.
 - Resolved initial GitHub merge conflict
 - Successfully pushed project to GitHub
 
+## Day 1 – Project Foundation & Homepage Structure
+
+Today I:
+
+- Created a Next.js project using the App Router
+- Enabled TypeScript for scalability
+- Set up TailwindCSS for styling
+- Connected the project to GitHub
+- Resolved a remote merge conflict manually
+- Removed the default Next.js template
+- Built the foundational homepage layout (not just a hero section)
+- Recorded my build process
+
+### Thought Process
+
+I am intentionally building the structural foundation first:
+- Clear positioning
+- Logical content flow
+- Scalability in mind
+- Clean Git workflow
+
+Design polish will come later. Right now, the focus is structure and architecture.
+
 ---
 
 ## 🔥 Development Philosophy
@@ -78,16 +101,6 @@ Build in public.
 Ship fast.
 Document everything.
 Improve daily.
-
----
-
-## 📌 Next Steps
-
-- Build Homepage
-- Create reusable components
-- Add portfolio section
-- Deploy to Vercel
-- Connect custom domain
 
 ---
 
