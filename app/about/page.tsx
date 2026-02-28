@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const GlobalStyles = () => (
   <style>{`
@@ -48,8 +48,20 @@ const GlobalStyles = () => (
         var(--secondary);
     }
 
-    @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes pulse  { 0%,100% { opacity:1; } 50% { opacity:0.45; } }
+    @keyframes fadeUp   { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes pulse    { 0%,100% { opacity:1; } 50% { opacity:0.45; } }
+    @keyframes blink    { 0%,100% { opacity:1; } 50% { opacity:0; } }
+
+    /* Typewriter cursor */
+    .tw-cursor {
+      display: inline-block;
+      width: 3px;
+      background: var(--accent);
+      margin-left: 4px;
+      vertical-align: middle;
+      border-radius: 2px;
+      animation: blink 0.75s step-end infinite;
+    }
 
     .fade-up-1 { animation: fadeUp 0.75s 0.05s ease both; }
     .fade-up-2 { animation: fadeUp 0.75s 0.20s ease both; }
@@ -108,16 +120,18 @@ const GlobalStyles = () => (
       border: 1px solid var(--accent-glow); background: var(--accent-dim);
       font-size: 0.72rem; font-weight: 600; letter-spacing: 0.10em;
       text-transform: uppercase; color: var(--accent);
+      margin-top: -60px;
       margin-bottom: 36px; width: fit-content;
     }
     .about-headline {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
       font-weight: 800; line-height: 1.0;
       letter-spacing: -0.03em; color: var(--text); max-width: 780px;
     }
     .about-headline .line-accent {
       display: block;
+      min-height: 1.1em;
       background: linear-gradient(120deg, var(--accent) 20%, var(--accent-light) 80%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
@@ -295,6 +309,61 @@ const GlobalStyles = () => (
     }
     .focus-note strong { color: var(--accent-light); font-style: normal; font-weight: 500; }
 
+    /* Metrics row inside focus card */
+    .focus-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    .focus-metric {
+      display: flex; flex-direction: column; gap: 4px;
+      padding: 14px 12px; border-radius: 10px;
+      border: 1px solid var(--border); background: rgba(15,23,42,0.5);
+      text-align: center;
+    }
+    .focus-metric-val {
+      font-family: 'Syne', sans-serif; font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-weight: 800; color: var(--text); line-height: 1;
+    }
+    .focus-metric-val em { color: var(--accent); font-style: normal; font-size: 0.85em; }
+    .focus-metric-label { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.04em; }
+
+    /* SELECTED WORK TEASER */
+    .work-teaser-section { padding: 0 0 120px; }
+    .work-teaser-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 16px; margin-top: 48px;
+    }
+    .work-teaser-card {
+      padding: 28px 24px; border-radius: 14px;
+      border: 1px solid var(--border); background: var(--card-bg);
+      backdrop-filter: blur(12px); text-decoration: none;
+      transition: all 0.25s; display: flex; flex-direction: column; gap: 10px;
+    }
+    .work-teaser-card:hover { border-color: var(--border-hover); transform: translateY(-4px); }
+    .work-teaser-tag {
+      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.10em;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .work-teaser-card h3 {
+      font-family: 'Syne', sans-serif; font-size: 0.95rem;
+      font-weight: 700; color: var(--text); line-height: 1.3;
+    }
+    .work-teaser-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; flex: 1; }
+    .work-teaser-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 14px; border-top: 1px solid var(--border); margin-top: 4px;
+    }
+    .work-teaser-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+    .work-teaser-pill {
+      padding: 2px 8px; border-radius: 4px;
+      background: var(--accent-dim); border: 1px solid var(--accent-glow);
+      font-size: 0.63rem; color: var(--accent-light); font-weight: 500;
+    }
+    .work-teaser-arrow { font-size: 0.78rem; color: var(--accent); font-weight: 600; flex-shrink: 0; }
+
     /* CORE STACK */
     .stack-section { padding: 0 0 120px; }
     .stack-grid {
@@ -373,15 +442,35 @@ const GlobalStyles = () => (
       .journey-grid { grid-template-columns: 1fr; gap: 48px; }
       .focus-grid { grid-template-columns: 1fr; }
       .stack-grid { grid-template-columns: 1fr 1fr; }
+      .work-teaser-grid { grid-template-columns: 1fr 1fr; }
       .about-cta-inner { grid-template-columns: 1fr; gap: 40px; padding: 56px 40px; }
       .philosophy-inner { padding: 40px 32px; }
+
+      /* Section top spacing on tablet */
+      .help-section       { padding-top: 100px; }
+      .philosophy-section { padding-top: 100px; }
+      .journey-section    { padding-top: 100px; }
+      .focus-section      { padding-top: 100px; }
+      .stack-section      { padding-top: 100px; }
+      .work-teaser-section { padding-top: 100px; }
+      .about-cta-section  { padding-top: 100px; }
     }
     @media (max-width: 640px) {
       .about-hero { padding-top: 140px; }
       .about-headline { font-size: 2.2rem; }
-      .principles-grid { grid-template-columns: 1fr 1fr; }
+      .principles-grid { grid-template-columns: 1fr; }
       .stack-grid { grid-template-columns: 1fr; }
+      .work-teaser-grid { grid-template-columns: 1fr; }
       .about-cta-inner { padding: 48px 24px; }
+
+      /* Section top spacing on mobile — prevents sections crowding element above */
+      .help-section      { padding-top: 80px; }
+      .philosophy-section { padding-top: 80px; }
+      .journey-section   { padding-top: 80px; }
+      .focus-section     { padding-top: 80px; }
+      .stack-section     { padding-top: 80px; }
+      .work-teaser-section { padding-top: 80px; }
+      .about-cta-section { padding-top: 80px; }
     }
   `}</style>
 );
@@ -399,6 +488,39 @@ function useReveal() {
     els.forEach(el => obs.observe(el));
     return () => obs.disconnect();
   }, []);
+}
+
+// Typewriter hook — loops through phrases indefinitely
+function useTypewriter(phrases: string[], typingSpeed = 55, deletingSpeed = 30, pauseMs = 2000) {
+  const [displayed, setDisplayed] = useState('');
+  const [phraseIdx, setPhraseIdx] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const current = phrases[phraseIdx];
+    const atFull = displayed === current;
+    const atEmpty = displayed === '';
+
+    if (!isDeleting && atFull) {
+      timeout.current = setTimeout(() => setIsDeleting(true), pauseMs);
+    } else if (isDeleting && atEmpty) {
+      setIsDeleting(false);
+      setPhraseIdx(i => (i + 1) % phrases.length);
+    } else {
+      const speed = isDeleting ? deletingSpeed : typingSpeed;
+      timeout.current = setTimeout(() => {
+        setDisplayed(isDeleting
+          ? current.slice(0, displayed.length - 1)
+          : current.slice(0, displayed.length + 1)
+        );
+      }, speed);
+    }
+
+    return () => { if (timeout.current) clearTimeout(timeout.current); };
+  }, [displayed, isDeleting, phraseIdx, phrases, typingSpeed, deletingSpeed, pauseMs]);
+
+  return displayed;
 }
 
 const helpItems = [
@@ -432,6 +554,14 @@ const stackGroups = [
 export default function About() {
   useReveal();
 
+  const twPhrases = [
+    'production-ready software',
+    'scalable mobile apps',
+    'trust-driven platforms',
+    'systems built to last',
+  ];
+  const twText = useTypewriter(twPhrases);
+
   return (
     <>
       <GlobalStyles />
@@ -443,7 +573,10 @@ export default function About() {
           <div className="about-eyebrow fade-up-1">About Rex</div>
           <h1 className="about-headline fade-up-2">
             I build reliable,<br />
-            <span className="line-accent">production-ready software</span><br />
+            <span className="line-accent">
+              {twText}<span className="tw-cursor" style={{ height: '0.85em' }} />
+            </span>
+            <br />
             for founders who move fast.
           </h1>
           <p className="about-intro fade-up-3">
@@ -560,7 +693,7 @@ export default function About() {
                 system, and fix it.
               </p>
               <p>
-                That is the kind of engineer I am. And that is the kind of engineer you want on your project.
+                That is the kind of engineering mindset I bring to every project.
               </p>
             </div>
             <div className="journey-milestones reveal" style={{ transitionDelay: '0.1s' }}>
@@ -598,6 +731,20 @@ export default function About() {
                 I am actively expanding its vendor verification system, improving the escrow dispute resolution
                 flow, and building the next version of the mobile app.
               </p>
+              <div className="focus-metrics">
+                <div className="focus-metric">
+                  <span className="focus-metric-val">300<em>+</em></span>
+                  <span className="focus-metric-label">Users onboarded</span>
+                </div>
+                <div className="focus-metric">
+                  <span className="focus-metric-val">50<em>+</em></span>
+                  <span className="focus-metric-label">Vendors verified</span>
+                </div>
+                <div className="focus-metric">
+                  <span className="focus-metric-val">6<em>mo</em></span>
+                  <span className="focus-metric-label">Live in production</span>
+                </div>
+              </div>
               <div className="focus-note">
                 <strong>Live at zolarux.com.ng</strong> — real users, real transactions, real problems being solved.
               </div>
@@ -637,6 +784,64 @@ export default function About() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SELECTED WORK TEASER */}
+      <section>
+        <div className="container work-teaser-section">
+          <div className="reveal">
+            <span className="section-tag">Selected Work</span>
+            <h2 className="section-title">Some of what<br />I have shipped.</h2>
+          </div>
+          <div className="work-teaser-grid">
+            <a href="/projects/zolarux" className="work-teaser-card reveal">
+              <span className="work-teaser-tag">Flutter · Supabase</span>
+              <h3>Zolarux — Trust Layer for Social Commerce</h3>
+              <p>
+                End-to-end marketplace with escrow payments, vendor verification, risk scoring, and
+                dispute mediation. Built and launched solo.
+              </p>
+              <div className="work-teaser-footer">
+                <div className="work-teaser-pills">
+                  <span className="work-teaser-pill">Live</span>
+                  <span className="work-teaser-pill">Payments</span>
+                  <span className="work-teaser-pill">RLS</span>
+                </div>
+                <span className="work-teaser-arrow">View →</span>
+              </div>
+            </a>
+            <a href="/projects" className="work-teaser-card reveal" style={{ transitionDelay: '0.08s' }}>
+              <span className="work-teaser-tag">Next.js · React</span>
+              <h3>Phonics Assessment Tool — EdTech for Nigerian Classrooms</h3>
+              <p>
+                Interactive reading assessment app for primary school students. Offline-first,
+                optimised for low-bandwidth environments.
+              </p>
+              <div className="work-teaser-footer">
+                <div className="work-teaser-pills">
+                  <span className="work-teaser-pill">TypeScript</span>
+                  <span className="work-teaser-pill">Edge</span>
+                </div>
+                <span className="work-teaser-arrow">View →</span>
+              </div>
+            </a>
+            <a href="/projects" className="work-teaser-card reveal" style={{ transitionDelay: '0.16s' }}>
+              <span className="work-teaser-tag">Flutter · Firebase</span>
+              <h3>Admin Command Center — Real-Time Ops Dashboard</h3>
+              <p>
+                Role-based operations dashboard for monitoring vendor risk scores, processing orders,
+                and managing flagged accounts in real-time.
+              </p>
+              <div className="work-teaser-footer">
+                <div className="work-teaser-pills">
+                  <span className="work-teaser-pill">Real-time</span>
+                  <span className="work-teaser-pill">RBAC</span>
+                </div>
+                <span className="work-teaser-arrow">View →</span>
+              </div>
+            </a>
           </div>
         </div>
       </section>
