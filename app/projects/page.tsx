@@ -26,15 +26,11 @@ const GlobalStyles = () => (
 
     html { scroll-behavior: smooth; }
     body {
-      background: var(--secondary);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      overflow-x: hidden;
-      line-height: 1.6;
+      background: var(--secondary); color: var(--text);
+      font-family: 'DM Sans', sans-serif; overflow-x: hidden; line-height: 1.6;
     }
     body::after {
-      content: '';
-      position: fixed; inset: 0;
+      content: ''; position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
       pointer-events: none; z-index: 9999; opacity: 0.5;
     }
@@ -54,10 +50,7 @@ const GlobalStyles = () => (
     .fade-up-3 { animation: fadeUp 0.75s 0.35s ease both; }
     .fade-up-4 { animation: fadeUp 0.75s 0.50s ease both; }
 
-    .reveal {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
     .reveal.visible { opacity:1; transform:translateY(0); }
 
     section { position: relative; z-index: 1; }
@@ -65,35 +58,31 @@ const GlobalStyles = () => (
 
     .section-tag {
       display: inline-block; font-size: 0.70rem; font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 14px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
     }
     .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.9rem, 3.5vw, 2.9rem);
-      font-weight: 800; line-height: 1.1;
-      letter-spacing: -0.025em; color: var(--text);
+      font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 3.5vw, 2.9rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.025em; color: var(--text);
     }
     .btn-primary {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 13px 28px; background: var(--accent); color: #fff;
       border-radius: 8px; font-weight: 600; font-size: 0.875rem;
-      text-decoration: none; letter-spacing: 0.02em;
-      transition: all 0.25s; box-shadow: 0 4px 28px var(--accent-glow);
-      border: 1px solid transparent; white-space: nowrap;
+      text-decoration: none; letter-spacing: 0.02em; transition: all 0.25s;
+      box-shadow: 0 4px 28px var(--accent-glow); border: 1px solid transparent; white-space: nowrap;
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 36px var(--accent-glow); }
     .btn-ghost {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 24px; border: 1px solid var(--border);
-      color: var(--text); border-radius: 8px; font-weight: 500; font-size: 0.875rem;
+      padding: 12px 24px; border: 1px solid var(--border); color: var(--text);
+      border-radius: 8px; font-weight: 500; font-size: 0.875rem;
       text-decoration: none; transition: all 0.25s; background: transparent; white-space: nowrap;
     }
     .btn-ghost:hover { border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.04); }
     .btn-outline {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 24px; border: 1px solid var(--accent-glow);
-      color: var(--accent); border-radius: 8px; font-weight: 600; font-size: 0.875rem;
+      padding: 12px 24px; border: 1px solid var(--accent-glow); color: var(--accent);
+      border-radius: 8px; font-weight: 600; font-size: 0.875rem;
       text-decoration: none; transition: all 0.25s; background: var(--accent-dim); white-space: nowrap;
     }
     .btn-outline:hover { background: rgba(59,130,246,0.18); border-color: var(--accent); }
@@ -104,20 +93,17 @@ const GlobalStyles = () => (
       justify-content: flex-end; padding-top: 160px; padding-bottom: 80px;
     }
     .hero-label {
-      display: inline-flex; align-items: center; gap: 10px;
+      display: inline-flex; align-items: center;
       padding: 6px 16px 6px 10px; border-radius: 100px;
       border: 1px solid var(--accent-glow); background: var(--accent-dim);
       font-size: 0.72rem; font-weight: 600; letter-spacing: 0.10em;
       text-transform: uppercase; color: var(--accent);
-      margin-top: -60px;
-      margin-bottom: 32px; width: fit-content;
+      margin-top: -60px; margin-bottom: 32px; width: fit-content;
     }
     .projects-headline {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2rem, 5vw, 4.2rem);
-      font-weight: 800; line-height: 1.05;
-      letter-spacing: -0.025em; color: var(--text);
-      max-width: 100%;
+      font-family: 'Syne', sans-serif; font-size: clamp(2rem, 5vw, 4.2rem);
+      font-weight: 800; line-height: 1.05; letter-spacing: -0.025em;
+      color: var(--text); max-width: 100%;
     }
     .projects-headline .dim { color: var(--muted); display: block; }
     .projects-sub {
@@ -125,23 +111,14 @@ const GlobalStyles = () => (
       color: var(--muted); max-width: 520px; font-weight: 300;
     }
     .projects-sub strong { color: var(--text); font-weight: 500; }
-
-    /* ── FILTER TABS ── */
-    .filter-bar {
-      display: flex; align-items: center; gap: 8px;
-      margin-top: 48px; flex-wrap: wrap;
-    }
+    .filter-bar { display: flex; align-items: center; gap: 8px; margin-top: 48px; flex-wrap: wrap; }
     .filter-btn {
-      padding: 7px 18px; border-radius: 100px;
-      border: 1px solid var(--border); background: transparent;
-      font-size: 0.78rem; font-weight: 500; color: var(--muted);
+      padding: 7px 18px; border-radius: 100px; border: 1px solid var(--border);
+      background: transparent; font-size: 0.78rem; font-weight: 500; color: var(--muted);
       cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
     }
     .filter-btn:hover { border-color: var(--accent-glow); color: var(--text); }
-    .filter-btn.active {
-      background: var(--accent-dim); border-color: var(--accent-glow);
-      color: var(--accent); font-weight: 600;
-    }
+    .filter-btn.active { background: var(--accent-dim); border-color: var(--accent-glow); color: var(--accent); font-weight: 600; }
 
     /* ── FEATURED PROJECT ── */
     .featured-section { padding: 80px 0 0; }
@@ -156,17 +133,9 @@ const GlobalStyles = () => (
       background: radial-gradient(ellipse, rgba(59,130,246,0.08), transparent 70%);
       pointer-events: none;
     }
-    .featured-top {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 0; align-items: stretch;
-    }
-    .featured-img {
-      position: relative; overflow: hidden; min-height: 380px;
-    }
-    .featured-img img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.6s ease;
-    }
+    .featured-top { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; }
+    .featured-img { position: relative; overflow: hidden; min-height: 380px; }
+    .featured-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
     .featured-inner:hover .featured-img img { transform: scale(1.04); }
     .featured-img-overlay {
       position: absolute; inset: 0;
@@ -191,67 +160,28 @@ const GlobalStyles = () => (
       font-weight: 800; color: var(--text); line-height: 1.15; margin-bottom: 12px;
     }
     .featured-tagline { font-size: 0.9rem; color: var(--muted); line-height: 1.65; margin-bottom: 28px; }
-
-    /* Problem / Solution blocks */
     .ps-blocks { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
-    .ps-block {
-      padding: 16px 18px; border-radius: 10px; border: 1px solid var(--border);
-      background: rgba(15,23,42,0.45);
-    }
-    .ps-block-label {
-      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.10em;
-      text-transform: uppercase; margin-bottom: 6px;
-    }
+    .ps-block { padding: 16px 18px; border-radius: 10px; border: 1px solid var(--border); background: rgba(15,23,42,0.45); }
+    .ps-block-label { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 6px; }
     .ps-block-label.problem { color: #F87171; }
     .ps-block-label.solution { color: var(--green); }
     .ps-block p { font-size: 0.82rem; line-height: 1.6; color: var(--muted); }
-
-    /* Impact metrics */
-    .impact-row {
-      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px; margin-bottom: 28px;
-    }
-    .impact-stat {
-      padding: 12px 10px; border-radius: 10px; text-align: center;
-      border: 1px solid var(--border); background: rgba(15,23,42,0.5);
-    }
-    .impact-val {
-      font-family: 'Syne', sans-serif; font-size: clamp(1rem, 1.8vw, 1.25rem);
-      font-weight: 800; color: var(--text); line-height: 1; display: block;
-    }
+    .impact-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 28px; }
+    .impact-stat { padding: 12px 10px; border-radius: 10px; text-align: center; border: 1px solid var(--border); background: rgba(15,23,42,0.5); }
+    .impact-val { font-family: 'Syne', sans-serif; font-size: clamp(1rem, 1.8vw, 1.25rem); font-weight: 800; color: var(--text); line-height: 1; display: block; }
     .impact-val em { color: var(--accent); font-style: normal; }
     .impact-label { font-size: 0.65rem; color: var(--muted); margin-top: 4px; display: block; }
-
-    /* Stack pills */
     .stack-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 28px; }
-    .stack-chip {
-      padding: 4px 12px; border-radius: 6px;
-      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-      font-size: 0.72rem; color: var(--muted); font-weight: 500;
-      white-space: nowrap;
-    }
-
+    .stack-chip { padding: 4px 12px; border-radius: 6px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); font-size: 0.72rem; color: var(--muted); font-weight: 500; white-space: nowrap; }
     .featured-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-
-    /* ── WHY IT MATTERS ── */
-    .featured-why {
-      border-top: 1px solid var(--border);
-      padding: 28px 48px; display: flex; align-items: flex-start; gap: 20px;
-    }
-    .why-icon {
-      width: 40px; height: 40px; flex-shrink: 0;
-      border-radius: 10px; background: var(--accent-dim); border: 1px solid var(--accent-glow);
-      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
-    }
+    .featured-why { border-top: 1px solid var(--border); padding: 28px 48px; display: flex; align-items: flex-start; gap: 20px; }
+    .why-icon { width: 40px; height: 40px; flex-shrink: 0; border-radius: 10px; background: var(--accent-dim); border: 1px solid var(--accent-glow); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
     .why-text p { font-size: 0.84rem; line-height: 1.7; color: var(--muted); }
     .why-text p strong { color: var(--accent-light); font-weight: 500; }
 
     /* ── SUPPORTING PROJECTS ── */
     .projects-grid-section { padding: 64px 0 0; }
-    .projects-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 20px; margin-top: 40px;
-    }
+    .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 40px; }
     .proj-card {
       border-radius: 18px; overflow: hidden; min-width: 0;
       background: var(--card-bg); border: 1px solid var(--border);
@@ -262,140 +192,82 @@ const GlobalStyles = () => (
     .proj-img { position: relative; height: 200px; overflow: hidden; }
     .proj-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
     .proj-card:hover .proj-img img { transform: scale(1.06); }
-    .proj-img-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(15,23,42,0.9) 0%, transparent 60%);
-    }
-    .proj-tech-badge {
-      position: absolute; top: 14px; right: 14px;
-      padding: 4px 12px; border-radius: 100px;
-      background: rgba(15,23,42,0.88); border: 1px solid var(--border);
-      font-size: 0.66rem; font-weight: 600; color: var(--muted); letter-spacing: 0.04em;
-    }
+    .proj-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,23,42,0.9) 0%, transparent 60%); }
+    .proj-tech-badge { position: absolute; top: 14px; right: 14px; padding: 4px 12px; border-radius: 100px; background: rgba(15,23,42,0.88); border: 1px solid var(--border); font-size: 0.66rem; font-weight: 600; color: var(--muted); letter-spacing: 0.04em; }
+    .proj-tech-badge--design { border-color: rgba(251,211,61,0.4); background: rgba(251,211,61,0.08); color: #FBD34D; }
+    .proj-outcome--design { color: #FBD34D; }
     .proj-body { padding: 28px; flex: 1; display: flex; flex-direction: column; }
-    .proj-category {
-      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
-    }
-    .proj-body h3 {
-      font-family: 'Syne', sans-serif; font-weight: 700;
-      font-size: 1.05rem; color: var(--text); margin-bottom: 6px;
-    }
-    .proj-problem {
-      font-size: 0.78rem; font-weight: 600; color: #F87171;
-      margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
-    }
+    .proj-category { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .proj-body h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--text); margin-bottom: 6px; }
+    .proj-problem { font-size: 0.78rem; font-weight: 600; color: #F87171; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
     .proj-desc { font-size: 0.84rem; line-height: 1.65; color: var(--muted); flex: 1; }
-    .proj-outcome {
-      display: flex; align-items: center; gap: 8px;
-      margin-top: 12px; font-size: 0.78rem; font-weight: 600;
-      color: var(--green); line-height: 1.4;
-    }
-    .proj-outcome-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--green); flex-shrink: 0;
-    }
+    .proj-outcome { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.78rem; font-weight: 600; color: var(--green); line-height: 1.4; }
+    .proj-outcome-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
     .proj-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
-    .proj-chip {
-      padding: 3px 10px; border-radius: 4px;
-      background: var(--accent-dim); border: 1px solid var(--accent-glow);
-      font-size: 0.65rem; color: var(--accent-light); font-weight: 500;
-    }
-    .proj-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); gap: 8px;
-    }
+    .proj-chip { padding: 3px 10px; border-radius: 4px; background: var(--accent-dim); border: 1px solid var(--accent-glow); font-size: 0.65rem; color: var(--accent-light); font-weight: 500; }
+    .proj-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); gap: 8px; }
     .proj-links { display: flex; gap: 10px; }
-    .proj-link {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 0.78rem; font-weight: 600; color: var(--accent);
-      text-decoration: none; transition: gap 0.2s;
-    }
+    .proj-link { display: inline-flex; align-items: center; gap: 5px; font-size: 0.78rem; font-weight: 600; color: var(--accent); text-decoration: none; transition: gap 0.2s; }
     .proj-link:hover { gap: 8px; }
     .proj-link.ghost { color: var(--muted); font-weight: 500; }
     .proj-link.ghost:hover { color: var(--text); }
 
+    /* ── OTHER WORK (WordPress) ── */
+    .other-section { padding: 64px 0 0; }
+    .other-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+    .other-card {
+      padding: 26px 24px; border-radius: 14px;
+      border: 1px solid var(--border); background: var(--card-bg);
+      backdrop-filter: blur(12px); text-decoration: none;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: all 0.25s; min-width: 0;
+    }
+    .other-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+    .other-card-top { display: flex; align-items: center; justify-content: space-between; }
+    .other-tag { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; color: var(--muted-2); }
+    .other-platform {
+      font-size: 0.63rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--muted-2);
+      padding: 3px 8px; border-radius: 4px;
+      border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+    }
+    .other-card h3 { font-family: 'Syne', sans-serif; font-size: 0.92rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .other-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; flex: 1; }
+    .other-card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border); margin-top: 4px; }
+    .other-chips { display: flex; gap: 5px; flex-wrap: wrap; }
+    .other-chip { padding: 2px 8px; border-radius: 4px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); font-size: 0.62rem; color: var(--muted-2); font-weight: 500; }
+    .other-link { font-size: 0.75rem; font-weight: 600; color: var(--accent); flex-shrink: 0; }
+
     /* ── HOW I BUILD ── */
     .approach-section { padding: 80px 0 0; }
-    .approach-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 0; border-radius: 20px; overflow: hidden;
-      border: 1px solid var(--border); background: var(--card-bg); backdrop-filter: blur(16px);
-    }
+    .approach-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); background: var(--card-bg); backdrop-filter: blur(16px); }
     .approach-left { padding: 56px 48px; border-right: 1px solid var(--border); }
-    .approach-left p {
-      margin-top: 20px; font-size: 1.0rem; line-height: 1.8; color: var(--muted);
-    }
+    .approach-left p { margin-top: 20px; font-size: 1.0rem; line-height: 1.8; color: var(--muted); }
     .approach-left p strong { color: var(--text); font-weight: 500; }
     .approach-right { padding: 56px 48px; }
     .approach-steps { display: flex; flex-direction: column; gap: 0; }
-    .approach-step {
-      display: flex; gap: 18px; padding-bottom: 28px; position: relative;
-    }
+    .approach-step { display: flex; gap: 18px; padding-bottom: 28px; }
     .approach-step:last-child { padding-bottom: 0; }
     .step-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
-    .step-num-box {
-      width: 36px; height: 36px; border-radius: 9px;
-      background: var(--accent-dim); border: 1px solid var(--accent-glow);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Syne', sans-serif; font-size: 0.72rem;
-      font-weight: 800; color: var(--accent); flex-shrink: 0;
-    }
-    .step-connector {
-      width: 1px; flex: 1; min-height: 24px; margin-top: 8px;
-      background: linear-gradient(to bottom, var(--accent-glow), transparent);
-    }
+    .step-num-box { width: 36px; height: 36px; border-radius: 9px; background: var(--accent-dim); border: 1px solid var(--accent-glow); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 800; color: var(--accent); flex-shrink: 0; }
+    .step-connector { width: 1px; flex: 1; min-height: 24px; margin-top: 8px; background: linear-gradient(to bottom, var(--accent-glow), transparent); }
     .approach-step:last-child .step-connector { display: none; }
     .step-content { padding-top: 6px; }
-    .step-content h4 {
-      font-family: 'Syne', sans-serif; font-weight: 700;
-      font-size: 0.88rem; color: var(--text); margin-bottom: 4px;
-    }
+    .step-content h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; color: var(--text); margin-bottom: 4px; }
     .step-content p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
 
     /* ── CTA ── */
     .projects-cta-section { padding: 80px 0 140px; }
-    .projects-cta-inner {
-      border-radius: 24px; border: 1px solid var(--border);
-      background: linear-gradient(135deg, rgba(30,41,59,0.9), rgba(15,23,42,0.95));
-      backdrop-filter: blur(24px); padding: 90px 80px;
-      text-align: center; position: relative; overflow: hidden;
-    }
-    .projects-cta-inner::before {
-      content: ''; position: absolute; top: -60%; left: 50%;
-      transform: translateX(-50%); width: 70%; height: 300px;
-      background: radial-gradient(ellipse, rgba(59,130,246,0.12), transparent 70%);
-      pointer-events: none;
-    }
-    .projects-cta-inner h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.9rem, 3.5vw, 3rem);
-      font-weight: 800; letter-spacing: -0.025em;
-      line-height: 1.1; margin-bottom: 16px;
-    }
-    .projects-cta-inner > p {
-      font-size: 1.0rem; color: var(--muted); max-width: 480px;
-      margin: 0 auto 44px; line-height: 1.75; font-weight: 300;
-    }
+    .projects-cta-inner { border-radius: 24px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(30,41,59,0.9), rgba(15,23,42,0.95)); backdrop-filter: blur(24px); padding: 90px 80px; text-align: center; position: relative; overflow: hidden; }
+    .projects-cta-inner::before { content: ''; position: absolute; top: -60%; left: 50%; transform: translateX(-50%); width: 70%; height: 300px; background: radial-gradient(ellipse, rgba(59,130,246,0.12), transparent 70%); pointer-events: none; }
+    .projects-cta-inner h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 3.5vw, 3rem); font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 16px; }
+    .projects-cta-inner > p { font-size: 1.0rem; color: var(--muted); max-width: 480px; margin: 0 auto 44px; line-height: 1.75; font-weight: 300; }
     .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .cta-scarcity {
-      display: inline-flex; align-items: center; gap: 8px;
-      margin-bottom: 32px; padding: 9px 18px; border-radius: 100px;
-      border: 1px solid var(--border); background: rgba(255,255,255,0.04);
-      font-size: 0.76rem; color: var(--muted); letter-spacing: 0.02em;
-    }
-    .cta-scarcity-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--green); animation: pulse 2s infinite; flex-shrink: 0;
-    }
+    .cta-scarcity { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 32px; padding: 9px 18px; border-radius: 100px; border: 1px solid var(--border); background: rgba(255,255,255,0.04); font-size: 0.76rem; color: var(--muted); letter-spacing: 0.02em; }
+    .cta-scarcity-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; flex-shrink: 0; }
 
     /* ── FOOTER ── */
-    footer {
-      position: relative; z-index: 1;
-      border-top: 1px solid var(--border);
-      padding: 36px 64px; max-width: 1180px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-    }
+    footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 36px 64px; max-width: 1180px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
     .footer-left p { font-size: 0.78rem; color: var(--muted-2); }
     .footer-left p span { color: var(--accent); }
     .footer-links { display: flex; gap: 28px; }
@@ -412,25 +284,24 @@ const GlobalStyles = () => (
       .featured-content { padding: 36px 32px; }
       .featured-why { padding: 24px 32px; }
       .projects-grid { grid-template-columns: 1fr 1fr; }
+      .other-grid { grid-template-columns: 1fr 1fr; }
       .approach-inner { grid-template-columns: 1fr; }
       .approach-left { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 32px; }
       .approach-right { padding: 40px 32px; }
       .projects-cta-inner { padding: 64px 40px; }
       .featured-section    { padding-top: 60px; }
       .projects-grid-section { padding-top: 60px; }
+      .other-section       { padding-top: 60px; }
       .approach-section    { padding-top: 60px; }
       .projects-cta-section { padding-top: 60px; }
     }
     @media (max-width: 640px) {
-      /* Prevent page from overflowing horizontally */
       html, body { overflow-x: hidden; max-width: 100vw; }
       .container { padding: 0 20px; }
       .projects-hero { padding-top: 130px; padding-bottom: 60px; }
       .projects-headline { font-size: 2.1rem; letter-spacing: -0.02em; }
       .projects-sub { font-size: 0.92rem; margin-top: 18px; }
       .filter-bar { margin-top: 32px; }
-
-      /* Featured card — prevent overflow */
       .featured-inner { border-radius: 16px; }
       .featured-content { padding: 24px 18px; }
       .featured-why { padding: 18px; flex-direction: column; gap: 12px; }
@@ -439,30 +310,20 @@ const GlobalStyles = () => (
       .featured-actions .btn-outline,
       .featured-actions .btn-ghost { width: 100%; justify-content: center; }
       .stack-row { gap: 6px; }
-
-      /* Impact — 2x2, no overflow */
       .impact-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
       .impact-val { font-size: 1rem; }
-
-      /* Supporting projects — single column */
       .projects-grid { grid-template-columns: 1fr; }
-
-      /* Approach */
+      .other-grid { grid-template-columns: 1fr; }
       .approach-left, .approach-right { padding: 24px 18px; }
-
-      /* CTA */
       .projects-cta-inner { padding: 48px 20px; }
       .cta-scarcity { font-size: 0.70rem; text-align: center; }
       .cta-buttons { flex-direction: column; align-items: center; }
       .cta-buttons .btn-primary,
       .cta-buttons .btn-ghost { width: 100%; justify-content: center; }
-
-      /* Footer */
       footer { padding: 24px 20px; }
-
-      /* Section spacing */
       .featured-section     { padding-top: 40px; }
       .projects-grid-section { padding-top: 40px; }
+      .other-section        { padding-top: 40px; }
       .approach-section     { padding-top: 40px; }
       .projects-cta-section { padding-top: 40px; padding-bottom: 80px; }
     }
@@ -498,31 +359,72 @@ const filters = ['All', 'Mobile', 'Web', 'Full-Stack'];
 const supportingProjects = [
   {
     id: 2,
-    name: 'Phonics Assessment Tool',
-    category: 'Web · EdTech',
-    tech: 'Next.js',
-    problem: 'No structured reading assessment tool built for Nigerian classrooms',
-    desc: 'An interactive 30-word reading diagnostic app for primary school students. Designed for offline-first usage in low-bandwidth environments, with per-student progress tracking and teacher-facing reports.',
-    outcome: 'Piloted in 3 classrooms across Lagos — currently in active use.',
-    chips: ['Next.js', 'TypeScript', 'React', 'Edge Deploy'],
+    name: 'EduPanion — Interactive Reading Assessment Tool',
+    category: 'Mobile · EdTech',
+    tech: 'Flutter',
+    problem: 'No structured literacy assessment tool built for Nigerian classroom teachers',
+    desc: 'Smart literacy assessment and progress tracking for Nigerian classroom teachers. Run weekly phonics and English assessments, monitor student growth across six levels, and get actionable insights — all offline-capable.',
+    outcome: 'Built and ready for deployment — currently seeking school partnerships.',
+    chips: ['Flutter', 'Dart', 'Offline-first', 'EdTech'],
     image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=700&q=80',
     liveUrl: '#',
     githubUrl: '#',
-    tags: ['Web'],
+    tags: ['Mobile', 'Web'],
+    status: 'live',
   },
   {
     id: 3,
-    name: 'Admin Command Center',
-    category: 'Mobile · Operations',
+    name: 'Zolarux Admin Control Center',
+    category: 'Mobile · Web · Desktop · Operations',
     tech: 'Flutter',
     problem: 'No centralised dashboard for managing vendors, orders and risk flags in real-time',
-    desc: 'Role-based operations dashboard for monitoring vendor risk scores, managing order pipelines, reviewing stolen-device flags, and handling dispute escalations — all in real-time with Firebase Firestore.',
+    desc: 'Role-based operations dashboard for monitoring vendor risk scores, managing order pipelines, reviewing stolen-device flags, and handling dispute escalations — available on mobile, web, and Windows desktop.',
     outcome: 'Cut average dispute response time from 48hrs to under 4hrs.',
-    chips: ['Flutter', 'Firebase', 'Firestore', 'RBAC', 'Realtime'],
+    chips: ['Flutter', 'Firebase', 'Firestore', 'RBAC', 'Realtime', 'Windows'],
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=80',
     liveUrl: '#',
     githubUrl: '#',
     tags: ['Mobile', 'Full-Stack'],
+    status: 'live',
+  },
+  {
+    id: 4,
+    name: 'Zolarux FinTech Engine',
+    category: 'Mobile · FinTech · In Design',
+    tech: 'Figma → Flutter',
+    problem: 'Buyers need a secure, embedded wallet to transact directly inside the Zolarux app',
+    desc: 'A comprehensive embedded finance layer for the Zolarux ecosystem — powering wallet infrastructure, transaction routing, and balance management. Currently in interface design; the engine will be built into the Zolarux buyer app as an integrated FinTech layer.',
+    outcome: 'Interface design in progress on Figma — engineering phase starting soon.',
+    chips: ['Figma', 'Flutter', 'Wallet', 'Payments', 'FinTech'],
+    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=700&q=80',
+    liveUrl: null,
+    githubUrl: null,
+    tags: ['Mobile', 'Full-Stack'],
+    status: 'in-design',
+  },
+];
+
+const wordpressProjects = [
+  {
+    name: 'GTech Mobiles',
+    tag: 'E-commerce · Tech Retail',
+    desc: 'Full e-commerce site for a mobile device repair and sales business — product listings, shop, cart, service pages, and WhatsApp-integrated contact flow.',
+    chips: ['WooCommerce', 'Custom Theme', 'E-commerce'],
+    url: 'https://www.gtechmobiles.com.ng/',
+  },
+  {
+    name: 'First Queen Nigeria',
+    tag: 'Events · Beauty Pageant',
+    desc: "Website for Nigeria's prestigious women's beauty pageant — celebrating Nigerian women through empowerment, leadership development, and community impact. Built to handle registrations and brand storytelling.",
+    chips: ['WordPress', 'Custom Design', 'Events'],
+    url: 'https://www.firstqueennigeria.com.ng/',
+  },
+  {
+    name: 'Oshare Mega',
+    tag: 'Events · Ticketing',
+    desc: 'Event platform and ticketing site for a Nigerian entertainment brand — home to events like Nigeria at 50, Christmas Fever, and the Oversabi Aunty Saga. Built for discovery, promotion, and ticket sales.',
+    chips: ['WordPress', 'WooCommerce', 'Ticketing'],
+    url: 'https://osharemega.com/',
   },
 ];
 
@@ -547,7 +449,7 @@ export default function Projects() {
       <GlobalStyles />
       <div className="bg-mesh" aria-hidden="true" />
 
-      {/* ══ HERO ══ */}
+      {/* HERO */}
       <section>
         <div className="container projects-hero">
           <div className="hero-label fade-up-1">Selected Work</div>
@@ -560,15 +462,9 @@ export default function Projects() {
             Not a gallery — a <strong>track record</strong>. Every project here was built to solve a
             specific problem, deployed to real users, and engineered to last beyond launch day.
           </p>
-
-          {/* Filter tabs */}
           <div className="filter-bar fade-up-4">
             {filters.map(f => (
-              <button
-                key={f}
-                className={`filter-btn${activeFilter === f ? ' active' : ''}`}
-                onClick={() => setActiveFilter(f)}
-              >
+              <button key={f} className={`filter-btn${activeFilter === f ? ' active' : ''}`} onClick={() => setActiveFilter(f)}>
                 {f}
               </button>
             ))}
@@ -576,25 +472,16 @@ export default function Projects() {
         </div>
       </section>
 
-      {/* ══ FEATURED PROJECT — ZOLARUX ══ */}
+      {/* FEATURED — ZOLARUX */}
       <section className="featured-section">
         <div className="container">
           <div className="featured-inner reveal">
             <div className="featured-top">
-              {/* Image */}
               <div className="featured-img">
-                <img
-                  src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&q=80"
-                  alt="Zolarux Marketplace"
-                  loading="eager"
-                />
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&q=80" alt="Zolarux Marketplace" loading="eager" />
                 <div className="featured-img-overlay" />
-                <div className="featured-live-badge">
-                  <span className="live-dot" /> Live in production
-                </div>
+                <div className="featured-live-badge"><span className="live-dot" /> Live in production</div>
               </div>
-
-              {/* Content */}
               <div className="featured-content">
                 <span className="featured-flag">★ Flagship Project · Full-Stack · Mobile + Web</span>
                 <h2>Zolarux — Trust Infrastructure<br />for Social Commerce</h2>
@@ -602,8 +489,6 @@ export default function Projects() {
                   A marketplace platform built to enable secure, verifiable transactions between vendors
                   and buyers in the Nigerian social commerce market.
                 </p>
-
-                {/* Problem / Solution */}
                 <div className="ps-blocks">
                   <div className="ps-block">
                     <div className="ps-block-label problem">↑ The Problem</div>
@@ -614,46 +499,24 @@ export default function Projects() {
                     <p>A verification-based marketplace with escrow-style payments, multi-step vendor onboarding, risk scoring, real-time transaction tracking, and structured dispute mediation.</p>
                   </div>
                 </div>
-
-                {/* Impact */}
                 <div className="impact-row">
-                  <div className="impact-stat">
-                    <span className="impact-val">300<em>+</em></span>
-                    <span className="impact-label">Users onboarded</span>
-                  </div>
-                  <div className="impact-stat">
-                    <span className="impact-val">50<em>+</em></span>
-                    <span className="impact-label">Vendors verified</span>
-                  </div>
-                  <div className="impact-stat">
-                    <span className="impact-val">₦2M<em>+</em></span>
-                    <span className="impact-label">Transaction volume</span>
-                  </div>
-                  <div className="impact-stat">
-                    <span className="impact-val">6<em>mo</em></span>
-                    <span className="impact-label">Live in production</span>
-                  </div>
+                  <div className="impact-stat"><span className="impact-val">29</span><span className="impact-label">Verified vendors</span></div>
+                  <div className="impact-stat"><span className="impact-val">2<em>mo</em></span><span className="impact-label">Website live</span></div>
+                  <div className="impact-stat"><span className="impact-val">1<em>mo</em></span><span className="impact-label">App in market</span></div>
+                  <div className="impact-stat"><span className="impact-val">₦<em>growing</em></span><span className="impact-label">Transaction volume</span></div>
                 </div>
-
-                {/* Stack */}
                 <div className="stack-row">
                   {['Flutter', 'Dart', 'Supabase', 'PostgreSQL', 'RLS', 'Supabase Auth', 'REST API', 'Vercel'].map(s => (
                     <span key={s} className="stack-chip">{s}</span>
                   ))}
                 </div>
-
-                {/* Actions */}
                 <div className="featured-actions">
-                  <a href="https://zolarux.com.ng" target="_blank" rel="noopener noreferrer" className="btn-primary">
-                    View Live <IconExternal />
-                  </a>
+                  <a href="https://zolarux.com.ng" target="_blank" rel="noopener noreferrer" className="btn-primary">View Live <IconExternal /></a>
                   <a href="/projects/zolarux" className="btn-outline">Case Study →</a>
                   <a href="#" className="btn-ghost"><IconGithub /> GitHub</a>
                 </div>
               </div>
             </div>
-
-            {/* Why it matters */}
             <div className="featured-why">
               <div className="why-icon">💡</div>
               <div className="why-text">
@@ -669,7 +532,7 @@ export default function Projects() {
         </div>
       </section>
 
-      {/* ══ SUPPORTING PROJECTS ══ */}
+      {/* SUPPORTING PROJECTS */}
       <section className="projects-grid-section">
         <div className="container">
           <div className="reveal">
@@ -682,26 +545,30 @@ export default function Projects() {
                 <div className="proj-img">
                   <img src={proj.image} alt={proj.name} loading="lazy" />
                   <div className="proj-img-overlay" />
-                  <span className="proj-tech-badge">{proj.tech}</span>
+                  <span className={`proj-tech-badge${proj.status === 'in-design' ? ' proj-tech-badge--design' : ''}`}>
+                    {proj.status === 'in-design' ? '✦ In Design' : proj.tech}
+                  </span>
                 </div>
                 <div className="proj-body">
                   <div className="proj-category">{proj.category}</div>
                   <h3>{proj.name}</h3>
-                  <div className="proj-problem">
-                    <span>Problem →</span> {proj.problem}
-                  </div>
+                  <div className="proj-problem"><span>Problem →</span> {proj.problem}</div>
                   <p className="proj-desc">{proj.desc}</p>
-                  <div className="proj-outcome">
-                    <span className="proj-outcome-dot" />
+                  <div className={`proj-outcome${proj.status === 'in-design' ? ' proj-outcome--design' : ''}`}>
+                    <span className="proj-outcome-dot" style={proj.status === 'in-design' ? { background: '#FBD34D' } : {}} />
                     {proj.outcome}
                   </div>
-                  <div className="proj-chips">
-                    {proj.chips.map(c => <span key={c} className="proj-chip">{c}</span>)}
-                  </div>
+                  <div className="proj-chips">{proj.chips.map(c => <span key={c} className="proj-chip">{c}</span>)}</div>
                   <div className="proj-footer">
                     <div className="proj-links">
-                      <a href={proj.liveUrl} className="proj-link">Live <IconExternal /></a>
-                      <a href={proj.githubUrl} className="proj-link ghost"><IconGithub /> GitHub</a>
+                      {proj.status === 'in-design' ? (
+                        <span className="proj-link" style={{ color: '#FBD34D', cursor: 'default' }}>Designing ✦</span>
+                      ) : (
+                        <>
+                          <a href={proj.liveUrl ?? '#'} className="proj-link">Live <IconExternal /></a>
+                          <a href={proj.githubUrl ?? '#'} className="proj-link ghost"><IconGithub /> GitHub</a>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -711,7 +578,40 @@ export default function Projects() {
         </div>
       </section>
 
-      {/* ══ HOW I BUILD ══ */}
+      {/* WORDPRESS / OTHER WORK */}
+      <section className="other-section">
+        <div className="container">
+          <div className="reveal">
+            <span className="section-tag">Other Work</span>
+            <h2 className="section-title">WordPress builds<br />for real businesses.</h2>
+          </div>
+          <div className="other-grid">
+            {wordpressProjects.map((proj, i) => (
+              <a
+                key={proj.name}
+                href={proj.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="other-card reveal"
+                style={{ transitionDelay: `${i * 0.08}s` }}
+              >
+                <div className="other-card-top">
+                  <span className="other-tag">{proj.tag}</span>
+                  <span className="other-platform">WordPress</span>
+                </div>
+                <h3>{proj.name}</h3>
+                <p>{proj.desc}</p>
+                <div className="other-card-footer">
+                  <div className="other-chips">{proj.chips.map(c => <span key={c} className="other-chip">{c}</span>)}</div>
+                  <span className="other-link">Visit →</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* HOW I BUILD */}
       <section className="approach-section">
         <div className="container">
           <div className="approach-inner reveal">
@@ -747,7 +647,7 @@ export default function Projects() {
         </div>
       </section>
 
-      {/* ══ CTA ══ */}
+      {/* CTA */}
       <section className="projects-cta-section">
         <div className="container">
           <div className="projects-cta-inner reveal">
@@ -768,7 +668,7 @@ export default function Projects() {
         </div>
       </section>
 
-      {/* ══ FOOTER ══ */}
+      {/* FOOTER */}
       <footer>
         <div className="footer-left">
           <p>© 2026 <span>Rex Orokumue</span> · Built with Next.js & intention.</p>

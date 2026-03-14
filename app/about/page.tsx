@@ -120,7 +120,6 @@ const GlobalStyles = () => (
       border: 1px solid var(--accent-glow); background: var(--accent-dim);
       font-size: 0.72rem; font-weight: 600; letter-spacing: 0.10em;
       text-transform: uppercase; color: var(--accent);
-      margin-top: -60px;
       margin-bottom: 36px; width: fit-content;
     }
     .about-headline {
@@ -367,7 +366,7 @@ const GlobalStyles = () => (
     /* CORE STACK */
     .stack-section { padding: 0 0 120px; }
     .stack-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
+      display: grid; grid-template-columns: repeat(4, 1fr);
       gap: 16px; margin-top: 48px;
     }
     .stack-group {
@@ -549,6 +548,7 @@ const stackGroups = [
   { label: 'Frontend & Mobile', items: ['Next.js', 'React', 'Flutter', 'TypeScript'] },
   { label: 'Backend & Database', items: ['Supabase', 'Firebase', 'PostgreSQL', 'REST APIs'] },
   { label: 'Infra, Auth & Deploy', items: ['Vercel', 'GitHub Actions', 'CI/CD', 'Supabase Auth', 'JWT / RLS'] },
+  { label: 'Design & CMS', items: ['Figma', 'WordPress'] },
 ];
 
 export default function About() {
@@ -720,46 +720,31 @@ export default function About() {
         <div className="container focus-section">
           <div className="reveal">
             <span className="section-tag">Current Focus</span>
-            <h2 className="section-title">Where my energy<br />is going right now.</h2>
+            <h2 className="section-title">What I bring<br />to a team or project.</h2>
           </div>
           <div className="focus-grid">
             <div className="focus-card reveal">
-              <div className="focus-card-label">Primary</div>
-              <h3>Building Zolarux</h3>
+              <div className="focus-card-label">Product Engineering</div>
+              <h3>Building end-to-end systems</h3>
               <p>
-                Zolarux is my main product — a trust infrastructure layer for Nigerian social commerce.
-                I am actively expanding its vendor verification system, improving the escrow dispute resolution
-                flow, and building the next version of the mobile app.
+                I design and ship full-stack products — mobile, web, and backend — with a focus on
+                <strong> trust, security, and scalability</strong>. From authentication flows to payment
+                integrations, I handle the full engineering lifecycle without handing off the hard parts.
               </p>
-              <div className="focus-metrics">
-                <div className="focus-metric">
-                  <span className="focus-metric-val">300<em>+</em></span>
-                  <span className="focus-metric-label">Users onboarded</span>
-                </div>
-                <div className="focus-metric">
-                  <span className="focus-metric-val">50<em>+</em></span>
-                  <span className="focus-metric-label">Vendors verified</span>
-                </div>
-                <div className="focus-metric">
-                  <span className="focus-metric-val">6<em>mo</em></span>
-                  <span className="focus-metric-label">Live in production</span>
-                </div>
-              </div>
               <div className="focus-note">
-                <strong>Live at zolarux.com.ng</strong> — real users, real transactions, real problems being solved.
+                <strong>Currently available</strong> for full-time roles, contracts, and serious freelance engagements — Q2 2026.
               </div>
             </div>
             <div className="focus-card reveal" style={{ transitionDelay: '0.1s' }}>
-              <div className="focus-card-label">Secondary</div>
-              <h3>Client Projects and MVPs</h3>
+              <div className="focus-card-label">What I Bring</div>
+              <h3>Founder-grade ownership</h3>
               <p>
-                I am currently focused on helping <strong>early-stage founders</strong> launch faster using
-                modern full-stack tooling and AI-assisted development workflows. I take on a limited number of
-                projects at a time to ensure quality and genuine attention to your product.
+                I have shipped production software solo — architecture, implementation, deployment, and
+                iteration. That means I do not need to be managed through every decision. I take
+                <strong> ownership of outcomes</strong>, not just tasks.
               </p>
               <div className="focus-note">
-                <strong>Limited availability.</strong> I work with a small number of clients at once — which means
-                the projects I take on get my full focus, not a fraction of it.
+                <strong>Limited availability.</strong> I take on a small number of commitments at once to ensure every project gets genuine attention and care.
               </div>
             </div>
           </div>
@@ -813,16 +798,18 @@ export default function About() {
               </div>
             </a>
             <a href="/projects" className="work-teaser-card reveal" style={{ transitionDelay: '0.08s' }}>
-              <span className="work-teaser-tag">Next.js · React</span>
-              <h3>Phonics Assessment Tool — EdTech for Nigerian Classrooms</h3>
+              <span className="work-teaser-tag">Flutter · Dart</span>
+              <h3>EduPanion — Interactive Reading Assessment Tool</h3>
               <p>
-                Interactive reading assessment app for primary school students. Offline-first,
-                optimised for low-bandwidth environments.
+                Smart literacy assessment and progress tracking for Nigerian 
+                classroom teachers. Run weekly phonics and English assessments, 
+                monitor student growth across six levels, and get actionable 
+                insights — all offline-capable.
               </p>
               <div className="work-teaser-footer">
                 <div className="work-teaser-pills">
-                  <span className="work-teaser-pill">TypeScript</span>
-                  <span className="work-teaser-pill">Edge</span>
+                  <span className="work-teaser-pill">Flutter</span>
+                  <span className="work-teaser-pill">Offline-first</span>
                 </div>
                 <span className="work-teaser-arrow">View →</span>
               </div>
