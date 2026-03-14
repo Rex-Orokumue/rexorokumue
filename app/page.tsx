@@ -109,7 +109,6 @@ const GlobalStyles = () => (
       letter-spacing: 0.10em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-top: -60px;
       margin-bottom: 36px;
       width: fit-content;
     }
@@ -287,7 +286,7 @@ const GlobalStyles = () => (
     .stat-item:hover { background: rgba(59,130,246,0.05); }
     .stat-number {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2rem, 3vw, 2.8rem);
+      font-size: clamp(1.6rem, 2.5vw, 2.8rem);
       font-weight: 800;
       color: var(--text);
       line-height: 1;
@@ -450,7 +449,7 @@ const GlobalStyles = () => (
     }
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 20px;
     }
     .project-card {
@@ -495,6 +494,11 @@ const GlobalStyles = () => (
       font-weight: 600;
       color: var(--muted);
       letter-spacing: 0.04em;
+    }
+    .project-badge--design {
+      border-color: rgba(251,191,36,0.4);
+      background: rgba(251,191,36,0.08);
+      color: #FBD34D;
     }
     .project-body { padding: 26px; flex: 1; display: flex; flex-direction: column; }
     .project-body h3 {
@@ -673,8 +677,6 @@ const GlobalStyles = () => (
       display: flex;
       align-items: center;
       gap: 0;
-      flex-wrap: wrap;
-      row-gap: 16px;
       flex-shrink: 0;
     }
     .arch-node {
@@ -710,6 +712,13 @@ const GlobalStyles = () => (
       padding-bottom: 22px;
       color: var(--muted-2);
       font-size: 1rem;
+    }
+    /* On mobile: stack diagram vertically */
+    @media (max-width: 768px) {
+      .arch-diagram { flex-direction: column; align-items: flex-start; gap: 0; width: 100%; }
+      .arch-node { flex-direction: row; align-items: center; gap: 12px; width: 100%; }
+      .arch-node-box { white-space: normal; flex-shrink: 0; }
+      .arch-arrow { padding: 4px 0 4px 20px; font-size: 0.9rem; transform: rotate(90deg); align-self: flex-start; }
     }
     /* Decisions */
     .arch-decisions {
@@ -851,6 +860,7 @@ const GlobalStyles = () => (
       .cta-inner { padding: 52px 24px; }
       .arch-decisions { grid-template-columns: 1fr; }
       .arch-inner { padding: 28px 20px; }
+      .stat-item { padding: 24px 16px; }
       .about-section    { padding-top: 72px; }
       .tech-section     { padding-top: 72px; }
       .projects-section { padding-top: 72px; }
@@ -912,32 +922,46 @@ const projects = [
   {
     id: 1,
     name: 'Zolarux Marketplace',
-    description: 'Trust-first social commerce platform for the Nigerian market. Handles escrow payments, multi-step vendor verification, and structured dispute mediation.',
+    description: 'Trust-first social commerce platform for the Nigerian market. Escrow payments, vendor verification, and dispute mediation — available on mobile app and web.',
     tech: 'Flutter',
     tags: ['Supabase', 'Dart', 'REST API'],
     image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&q=80',
     liveUrl: 'https://zolarux.com.ng',
     caseStudyUrl: '/projects/zolarux',
+    status: 'live',
   },
   {
     id: 2,
-    name: 'Admin Command Center',
-    description: 'Real-time operations dashboard for monitoring vendor risk scores, processing orders, and reviewing stolen device reports with role-based access control.',
+    name: 'Zolarux Admin Control Center',
+    description: 'Comprehensive operations dashboard for managing vendors, orders, risk flags and disputes in real-time. Available on mobile app, web, and Windows desktop.',
     tech: 'Flutter',
-    tags: ['Firebase', 'Auth', 'Realtime'],
+    tags: ['Firebase', 'RBAC', 'Realtime'],
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=80',
     liveUrl: '#',
     caseStudyUrl: null,
+    status: 'live',
   },
   {
     id: 3,
-    name: 'Phonics Assessment Tool',
-    description: 'Interactive 30-word reading assessment app for primary school students built specifically for Nigerian classrooms with offline-first support.',
+    name: 'EduPanion — Phonics Assessment Tool',
+    description: 'Interactive reading assessment platform covering Nursery through Senior Secondary School curricula. Built specifically for Nigerian classrooms with offline-first support.',
     tech: 'Next.js',
-    tags: ['React', 'TypeScript', 'Edge'],
+    tags: ['React', 'TypeScript', 'EdTech'],
     image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=700&q=80',
     liveUrl: '#',
     caseStudyUrl: null,
+    status: 'live',
+  },
+  {
+    id: 4,
+    name: 'Zolarux FinTech Engine',
+    description: 'A comprehensive embedded finance layer for the Zolarux ecosystem — powering wallet infrastructure, transaction routing, and balance management directly inside the buyer app.',
+    tech: 'Figma → Flutter',
+    tags: ['FinTech', 'Wallet', 'Payments'],
+    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=700&q=80',
+    liveUrl: null,
+    caseStudyUrl: null,
+    status: 'in-design',
   },
 ];
 
@@ -953,7 +977,7 @@ const techCategories = [
   { label: 'Frontend',        items: ['Flutter / Dart', 'Next.js 14', 'React', 'TypeScript'] },
   { label: 'Backend & DB',    items: ['Supabase', 'Firebase', 'REST APIs', 'PostgreSQL'] },
   { label: 'Auth & Payments', items: ['Supabase Auth', 'Firebase Auth', 'Escrow Flows', 'Webhooks'] },
-  { label: 'Infra & Deploy',  items: ['Vercel', 'Edge Functions', 'CI / CD', 'GitHub Actions'] },
+  { label: 'Infra & Tools',   items: ['Vercel', 'CI / CD', 'Figma', 'WordPress'] },
 ];
 
 const processSteps = [
@@ -1061,9 +1085,9 @@ export default function Home() {
               <div className="stat-desc">iOS, Android &amp; web</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number"><Counter end={300} /><em>+</em></div>
-              <div className="stat-label">Real users served</div>
-              <div className="stat-desc">Across Zolarux &amp; client projects</div>
+              <div className="stat-number"><Counter end={3} /><em>+</em></div>
+              <div className="stat-label">Live products in market</div>
+              <div className="stat-desc">Mobile, web &amp; desktop — all in production</div>
             </div>
             <div className="stat-item">
               <div className="stat-number"><Counter end={4} /></div>
@@ -1163,7 +1187,9 @@ export default function Home() {
                 <div className="project-img-wrap">
                   <img src={project.image} alt={project.name} loading="lazy" />
                   <div className="project-overlay" />
-                  <span className="project-badge">{project.tech}</span>
+                  <span className={`project-badge${project.status === 'in-design' ? ' project-badge--design' : ''}`}>
+                    {project.status === 'in-design' ? '✦ In Design' : project.tech}
+                  </span>
                 </div>
                 <div className="project-body">
                   <h3>{project.name}</h3>
@@ -1180,14 +1206,20 @@ export default function Home() {
                           Deep Dive →
                         </a>
                       )}
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="project-link"
-                      >
-                        Live <IconExternal />
-                      </a>
+                      {project.status === 'in-design' ? (
+                        <span className="project-link" style={{ color: '#FBD34D', cursor: 'default' }}>
+                          Designing ✦
+                        </span>
+                      ) : (
+                        <a
+                          href={project.liveUrl ?? '#'}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="project-link"
+                        >
+                          Live <IconExternal />
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -1316,7 +1348,7 @@ export default function Home() {
               Let's ship something people will actually use.
             </p>
             <div className="cta-buttons">
-              <a href="mailto:hello@zolarux.com" className="btn-primary">Work With Me</a>
+              <a href="mailto:hello@zolarux.com" className="btn-primary">Hire Me</a>
               <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="btn-ghost">
                 View GitHub →
               </a>
