@@ -89,7 +89,27 @@ const GlobalStyles = () => (
       display: flex; align-items: center; gap: 16px;
       padding-bottom: 24px; margin-bottom: 32px;
       border-bottom: 1px solid var(--border);
+      cursor: pointer; user-select: none;
     }
+    .project-group-header:hover .project-group-name { color: var(--accent-light); }
+    .project-group-chevron {
+      margin-left: auto; flex-shrink: 0;
+      width: 28px; height: 28px; border-radius: 8px;
+      border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted-2); font-size: 0.75rem;
+      transition: transform 0.3s ease, border-color 0.2s, color 0.2s;
+    }
+    .project-group-header:hover .project-group-chevron { border-color: var(--border-hover); color: var(--accent); }
+    .project-group-chevron.open { transform: rotate(180deg); color: var(--accent); border-color: var(--accent-glow); }
+
+    .project-group-body {
+      overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
+      max-height: 2000px;
+      opacity: 1;
+    }
+    .project-group-body.collapsed { max-height: 0; opacity: 0; }
     .project-group-icon {
       width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
       border: 1px solid var(--border); background: var(--card-bg);
@@ -423,6 +443,9 @@ const projects: ProjectGroup[] = [
 export default function BuildLogs() {
   useReveal();
   const [activeTag, setActiveTag] = useState<Tag | 'all'>('all');
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+
+  const toggle = (id: string) => setCollapsed(prev => ({ ...prev, [id]: !prev[id] }));
 
   const totalEntries = projects.reduce((sum, p) => sum + p.entries.length, 0);
 
@@ -482,8 +505,8 @@ export default function BuildLogs() {
         <div className="container">
           {filteredProjects.map((proj, gi) => (
             <div key={proj.id} className="project-group reveal" style={{ transitionDelay: `${gi * 0.08}s` }}>
-              {/* Group header */}
-              <div className="project-group-header">
+              {/* Clickable group header */}
+              <div className="project-group-header" onClick={() => toggle(proj.id)}>
                 <div className="project-group-icon">{proj.icon}</div>
                 <div className="project-group-info">
                   <div className="project-group-name">{proj.name}</div>
@@ -495,38 +518,41 @@ export default function BuildLogs() {
                     <span className="project-group-count">{proj.entries.length} entries</span>
                   </div>
                 </div>
+                <div className={`project-group-chevron${collapsed[proj.id] ? '' : ' open'}`}>▼</div>
               </div>
 
-              {/* Timeline */}
-              <div className="timeline">
-                {proj.entries.map((entry, ei) => (
-                  <div key={`${proj.id}-${ei}`} className="log-entry">
-                    <div className={`log-dot${entry.isLatest ? ' latest' : ''}`} />
-                    <div className="log-day">
-                      <span>{entry.day}</span>
-                      <span className="log-day-sep" />
-                      <span className="log-day-date">{entry.date}</span>
-                      {entry.isLatest && <span className="latest-badge">LATEST</span>}
-                    </div>
-                    <div className="log-card">
-                      <div className="log-card-header">
-                        <h3 className="log-title">{entry.title}</h3>
-                        <div className="log-tags">
-                          {entry.tags.map(tag => (
-                            <span key={tag} className={`log-tag ${tag}`}>{TAG_LABELS[tag]}</span>
-                          ))}
-                        </div>
+              {/* Collapsible timeline */}
+              <div className={`project-group-body${collapsed[proj.id] ? ' collapsed' : ''}`}>
+                <div className="timeline">
+                  {proj.entries.map((entry, ei) => (
+                    <div key={`${proj.id}-${ei}`} className="log-entry">
+                      <div className={`log-dot${entry.isLatest ? ' latest' : ''}`} />
+                      <div className="log-day">
+                        <span>{entry.day}</span>
+                        <span className="log-day-sep" />
+                        <span className="log-day-date">{entry.date}</span>
+                        {entry.isLatest && <span className="latest-badge">LATEST</span>}
                       </div>
-                      <div className="log-body" dangerouslySetInnerHTML={{ __html: entry.body }} />
-                      {entry.decision && (
-                        <div className="log-decision">
-                          <div className="log-decision-label">Decision</div>
-                          {entry.decision}
+                      <div className="log-card">
+                        <div className="log-card-header">
+                          <h3 className="log-title">{entry.title}</h3>
+                          <div className="log-tags">
+                            {entry.tags.map(tag => (
+                              <span key={tag} className={`log-tag ${tag}`}>{TAG_LABELS[tag]}</span>
+                            ))}
+                          </div>
                         </div>
-                      )}
+                        <div className="log-body" dangerouslySetInnerHTML={{ __html: entry.body }} />
+                        {entry.decision && (
+                          <div className="log-decision">
+                            <div className="log-decision-label">Decision</div>
+                            {entry.decision}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           ))}
