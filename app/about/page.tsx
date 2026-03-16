@@ -799,12 +799,10 @@ export default function About() {
             </a>
             <a href="/projects" className="work-teaser-card reveal" style={{ transitionDelay: '0.08s' }}>
               <span className="work-teaser-tag">Flutter · Dart</span>
-              <h3>EduPanion — Interactive Reading Assessment Tool</h3>
+              <h3>EduPanion — Phonics Assessment Tool</h3>
               <p>
-                Smart literacy assessment and progress tracking for Nigerian 
-                classroom teachers. Run weekly phonics and English assessments, 
-                monitor student growth across six levels, and get actionable 
-                insights — all offline-capable.
+                Interactive reading assessment app for primary school students. Offline-first,
+                optimised for low-bandwidth environments.
               </p>
               <div className="work-teaser-footer">
                 <div className="work-teaser-pills">
