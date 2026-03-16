@@ -671,13 +671,13 @@ export default function Projects() {
       {/* FOOTER */}
       <footer>
         <div className="footer-left">
-          <p>© 2026 <span>Rex Orokumue</span> · Built with Next.js & intention.</p>
+          <p>© 2026 <span>Rex Orokumue</span> · Built with Next.js &amp; intention.</p>
         </div>
         <div className="footer-links">
-          <a href="#">Twitter</a>
-          <a href="#">LinkedIn</a>
-          <a href="#">GitHub</a>
-          <a href="mailto:hello@zolarux.com">Email</a>
+          <a href="https://x.com/iamrexorokumue">𝕏</a>
+          <a href="https://www.linkedin.com/in/rex-orokumue-2550251b7/">LinkedIn</a>
+          <a href="https://github.com/Rex-Orokumue">GitHub</a>
+          <a href="mailto:gorokumue@gmail.com">Email</a>
         </div>
       </footer>
     </>
