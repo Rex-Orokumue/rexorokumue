@@ -359,6 +359,7 @@ const filters = ['All', 'Mobile', 'Web', 'Full-Stack'];
 const supportingProjects = [
   {
     id: 2,
+    slug: 'edupanion',
     name: 'EduPanion — Phonics & Literacy Assessment Tool',
     category: 'Mobile · EdTech',
     tech: 'Flutter',
@@ -374,6 +375,7 @@ const supportingProjects = [
   },
   {
     id: 3,
+    slug: 'zolarux-admin',
     name: 'Zolarux Admin Control Center',
     category: 'Mobile · Web · Desktop · Operations',
     tech: 'Flutter',
@@ -389,6 +391,7 @@ const supportingProjects = [
   },
   {
     id: 4,
+    slug: 'escrowpay-engine',
     name: 'Zolarux FinTech Engine',
     category: 'Mobile · FinTech · In Design',
     tech: 'Figma → Flutter',
@@ -512,7 +515,7 @@ export default function Projects() {
                 </div>
                 <div className="featured-actions">
                   <a href="https://zolarux.com.ng" target="_blank" rel="noopener noreferrer" className="btn-primary">View Live <IconExternal /></a>
-                  <a href="/projects/zolarux" className="btn-outline">Case Study →</a>
+                  <a href="/projects/zolarux-marketplace" className="btn-outline">Case Study →</a>
                   <a href="#" className="btn-ghost"><IconGithub /> GitHub</a>
                 </div>
               </div>
@@ -562,10 +565,14 @@ export default function Projects() {
                   <div className="proj-footer">
                     <div className="proj-links">
                       {proj.status === 'in-design' ? (
-                        <span className="proj-link" style={{ color: '#FBD34D', cursor: 'default' }}>Designing ✦</span>
+                        <>
+                          <span className="proj-link" style={{ color: '#FBD34D', cursor: 'default' }}>Designing ✦</span>
+                          <a href={`/projects/${proj.slug}`} className="proj-link ghost">Case Study →</a>
+                        </>
                       ) : (
                         <>
                           <a href={proj.liveUrl ?? '#'} className="proj-link">Live <IconExternal /></a>
+                          <a href={`/projects/${proj.slug}`} className="proj-link">Case Study →</a>
                           <a href={proj.githubUrl ?? '#'} className="proj-link ghost"><IconGithub /> GitHub</a>
                         </>
                       )}
