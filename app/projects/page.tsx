@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 const GlobalStyles = () => (
   <style>{`
@@ -21,455 +21,311 @@ const GlobalStyles = () => (
       --border:       rgba(255,255,255,0.07);
       --border-hover: rgba(59,130,246,0.25);
       --card-bg:      rgba(30,41,59,0.55);
+      --green:        #34D399;
     }
 
     html { scroll-behavior: smooth; }
     body {
-      background: var(--secondary);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      overflow-x: hidden;
-      line-height: 1.6;
+      background: var(--secondary); color: var(--text);
+      font-family: 'DM Sans', sans-serif; overflow-x: hidden; line-height: 1.6;
     }
     body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
+      content: ''; position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.5;
+      pointer-events: none; z-index: 9999; opacity: 0.5;
     }
     .bg-mesh {
       position: fixed; inset: 0; z-index: 0;
       background:
-        radial-gradient(ellipse 70% 50% at 0% 10%, rgba(59,130,246,0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 55% 65% at 100% 85%, rgba(59,130,246,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 50% at 10% 0%, rgba(59,130,246,0.13) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 90% 90%, rgba(59,130,246,0.07) 0%, transparent 55%),
         var(--secondary);
     }
 
-    @keyframes fadeUp   { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes pulse    { 0%,100% { opacity:1; } 50% { opacity:0.45; } }
-    @keyframes blink    { 0%,100% { opacity:1; } 50% { opacity:0; } }
-
-    /* Typewriter cursor */
-    .tw-cursor {
-      display: inline-block;
-      width: 3px;
-      background: var(--accent);
-      margin-left: 4px;
-      vertical-align: middle;
-      border-radius: 2px;
-      animation: blink 0.75s step-end infinite;
-    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes pulse  { 0%,100% { opacity:1; } 50% { opacity:0.45; } }
 
     .fade-up-1 { animation: fadeUp 0.75s 0.05s ease both; }
     .fade-up-2 { animation: fadeUp 0.75s 0.20s ease both; }
     .fade-up-3 { animation: fadeUp 0.75s 0.35s ease both; }
     .fade-up-4 { animation: fadeUp 0.75s 0.50s ease both; }
 
-    .reveal {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
     .reveal.visible { opacity:1; transform:translateY(0); }
 
     section { position: relative; z-index: 1; }
     .container { max-width: 1180px; margin: 0 auto; padding: 0 64px; }
 
     .section-tag {
-      display: inline-block;
-      font-size: 0.70rem; font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 14px;
+      display: inline-block; font-size: 0.70rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
     }
     .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.9rem, 3.5vw, 2.9rem);
-      font-weight: 800; line-height: 1.1;
-      letter-spacing: -0.025em; color: var(--text);
+      font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 3.5vw, 2.9rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.025em; color: var(--text);
     }
     .btn-primary {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 34px; background: var(--accent); color: #fff;
-      border-radius: 8px; font-weight: 600; font-size: 0.9rem;
-      text-decoration: none; letter-spacing: 0.02em;
-      transition: all 0.25s;
-      box-shadow: 0 4px 28px var(--accent-glow);
-      border: 1px solid transparent;
+      padding: 13px 28px; background: var(--accent); color: #fff;
+      border-radius: 8px; font-weight: 600; font-size: 0.875rem;
+      text-decoration: none; letter-spacing: 0.02em; transition: all 0.25s;
+      box-shadow: 0 4px 28px var(--accent-glow); border: 1px solid transparent; white-space: nowrap;
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 36px var(--accent-glow); }
     .btn-ghost {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 13px 30px; border: 1px solid var(--border);
-      color: var(--text); border-radius: 8px;
-      font-weight: 500; font-size: 0.9rem;
-      text-decoration: none; transition: all 0.25s; background: transparent;
+      padding: 12px 24px; border: 1px solid var(--border); color: var(--text);
+      border-radius: 8px; font-weight: 500; font-size: 0.875rem;
+      text-decoration: none; transition: all 0.25s; background: transparent; white-space: nowrap;
     }
     .btn-ghost:hover { border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.04); }
-
-    /* HERO */
-    .about-hero {
-      min-height: 70vh; display: flex; flex-direction: column;
-      justify-content: flex-start;
-      padding-top: 160px; padding-bottom: 100px;
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border: 1px solid var(--accent-glow); color: var(--accent);
+      border-radius: 8px; font-weight: 600; font-size: 0.875rem;
+      text-decoration: none; transition: all 0.25s; background: var(--accent-dim); white-space: nowrap;
     }
-    .about-eyebrow {
-      display: inline-flex; align-items: center; gap: 10px;
+    .btn-outline:hover { background: rgba(59,130,246,0.18); border-color: var(--accent); }
+
+    /* ── HERO ── */
+    .projects-hero {
+      min-height: 52vh; display: flex; flex-direction: column;
+      justify-content: flex-end; padding-top: 160px; padding-bottom: 80px;
+    }
+    .hero-label {
+      display: inline-flex; align-items: center;
       padding: 6px 16px 6px 10px; border-radius: 100px;
       border: 1px solid var(--accent-glow); background: var(--accent-dim);
       font-size: 0.72rem; font-weight: 600; letter-spacing: 0.10em;
       text-transform: uppercase; color: var(--accent);
-      margin-bottom: 36px; width: fit-content;
+      margin-top: -60px; margin-bottom: 32px; width: fit-content;
     }
-    .about-headline {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.2rem, 4vw, 3.4rem);
-      font-weight: 800; line-height: 1.0;
-      letter-spacing: -0.03em; color: var(--text); max-width: 780px;
+    .projects-headline {
+      font-family: 'Syne', sans-serif; font-size: clamp(2rem, 5vw, 4.2rem);
+      font-weight: 800; line-height: 1.05; letter-spacing: -0.025em;
+      color: var(--text); max-width: 100%;
     }
-    .about-headline .line-accent {
-      display: block;
-      min-height: 1.1em;
-      background: linear-gradient(120deg, var(--accent) 20%, var(--accent-light) 80%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    .projects-headline .dim { color: var(--muted); display: block; }
+    .projects-sub {
+      margin-top: 24px; font-size: 1.05rem; line-height: 1.75;
+      color: var(--muted); max-width: 520px; font-weight: 300;
     }
-    .about-intro {
-      margin-top: 32px; font-size: 1.15rem; line-height: 1.8;
-      color: var(--muted); max-width: 640px; font-weight: 300;
+    .projects-sub strong { color: var(--text); font-weight: 500; }
+    .filter-bar { display: flex; align-items: center; gap: 8px; margin-top: 48px; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 7px 18px; border-radius: 100px; border: 1px solid var(--border);
+      background: transparent; font-size: 0.78rem; font-weight: 500; color: var(--muted);
+      cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
     }
-    .about-intro strong { color: var(--text); font-weight: 500; }
-    .about-avail {
-      display: inline-flex; align-items: center; gap: 10px;
-      margin-top: 40px; padding: 10px 20px; border-radius: 10px;
-      border: 1px solid var(--border); background: var(--card-bg);
-      font-size: 0.80rem; color: var(--muted);
-    }
-    .avail-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: #34D399; animation: pulse 2s infinite; flex-shrink: 0;
-    }
-    .about-avail strong { color: var(--text); font-weight: 500; }
+    .filter-btn:hover { border-color: var(--accent-glow); color: var(--text); }
+    .filter-btn.active { background: var(--accent-dim); border-color: var(--accent-glow); color: var(--accent); font-weight: 600; }
 
-    /* WHAT I HELP WITH */
-    .help-section { padding: 120px 0; }
-    .help-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 64px; margin-top: 56px; align-items: start;
-    }
-    .help-left p {
-      font-size: 1.0rem; line-height: 1.85;
-      color: var(--muted); margin-bottom: 20px;
-    }
-    .help-left p strong { color: var(--text); font-weight: 500; }
-    .help-items { display: flex; flex-direction: column; gap: 12px; }
-    .help-item {
-      display: flex; align-items: flex-start; gap: 16px;
-      padding: 20px 22px; border-radius: 12px;
-      border: 1px solid var(--border); background: var(--card-bg);
-      backdrop-filter: blur(12px); transition: all 0.25s;
-    }
-    .help-item:hover { border-color: var(--border-hover); transform: translateX(4px); }
-    .help-num {
-      font-family: 'Syne', sans-serif; font-size: 0.70rem;
-      font-weight: 800; color: var(--accent);
-      letter-spacing: 0.06em; flex-shrink: 0; padding-top: 2px;
-    }
-    .help-item-text h4 {
-      font-family: 'Syne', sans-serif; font-weight: 700;
-      font-size: 0.92rem; color: var(--text); margin-bottom: 4px;
-    }
-    .help-item-text p { font-size: 0.80rem; color: var(--muted); line-height: 1.5; }
-
-    /* PHILOSOPHY */
-    .philosophy-section { padding: 0 0 120px; }
-    .philosophy-inner {
-      border-radius: 20px; border: 1px solid var(--border);
+    /* ── FEATURED PROJECT ── */
+    .featured-section { padding: 80px 0 0; }
+    .featured-inner {
+      border-radius: 24px; border: 1px solid var(--border);
       background: var(--card-bg); backdrop-filter: blur(16px);
-      padding: 64px; position: relative; overflow: hidden;
+      overflow: hidden; position: relative; min-width: 0;
     }
-    .philosophy-inner::before {
-      content: ''; position: absolute; top: -40%; right: -5%;
+    .featured-inner::before {
+      content: ''; position: absolute; top: -30%; right: -8%;
       width: 500px; height: 500px;
-      background: radial-gradient(ellipse, rgba(59,130,246,0.07), transparent 70%);
+      background: radial-gradient(ellipse, rgba(59,130,246,0.08), transparent 70%);
       pointer-events: none;
     }
-    .philosophy-header {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 64px; align-items: start; margin-bottom: 56px;
+    .featured-top { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; }
+    .featured-img { position: relative; overflow: hidden; min-height: 380px; }
+    .featured-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .featured-inner:hover .featured-img img { transform: scale(1.04); }
+    .featured-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 60%, rgba(15,23,42,0.6));
     }
-    .philosophy-header-left p {
-      margin-top: 20px; font-size: 1.05rem; line-height: 1.8; color: var(--muted);
+    .featured-live-badge {
+      position: absolute; top: 20px; left: 20px;
+      display: flex; align-items: center; gap: 7px;
+      padding: 6px 14px; border-radius: 100px;
+      background: rgba(15,23,42,0.85); border: 1px solid var(--green);
+      font-size: 0.70rem; font-weight: 600; color: var(--green);
+      letter-spacing: 0.06em; text-transform: uppercase;
     }
-    .philosophy-header-left p strong { color: var(--text); font-weight: 500; }
-    .philosophy-header-left p + p { margin-top: 16px; }
-    .philosophy-quote {
-      padding: 28px 32px; border-radius: 14px;
-      border: 1px solid var(--accent-glow); background: var(--accent-dim);
-      position: relative;
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+    .featured-content { padding: 52px 48px; display: flex; flex-direction: column; justify-content: center; }
+    .featured-flag {
+      display: inline-block; font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
     }
-    .philosophy-quote::before {
-      content: '"'; position: absolute; top: -16px; left: 24px;
-      font-family: 'Syne', sans-serif; font-size: 4rem; font-weight: 800;
-      color: var(--accent); line-height: 1; opacity: 0.4;
+    .featured-content h2 {
+      font-family: 'Syne', sans-serif; font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 800; color: var(--text); line-height: 1.15; margin-bottom: 12px;
     }
-    .philosophy-quote p {
-      font-size: 1.05rem; line-height: 1.75; color: var(--text);
-      font-weight: 400; font-style: italic;
-    }
-    .philosophy-quote cite {
-      display: block; margin-top: 16px; font-size: 0.75rem;
-      color: var(--accent); font-style: normal;
-      font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-    }
-    .principles-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 16px; padding-top: 48px; border-top: 1px solid var(--border);
-    }
-    .principle {
-      padding: 24px 20px; border-radius: 12px;
-      border: 1px solid var(--border); background: rgba(15,23,42,0.4);
-      transition: all 0.25s;
-    }
-    .principle:hover { border-color: var(--border-hover); transform: translateY(-3px); }
-    .principle-icon { font-size: 1.4rem; margin-bottom: 14px; display: block; }
-    .principle h4 {
-      font-family: 'Syne', sans-serif; font-weight: 700;
-      font-size: 0.88rem; color: var(--text); margin-bottom: 8px;
-    }
-    .principle p { font-size: 0.78rem; line-height: 1.6; color: var(--muted); }
+    .featured-tagline { font-size: 0.9rem; color: var(--muted); line-height: 1.65; margin-bottom: 28px; }
+    .ps-blocks { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+    .ps-block { padding: 16px 18px; border-radius: 10px; border: 1px solid var(--border); background: rgba(15,23,42,0.45); }
+    .ps-block-label { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 6px; }
+    .ps-block-label.problem { color: #F87171; }
+    .ps-block-label.solution { color: var(--green); }
+    .ps-block p { font-size: 0.82rem; line-height: 1.6; color: var(--muted); }
+    .impact-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 28px; }
+    .impact-stat { padding: 12px 10px; border-radius: 10px; text-align: center; border: 1px solid var(--border); background: rgba(15,23,42,0.5); }
+    .impact-val { font-family: 'Syne', sans-serif; font-size: clamp(1rem, 1.8vw, 1.25rem); font-weight: 800; color: var(--text); line-height: 1; display: block; }
+    .impact-val em { color: var(--accent); font-style: normal; }
+    .impact-label { font-size: 0.65rem; color: var(--muted); margin-top: 4px; display: block; }
+    .stack-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 28px; }
+    .stack-chip { padding: 4px 12px; border-radius: 6px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); font-size: 0.72rem; color: var(--muted); font-weight: 500; white-space: nowrap; }
+    .featured-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .featured-why { border-top: 1px solid var(--border); padding: 28px 48px; display: flex; align-items: flex-start; gap: 20px; }
+    .why-icon { width: 40px; height: 40px; flex-shrink: 0; border-radius: 10px; background: var(--accent-dim); border: 1px solid var(--accent-glow); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .why-text p { font-size: 0.84rem; line-height: 1.7; color: var(--muted); }
+    .why-text p strong { color: var(--accent-light); font-weight: 500; }
 
-    /* JOURNEY */
-    .journey-section { padding: 0 0 120px; }
-    .journey-grid {
-      display: grid; grid-template-columns: 1.1fr 1fr;
-      gap: 80px; margin-top: 56px; align-items: start;
+    /* ── SUPPORTING PROJECTS ── */
+    .projects-grid-section { padding: 64px 0 0; }
+    .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 40px; }
+    .proj-card {
+      border-radius: 18px; overflow: hidden; min-width: 0;
+      background: var(--card-bg); border: 1px solid var(--border);
+      backdrop-filter: blur(12px); display: flex; flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1);
     }
-    .journey-text p {
-      font-size: 1.0rem; line-height: 1.85;
-      color: var(--muted); margin-bottom: 20px;
-    }
-    .journey-text p strong { color: var(--text); font-weight: 500; }
-    .journey-milestones { display: flex; flex-direction: column; gap: 0; }
-    .milestone { display: flex; gap: 20px; padding-bottom: 32px; position: relative; }
-    .milestone:last-child { padding-bottom: 0; }
-    .milestone-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
-    .milestone-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--accent); border: 2px solid var(--accent-glow);
-      flex-shrink: 0; margin-top: 4px;
-    }
-    .milestone-line {
-      width: 1px; flex: 1;
-      background: linear-gradient(to bottom, var(--accent-glow), transparent);
-      margin-top: 8px; min-height: 32px;
-    }
-    .milestone:last-child .milestone-line { display: none; }
-    .milestone-year {
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.10em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 6px;
-    }
-    .milestone-content h4 {
-      font-family: 'Syne', sans-serif; font-weight: 700;
-      font-size: 0.90rem; color: var(--text); margin-bottom: 4px;
-    }
-    .milestone-content p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+    .proj-card:hover { transform: translateY(-4px); border-color: var(--border-hover); box-shadow: 0 20px 56px rgba(0,0,0,0.4); }
+    .proj-img { position: relative; height: 200px; overflow: hidden; }
+    .proj-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .proj-card:hover .proj-img img { transform: scale(1.06); }
+    .proj-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,23,42,0.9) 0%, transparent 60%); }
+    .proj-tech-badge { position: absolute; top: 14px; right: 14px; padding: 4px 12px; border-radius: 100px; background: rgba(15,23,42,0.88); border: 1px solid var(--border); font-size: 0.66rem; font-weight: 600; color: var(--muted); letter-spacing: 0.04em; }
+    .proj-tech-badge--design { border-color: rgba(251,211,61,0.4); background: rgba(251,211,61,0.08); color: #FBD34D; }
+    .proj-outcome--design { color: #FBD34D; }
+    .proj-body { padding: 28px; flex: 1; display: flex; flex-direction: column; }
+    .proj-category { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .proj-body h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--text); margin-bottom: 6px; }
+    .proj-problem { font-size: 0.78rem; font-weight: 600; color: #F87171; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
+    .proj-desc { font-size: 0.84rem; line-height: 1.65; color: var(--muted); flex: 1; }
+    .proj-outcome { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.78rem; font-weight: 600; color: var(--green); line-height: 1.4; }
+    .proj-outcome-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+    .proj-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+    .proj-chip { padding: 3px 10px; border-radius: 4px; background: var(--accent-dim); border: 1px solid var(--accent-glow); font-size: 0.65rem; color: var(--accent-light); font-weight: 500; }
+    .proj-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); gap: 8px; }
+    .proj-links { display: flex; gap: 10px; }
+    .proj-link { display: inline-flex; align-items: center; gap: 5px; font-size: 0.78rem; font-weight: 600; color: var(--accent); text-decoration: none; transition: gap 0.2s; }
+    .proj-link:hover { gap: 8px; }
+    .proj-link.ghost { color: var(--muted); font-weight: 500; }
+    .proj-link.ghost:hover { color: var(--text); }
 
-    /* CURRENT FOCUS */
-    .focus-section { padding: 0 0 120px; }
-    .focus-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 24px; margin-top: 52px;
-    }
-    .focus-card {
-      padding: 36px; border-radius: 16px;
-      border: 1px solid var(--border); background: var(--card-bg);
-      backdrop-filter: blur(12px); transition: all 0.25s;
-      position: relative; overflow: hidden;
-    }
-    .focus-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(to right, transparent, var(--accent-glow), transparent);
-    }
-    .focus-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
-    .focus-card-label {
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
-    }
-    .focus-card h3 {
-      font-family: 'Syne', sans-serif; font-size: 1.1rem;
-      font-weight: 700; color: var(--text); margin-bottom: 12px;
-    }
-    .focus-card p { font-size: 0.85rem; line-height: 1.75; color: var(--muted); }
-    .focus-note {
-      margin-top: 24px; padding: 16px 20px; border-radius: 10px;
-      border: 1px solid var(--border); background: rgba(15,23,42,0.5);
-      font-size: 0.82rem; color: var(--muted); line-height: 1.65; font-style: italic;
-    }
-    .focus-note strong { color: var(--accent-light); font-style: normal; font-weight: 500; }
-
-    /* Metrics row inside focus card */
-    .focus-metrics {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-    .focus-metric {
-      display: flex; flex-direction: column; gap: 4px;
-      padding: 14px 12px; border-radius: 10px;
-      border: 1px solid var(--border); background: rgba(15,23,42,0.5);
-      text-align: center;
-    }
-    .focus-metric-val {
-      font-family: 'Syne', sans-serif; font-size: clamp(1rem, 2.5vw, 1.3rem);
-      font-weight: 800; color: var(--text); line-height: 1;
-    }
-    .focus-metric-val em { color: var(--accent); font-style: normal; font-size: 0.85em; }
-    .focus-metric-label { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.04em; }
-
-    /* SELECTED WORK TEASER */
-    .work-teaser-section { padding: 0 0 120px; }
-    .work-teaser-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 16px; margin-top: 48px;
-    }
-    .work-teaser-card {
-      padding: 28px 24px; border-radius: 14px;
+    /* ── OTHER WORK (WordPress) ── */
+    .other-section { padding: 64px 0 0; }
+    .other-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+    .other-card {
+      padding: 26px 24px; border-radius: 14px;
       border: 1px solid var(--border); background: var(--card-bg);
       backdrop-filter: blur(12px); text-decoration: none;
-      transition: all 0.25s; display: flex; flex-direction: column; gap: 10px;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: all 0.25s; min-width: 0;
     }
-    .work-teaser-card:hover { border-color: var(--border-hover); transform: translateY(-4px); }
-    .work-teaser-tag {
-      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.10em;
-      text-transform: uppercase; color: var(--accent);
-    }
-    .work-teaser-card h3 {
-      font-family: 'Syne', sans-serif; font-size: 0.95rem;
-      font-weight: 700; color: var(--text); line-height: 1.3;
-    }
-    .work-teaser-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; flex: 1; }
-    .work-teaser-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 14px; border-top: 1px solid var(--border); margin-top: 4px;
-    }
-    .work-teaser-pills { display: flex; gap: 6px; flex-wrap: wrap; }
-    .work-teaser-pill {
-      padding: 2px 8px; border-radius: 4px;
-      background: var(--accent-dim); border: 1px solid var(--accent-glow);
-      font-size: 0.63rem; color: var(--accent-light); font-weight: 500;
-    }
-    .work-teaser-arrow { font-size: 0.78rem; color: var(--accent); font-weight: 600; flex-shrink: 0; }
-
-    /* CORE STACK */
-    .stack-section { padding: 0 0 120px; }
-    .stack-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 16px; margin-top: 48px;
-    }
-    .stack-group {
-      padding: 28px 24px; border-radius: 14px;
-      border: 1px solid var(--border); background: var(--card-bg);
-      backdrop-filter: blur(12px); transition: all 0.25s;
-    }
-    .stack-group:hover { border-color: var(--border-hover); }
-    .stack-group-label {
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.10em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
-    }
-    .stack-items { display: flex; flex-wrap: wrap; gap: 8px; }
-    .stack-pill {
-      padding: 5px 14px; border-radius: 100px;
+    .other-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+    .other-card-top { display: flex; align-items: center; justify-content: space-between; }
+    .other-tag { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; color: var(--muted-2); }
+    .other-platform {
+      font-size: 0.63rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--muted-2);
+      padding: 3px 8px; border-radius: 4px;
       border: 1px solid var(--border); background: rgba(255,255,255,0.03);
-      font-size: 0.78rem; color: var(--muted); font-weight: 500; transition: all 0.2s;
     }
-    .stack-pill:hover { border-color: var(--accent-glow); color: var(--accent-light); }
+    .other-card h3 { font-family: 'Syne', sans-serif; font-size: 0.92rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .other-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; flex: 1; }
+    .other-card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border); margin-top: 4px; }
+    .other-chips { display: flex; gap: 5px; flex-wrap: wrap; }
+    .other-chip { padding: 2px 8px; border-radius: 4px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); font-size: 0.62rem; color: var(--muted-2); font-weight: 500; }
+    .other-link { font-size: 0.75rem; font-weight: 600; color: var(--accent); flex-shrink: 0; }
 
-    /* CLOSING CTA */
-    .about-cta-section { padding: 0 0 140px; }
-    .about-cta-inner {
-      border-radius: 24px; border: 1px solid var(--border);
-      background: linear-gradient(135deg, rgba(30,41,59,0.9), rgba(15,23,42,0.95));
-      backdrop-filter: blur(24px); padding: 90px 80px;
-      display: grid; grid-template-columns: 1fr auto;
-      gap: 64px; align-items: center;
-      position: relative; overflow: hidden;
-    }
-    .about-cta-inner::before {
-      content: ''; position: absolute; bottom: -40%; left: -5%;
-      width: 400px; height: 400px;
-      background: radial-gradient(ellipse, rgba(59,130,246,0.10), transparent 70%);
-      pointer-events: none;
-    }
-    .about-cta-text h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      font-weight: 800; letter-spacing: -0.025em;
-      line-height: 1.1; margin-bottom: 16px;
-    }
-    .about-cta-text p {
-      font-size: 1.0rem; color: var(--muted);
-      line-height: 1.75; max-width: 480px; font-weight: 300;
-    }
-    .about-cta-actions { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
+    /* ── HOW I BUILD ── */
+    .approach-section { padding: 80px 0 0; }
+    .approach-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); background: var(--card-bg); backdrop-filter: blur(16px); }
+    .approach-left { padding: 56px 48px; border-right: 1px solid var(--border); }
+    .approach-left p { margin-top: 20px; font-size: 1.0rem; line-height: 1.8; color: var(--muted); }
+    .approach-left p strong { color: var(--text); font-weight: 500; }
+    .approach-right { padding: 56px 48px; }
+    .approach-steps { display: flex; flex-direction: column; gap: 0; }
+    .approach-step { display: flex; gap: 18px; padding-bottom: 28px; }
+    .approach-step:last-child { padding-bottom: 0; }
+    .step-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+    .step-num-box { width: 36px; height: 36px; border-radius: 9px; background: var(--accent-dim); border: 1px solid var(--accent-glow); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 800; color: var(--accent); flex-shrink: 0; }
+    .step-connector { width: 1px; flex: 1; min-height: 24px; margin-top: 8px; background: linear-gradient(to bottom, var(--accent-glow), transparent); }
+    .approach-step:last-child .step-connector { display: none; }
+    .step-content { padding-top: 6px; }
+    .step-content h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; color: var(--text); margin-bottom: 4px; }
+    .step-content p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
 
-    /* FOOTER */
-    footer {
-      position: relative; z-index: 1;
-      border-top: 1px solid var(--border);
-      padding: 36px 64px; max-width: 1180px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-    }
+    /* ── CTA ── */
+    .projects-cta-section { padding: 80px 0 140px; }
+    .projects-cta-inner { border-radius: 24px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(30,41,59,0.9), rgba(15,23,42,0.95)); backdrop-filter: blur(24px); padding: 90px 80px; text-align: center; position: relative; overflow: hidden; }
+    .projects-cta-inner::before { content: ''; position: absolute; top: -60%; left: 50%; transform: translateX(-50%); width: 70%; height: 300px; background: radial-gradient(ellipse, rgba(59,130,246,0.12), transparent 70%); pointer-events: none; }
+    .projects-cta-inner h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 3.5vw, 3rem); font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 16px; }
+    .projects-cta-inner > p { font-size: 1.0rem; color: var(--muted); max-width: 480px; margin: 0 auto 44px; line-height: 1.75; font-weight: 300; }
+    .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .cta-scarcity { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 32px; padding: 9px 18px; border-radius: 100px; border: 1px solid var(--border); background: rgba(255,255,255,0.04); font-size: 0.76rem; color: var(--muted); letter-spacing: 0.02em; }
+    .cta-scarcity-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 36px 64px; max-width: 1180px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
     .footer-left p { font-size: 0.78rem; color: var(--muted-2); }
     .footer-left p span { color: var(--accent); }
     .footer-links { display: flex; gap: 28px; }
-    .footer-links a {
-      font-size: 0.78rem; color: var(--muted-2);
-      text-decoration: none; transition: color 0.2s;
-    }
+    .footer-links a { font-size: 0.78rem; color: var(--muted-2); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--text); }
 
-    /* RESPONSIVE */
+    /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
       .container { padding: 0 28px; }
       footer { padding: 28px; flex-direction: column; gap: 16px; text-align: center; }
-      .help-grid { grid-template-columns: 1fr; gap: 48px; }
-      .philosophy-header { grid-template-columns: 1fr; gap: 40px; }
-      .principles-grid { grid-template-columns: 1fr 1fr; }
-      .journey-grid { grid-template-columns: 1fr; gap: 48px; }
-      .focus-grid { grid-template-columns: 1fr; }
-      .stack-grid { grid-template-columns: 1fr 1fr; }
-      .work-teaser-grid { grid-template-columns: 1fr 1fr; }
-      .about-cta-inner { grid-template-columns: 1fr; gap: 40px; padding: 56px 40px; }
-      .philosophy-inner { padding: 40px 32px; }
-
-      /* Section top spacing on tablet */
-      .help-section       { padding-top: 100px; }
-      .philosophy-section { padding-top: 100px; }
-      .journey-section    { padding-top: 100px; }
-      .focus-section      { padding-top: 100px; }
-      .stack-section      { padding-top: 100px; }
-      .work-teaser-section { padding-top: 100px; }
-      .about-cta-section  { padding-top: 100px; }
+      .featured-top { grid-template-columns: 1fr; }
+      .featured-img { min-height: 260px; }
+      .featured-img-overlay { background: linear-gradient(to top, rgba(15,23,42,0.7), transparent); }
+      .featured-content { padding: 36px 32px; }
+      .featured-why { padding: 24px 32px; }
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .other-grid { grid-template-columns: 1fr 1fr; }
+      .approach-inner { grid-template-columns: 1fr; }
+      .approach-left { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 32px; }
+      .approach-right { padding: 40px 32px; }
+      .projects-cta-inner { padding: 64px 40px; }
+      .featured-section    { padding-top: 60px; }
+      .projects-grid-section { padding-top: 60px; }
+      .other-section       { padding-top: 60px; }
+      .approach-section    { padding-top: 60px; }
+      .projects-cta-section { padding-top: 60px; }
     }
     @media (max-width: 640px) {
-      .about-hero { padding-top: 140px; }
-      .about-headline { font-size: 2.2rem; }
-      .principles-grid { grid-template-columns: 1fr; }
-      .stack-grid { grid-template-columns: 1fr; }
-      .work-teaser-grid { grid-template-columns: 1fr; }
-      .about-cta-inner { padding: 48px 24px; }
-
-      /* Section top spacing on mobile — prevents sections crowding element above */
-      .help-section      { padding-top: 80px; }
-      .philosophy-section { padding-top: 80px; }
-      .journey-section   { padding-top: 80px; }
-      .focus-section     { padding-top: 80px; }
-      .stack-section     { padding-top: 80px; }
-      .work-teaser-section { padding-top: 80px; }
-      .about-cta-section { padding-top: 80px; }
+      html, body { overflow-x: hidden; max-width: 100vw; }
+      .container { padding: 0 20px; }
+      .projects-hero { padding-top: 130px; padding-bottom: 60px; }
+      .projects-headline { font-size: 2.1rem; letter-spacing: -0.02em; }
+      .projects-sub { font-size: 0.92rem; margin-top: 18px; }
+      .filter-bar { margin-top: 32px; }
+      .featured-inner { border-radius: 16px; }
+      .featured-content { padding: 24px 18px; }
+      .featured-why { padding: 18px; flex-direction: column; gap: 12px; }
+      .featured-actions { flex-direction: column; }
+      .featured-actions .btn-primary,
+      .featured-actions .btn-outline,
+      .featured-actions .btn-ghost { width: 100%; justify-content: center; }
+      .stack-row { gap: 6px; }
+      .impact-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      .impact-val { font-size: 1rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .other-grid { grid-template-columns: 1fr; }
+      .approach-left, .approach-right { padding: 24px 18px; }
+      .projects-cta-inner { padding: 48px 20px; }
+      .cta-scarcity { font-size: 0.70rem; text-align: center; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+      .cta-buttons .btn-primary,
+      .cta-buttons .btn-ghost { width: 100%; justify-content: center; }
+      footer { padding: 24px 20px; }
+      .featured-section     { padding-top: 40px; }
+      .projects-grid-section { padding-top: 40px; }
+      .other-section        { padding-top: 40px; }
+      .approach-section     { padding-top: 40px; }
+      .projects-cta-section { padding-top: 40px; padding-bottom: 80px; }
     }
   `}</style>
 );
@@ -479,293 +335,242 @@ function useReveal() {
     if (typeof window === 'undefined') return;
     const els = document.querySelectorAll('.reveal');
     const obs = new IntersectionObserver(
-      entries => entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add('visible');
-      }),
-      { threshold: 0.10 }
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.08 }
     );
     els.forEach(el => obs.observe(el));
     return () => obs.disconnect();
   }, []);
 }
 
-// Typewriter hook — loops through phrases indefinitely
-function useTypewriter(phrases: string[], typingSpeed = 55, deletingSpeed = 30, pauseMs = 2000) {
-  const [displayed, setDisplayed] = useState('');
-  const [phraseIdx, setPhraseIdx] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+const IconExternal = () => (
+  <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
+    <path d="M1 13L13 1M13 1H5M13 1v8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+const IconGithub = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/>
+  </svg>
+);
 
-  useEffect(() => {
-    const current = phrases[phraseIdx];
-    const atFull = displayed === current;
-    const atEmpty = displayed === '';
+const filters = ['All', 'Mobile', 'Web', 'Full-Stack'];
 
-    if (!isDeleting && atFull) {
-      timeout.current = setTimeout(() => setIsDeleting(true), pauseMs);
-    } else if (isDeleting && atEmpty) {
-      setIsDeleting(false);
-      setPhraseIdx(i => (i + 1) % phrases.length);
-    } else {
-      const speed = isDeleting ? deletingSpeed : typingSpeed;
-      timeout.current = setTimeout(() => {
-        setDisplayed(isDeleting
-          ? current.slice(0, displayed.length - 1)
-          : current.slice(0, displayed.length + 1)
-        );
-      }, speed);
-    }
-
-    return () => { if (timeout.current) clearTimeout(timeout.current); };
-  }, [displayed, isDeleting, phraseIdx, phrases, typingSpeed, deletingSpeed, pauseMs]);
-
-  return displayed;
-}
-
-const helpItems = [
-  { title: 'MVPs from 0 to production', desc: 'Full product builds — architecture decisions to deployed, real-user-facing software.' },
-  { title: 'Backend systems & API design', desc: 'REST APIs, database schemas, auth flows, and real-time systems built to scale.' },
-  { title: 'Payment & escrow integrations', desc: 'Secure transaction flows, escrow logic, webhook handling, and reconciliation systems.' },
-  { title: 'AI-assisted development workflows', desc: 'Faster iteration cycles without sacrificing engineering rigour or code quality.' },
-  { title: 'Performance optimisation & deployment', desc: 'Edge deployment, CI/CD pipelines, and zero-downtime release strategies on Vercel.' },
+const supportingProjects = [
+  {
+    id: 2,
+    name: 'EduPanion — Phonics & Literacy Assessment Tool',
+    category: 'Mobile · EdTech',
+    tech: 'Flutter',
+    problem: 'No structured phonics and literacy assessment tool built for Nigerian classroom teachers',
+    desc: 'Smart literacy assessment and progress tracking for Nigerian classroom teachers. Run weekly phonics and English assessments, monitor student growth across six levels (Nursery to Senior Secondary), and get actionable insights — all offline-capable.',
+    outcome: 'Built and ready for deployment — currently seeking school partnerships.',
+    chips: ['Flutter', 'Dart', 'Offline-first', 'EdTech'],
+    image: '/edupanion-screenshot.jpeg',
+    liveUrl: '#',
+    githubUrl: '#',
+    tags: ['Mobile', 'Web'],
+    status: 'live',
+  },
+  {
+    id: 3,
+    name: 'Zolarux Admin Control Center',
+    category: 'Mobile · Web · Desktop · Operations',
+    tech: 'Flutter',
+    problem: 'No centralised dashboard for managing vendors, orders and risk flags in real-time',
+    desc: 'Role-based operations dashboard for monitoring vendor risk scores, managing order pipelines, reviewing stolen-device flags, and handling dispute escalations — available on mobile, web, and Windows desktop.',
+    outcome: 'Cut average dispute response time from 48hrs to under 4hrs.',
+    chips: ['Flutter', 'Firebase', 'Firestore', 'RBAC', 'Realtime', 'Windows'],
+    image: '/zolarux-admin.png',
+    liveUrl: '#',
+    githubUrl: '#',
+    tags: ['Mobile', 'Full-Stack'],
+    status: 'live',
+  },
+  {
+    id: 4,
+    name: 'Zolarux FinTech Engine',
+    category: 'Mobile · FinTech · In Design',
+    tech: 'Figma → Flutter',
+    problem: 'Buyers need a secure, embedded wallet to transact directly inside the Zolarux app',
+    desc: 'A comprehensive embedded finance layer for the Zolarux ecosystem — powering wallet infrastructure, transaction routing, and balance management. Currently in interface design; the engine will be built into the Zolarux buyer app as an integrated FinTech layer.',
+    outcome: 'Interface design in progress on Figma — engineering phase starting soon.',
+    chips: ['Figma', 'Flutter', 'Wallet', 'Payments', 'FinTech'],
+    image: '/escrowpay-engine.jpeg',
+    liveUrl: null,
+    githubUrl: null,
+    tags: ['Mobile', 'Full-Stack'],
+    status: 'in-design',
+  },
 ];
 
-const principles = [
-  { icon: '🏗️', title: 'Scalable from day one', desc: 'Good architecture is the difference between a product that grows and one that collapses under its own weight.' },
-  { icon: '🔐', title: 'Security is not optional', desc: 'Trust and data integrity are foundational — especially in products handling payments, identity, or sensitive user data.' },
-  { icon: '🤖', title: 'AI as a multiplier', desc: "AI tools accelerate development cycles. They don't replace engineering discipline — they amplify it." },
-  { icon: '🚢', title: 'Ship responsibly', desc: 'Shipping fast is good. Shipping something secure that can be maintained long-term — that is better.' },
+const wordpressProjects = [
+  {
+    name: 'GTech Mobiles',
+    tag: 'E-commerce · Tech Retail',
+    desc: 'Full e-commerce site for a mobile device repair and sales business — product listings, shop, cart, service pages, and WhatsApp-integrated contact flow.',
+    chips: ['WooCommerce', 'Custom Theme', 'E-commerce'],
+    url: 'https://www.gtechmobiles.com.ng/',
+  },
+  {
+    name: 'First Queen Nigeria',
+    tag: 'Events · Beauty Pageant',
+    desc: "Website for Nigeria's prestigious women's beauty pageant — celebrating Nigerian women through empowerment, leadership development, and community impact. Built to handle registrations and brand storytelling.",
+    chips: ['WordPress', 'Custom Design', 'Events'],
+    url: 'https://www.firstqueennigeria.com.ng/',
+  },
+  {
+    name: 'Oshare Mega',
+    tag: 'Events · Ticketing',
+    desc: 'Event platform and ticketing site for a Nigerian entertainment brand — home to events like Nigeria at 50, Christmas Fever, and the Oversabi Aunty Saga. Built for discovery, promotion, and ticket sales.',
+    chips: ['WordPress', 'WooCommerce', 'Ticketing'],
+    url: 'https://osharemega.com/',
+  },
 ];
 
-const milestones = [
-  { year: 'Foundation', title: 'Learned by building real things', desc: 'Started with curiosity, no bootcamp. Built broken things. Fixed them. Repeated until the mental models were solid.' },
-  { year: 'First Production Apps', title: 'Shipped beyond tutorials', desc: 'Moved from learning exercises to real software — auth systems, REST APIs, mobile apps people actually used.' },
-  { year: 'Zolarux', title: 'Founded a product from scratch', desc: 'Designed, built, and launched Zolarux — a trust infrastructure layer for Nigerian social commerce — entirely solo.' },
-  { year: 'Now', title: 'Full-stack engineer + founder', desc: 'Helping founders ship production-grade software while continuing to grow Zolarux into a real platform.' },
+const approachSteps = [
+  { n: '01', title: 'Architecture before UI', desc: 'Data models, API contracts, and auth strategy are defined before a single screen is designed.' },
+  { n: '02', title: 'Secure authentication flows', desc: 'JWT, RLS policies, and role-based access — built in from day one, not bolted on later.' },
+  { n: '03', title: 'Scalable database design', desc: 'Relational schemas with proper normalisation, indexing, and query performance in mind.' },
+  { n: '04', title: 'Production-ready deployment', desc: 'CI/CD pipelines, edge deployment, environment separation — built to survive real traffic.' },
+  { n: '05', title: 'Clean, maintainable code', desc: 'Written to be understood by the next developer, not just to work today.' },
 ];
 
-const stackGroups = [
-  { label: 'Frontend & Mobile', items: ['Next.js', 'React', 'Flutter', 'TypeScript'] },
-  { label: 'Backend & Database', items: ['Supabase', 'Firebase', 'PostgreSQL', 'REST APIs'] },
-  { label: 'Infra, Auth & Deploy', items: ['Vercel', 'GitHub Actions', 'CI/CD', 'Supabase Auth', 'JWT / RLS'] },
-  { label: 'Design & CMS', items: ['Figma', 'WordPress'] },
-];
-
-export default function About() {
+export default function Projects() {
   useReveal();
+  const [activeFilter, setActiveFilter] = useState('All');
 
-  const twPhrases = [
-    'production-ready software',
-    'scalable mobile apps',
-    'trust-driven platforms',
-    'systems built to last',
-  ];
-  const twText = useTypewriter(twPhrases);
+  const visible = activeFilter === 'All'
+    ? supportingProjects
+    : supportingProjects.filter(p => p.tags.includes(activeFilter));
 
   return (
     <>
       <GlobalStyles />
       <div className="bg-mesh" aria-hidden="true" />
 
-      {/* OPENING */}
+      {/* HERO */}
       <section>
-        <div className="container about-hero">
-          <div className="about-eyebrow fade-up-1">About Rex</div>
-          <h1 className="about-headline fade-up-2">
-            I build reliable,<br />
-            <span className="line-accent">
-              {twText}<span className="tw-cursor" style={{ height: '0.85em' }} />
-            </span>
-            <br />
-            for founders who move fast.
+        <div className="container projects-hero">
+          <div className="hero-label fade-up-1">Selected Work</div>
+          <h1 className="projects-headline fade-up-2">
+            Real Products.<br />
+            <span className="dim">Real Users.</span><br />
+            <span className="dim">Real Architecture.</span>
           </h1>
-          <p className="about-intro fade-up-3">
-            I am Rex — a <strong>full-stack engineer</strong> focused on shipping scalable, trust-driven products.
-            I work with early-stage founders and growing teams to turn ideas into production systems that are fast,
-            secure, and built to last. Currently building <strong>Zolarux</strong>, a trust infrastructure layer
-            for Nigerian social commerce.
+          <p className="projects-sub fade-up-3">
+            Not a gallery — a <strong>track record</strong>. Every project here was built to solve a
+            specific problem, deployed to real users, and engineered to last beyond launch day.
           </p>
-          <div className="about-avail fade-up-4">
-            <span className="avail-dot" />
-            <span><strong>Available for new projects</strong> — Q2–Q4 2026 · Limited spots</span>
+          <div className="filter-bar fade-up-4">
+            {filters.map(f => (
+              <button key={f} className={`filter-btn${activeFilter === f ? ' active' : ''}`} onClick={() => setActiveFilter(f)}>
+                {f}
+              </button>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* WHAT I HELP WITH */}
-      <section>
-        <div className="container help-section">
-          <div className="reveal">
-            <span className="section-tag">What I Help With</span>
-            <h2 className="section-title">The work I do<br />for clients.</h2>
-          </div>
-          <div className="help-grid">
-            <div className="help-left reveal">
-              <p>
-                I do not just write code to spec. I <strong>think through the whole problem</strong> — the
-                architecture, the edge cases, the deployment strategy — before writing a single line.
-              </p>
-              <p>
-                Most developers build features. I build systems. There is a difference, and you feel it the
-                moment you need to scale, add a team member, or change a core assumption.
-              </p>
-              <p>
-                Here is what I help clients ship, from the first commit to production:
-              </p>
-            </div>
-            <div className="help-items reveal" style={{ transitionDelay: '0.1s' }}>
-              {helpItems.map((item, i) => (
-                <div key={item.title} className="help-item">
-                  <span className="help-num">{String(i + 1).padStart(2, '0')}</span>
-                  <div className="help-item-text">
-                    <h4>{item.title}</h4>
-                    <p>{item.desc}</p>
+      {/* FEATURED — ZOLARUX */}
+      <section className="featured-section">
+        <div className="container">
+          <div className="featured-inner reveal">
+            <div className="featured-top">
+              <div className="featured-img">
+                <img src="/zolarux-marketplace.jpeg" alt="Zolarux Marketplace" loading="eager" />
+                <div className="featured-img-overlay" />
+                <div className="featured-live-badge"><span className="live-dot" /> Live in production</div>
+              </div>
+              <div className="featured-content">
+                <span className="featured-flag">★ Flagship Project · Full-Stack · Mobile + Web</span>
+                <h2>Zolarux — Trust Infrastructure<br />for Social Commerce</h2>
+                <p className="featured-tagline">
+                  A marketplace platform built to enable secure, verifiable transactions between vendors
+                  and buyers in the Nigerian social commerce market.
+                </p>
+                <div className="ps-blocks">
+                  <div className="ps-block">
+                    <div className="ps-block-label problem">↑ The Problem</div>
+                    <p>Social commerce transactions in Nigeria lack structured trust systems — leading to fraud, unresolved disputes, and vendor impersonation with no recourse for buyers.</p>
+                  </div>
+                  <div className="ps-block">
+                    <div className="ps-block-label solution">↓ The Solution</div>
+                    <p>A verification-based marketplace with escrow-style payments, multi-step vendor onboarding, risk scoring, real-time transaction tracking, and structured dispute mediation.</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ENGINEERING PHILOSOPHY */}
-      <section>
-        <div className="container philosophy-section">
-          <div className="philosophy-inner reveal">
-            <div className="philosophy-header">
-              <div className="philosophy-header-left">
-                <span className="section-tag">How I Build</span>
-                <h2 className="section-title">I do not just code features.<br />I think in systems.</h2>
-                <p>
-                  Every technical decision I make is shaped by one question: <strong>will this hold up under
-                  real conditions?</strong> Not demo conditions. Not tutorial conditions. Real users, real load,
-                  real edge cases.
-                </p>
-                <p>
-                  That mindset comes from building Zolarux — a product where a bad architectural decision means
-                  a user's money gets stuck, a vendor cannot be verified, or a dispute cannot be resolved. The
-                  stakes taught me to think before I type.
-                </p>
-              </div>
-              <div className="philosophy-quote reveal" style={{ transitionDelay: '0.15s' }}>
-                <p>
-                  The best code solves a real problem, handles its edge cases gracefully, and does not surprise
-                  the next engineer who reads it.
-                </p>
-                <cite>— Rex Orokumue</cite>
-              </div>
-            </div>
-            <div className="principles-grid">
-              {principles.map((p, i) => (
-                <div key={p.title} className="principle reveal" style={{ transitionDelay: `${i * 0.09}s` }}>
-                  <span className="principle-icon">{p.icon}</span>
-                  <h4>{p.title}</h4>
-                  <p>{p.desc}</p>
+                <div className="impact-row">
+                  <div className="impact-stat"><span className="impact-val">29</span><span className="impact-label">Verified vendors</span></div>
+                  <div className="impact-stat"><span className="impact-val">2<em>mo</em></span><span className="impact-label">Website live</span></div>
+                  <div className="impact-stat"><span className="impact-val">1<em>mo</em></span><span className="impact-label">App in market</span></div>
+                  <div className="impact-stat"><span className="impact-val">₦<em>growing</em></span><span className="impact-label">Transaction volume</span></div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* BACKGROUND */}
-      <section>
-        <div className="container journey-section">
-          <div className="reveal">
-            <span className="section-tag">Background</span>
-            <h2 className="section-title">Built by doing,<br />not by watching.</h2>
-          </div>
-          <div className="journey-grid">
-            <div className="journey-text reveal">
-              <p>
-                I am a <strong>self-taught engineer</strong> who learned by shipping real systems — not just
-                completing courses. My education happened in the gap between "this does not work" and "now it
-                does," repeated enough times to build genuine intuition.
-              </p>
-              <p>
-                Over the past few years I have shipped multiple production apps across web and mobile —
-                designing everything from <strong>authentication flows</strong> to backend logic, real-time
-                systems, and deployment pipelines.
-              </p>
-              <p>
-                Being self-taught did not give me shortcuts. It gave me <strong>problem-solving depth</strong>.
-                When something breaks in production, I do not reach for a tutorial. I read the error, trace the
-                system, and fix it.
-              </p>
-              <p>
-                That is the kind of engineering mindset I bring to every project.
-              </p>
-            </div>
-            <div className="journey-milestones reveal" style={{ transitionDelay: '0.1s' }}>
-              {milestones.map((m) => (
-                <div key={m.title} className="milestone">
-                  <div className="milestone-left">
-                    <div className="milestone-dot" />
-                    <div className="milestone-line" />
-                  </div>
-                  <div className="milestone-content">
-                    <div className="milestone-year">{m.year}</div>
-                    <h4>{m.title}</h4>
-                    <p>{m.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CURRENT FOCUS */}
-      <section>
-        <div className="container focus-section">
-          <div className="reveal">
-            <span className="section-tag">Current Focus</span>
-            <h2 className="section-title">What I bring<br />to a team or project.</h2>
-          </div>
-          <div className="focus-grid">
-            <div className="focus-card reveal">
-              <div className="focus-card-label">Product Engineering</div>
-              <h3>Building end-to-end systems</h3>
-              <p>
-                I design and ship full-stack products — mobile, web, and backend — with a focus on
-                <strong> trust, security, and scalability</strong>. From authentication flows to payment
-                integrations, I handle the full engineering lifecycle without handing off the hard parts.
-              </p>
-              <div className="focus-note">
-                <strong>Currently available</strong> for full-time roles, contracts, and serious freelance engagements — Q2 2026.
-              </div>
-            </div>
-            <div className="focus-card reveal" style={{ transitionDelay: '0.1s' }}>
-              <div className="focus-card-label">What I Bring</div>
-              <h3>Founder-grade ownership</h3>
-              <p>
-                I have shipped production software solo — architecture, implementation, deployment, and
-                iteration. That means I do not need to be managed through every decision. I take
-                <strong> ownership of outcomes</strong>, not just tasks.
-              </p>
-              <div className="focus-note">
-                <strong>Limited availability.</strong> I take on a small number of commitments at once to ensure every project gets genuine attention and care.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CORE STACK */}
-      <section>
-        <div className="container stack-section">
-          <div className="reveal">
-            <span className="section-tag">Core Stack</span>
-            <h2 className="section-title">The tools I reach<br />for in production.</h2>
-          </div>
-          <div className="stack-grid">
-            {stackGroups.map((group, i) => (
-              <div key={group.label} className="stack-group reveal" style={{ transitionDelay: `${i * 0.09}s` }}>
-                <div className="stack-group-label">{group.label}</div>
-                <div className="stack-items">
-                  {group.items.map(item => (
-                    <span key={item} className="stack-pill">{item}</span>
+                <div className="stack-row">
+                  {['Flutter', 'Dart', 'Supabase', 'PostgreSQL', 'RLS', 'Supabase Auth', 'REST API', 'Vercel'].map(s => (
+                    <span key={s} className="stack-chip">{s}</span>
                   ))}
+                </div>
+                <div className="featured-actions">
+                  <a href="https://zolarux.com.ng" target="_blank" rel="noopener noreferrer" className="btn-primary">View Live <IconExternal /></a>
+                  <a href="/projects/zolarux" className="btn-outline">Case Study →</a>
+                  <a href="#" className="btn-ghost"><IconGithub /> GitHub</a>
+                </div>
+              </div>
+            </div>
+            <div className="featured-why">
+              <div className="why-icon">💡</div>
+              <div className="why-text">
+                <p>
+                  <strong>Why this matters for clients:</strong> Zolarux demonstrates the ability to design
+                  and implement trust-based financial logic — escrow flows, risk scoring, role-based access,
+                  and dispute resolution — not just front-end interfaces. If your product handles money,
+                  identity, or sensitive user data, this is the kind of engineering it requires.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SUPPORTING PROJECTS */}
+      <section className="projects-grid-section">
+        <div className="container">
+          <div className="reveal">
+            <span className="section-tag">More Work</span>
+            <h2 className="section-title">Other projects<br />worth your time.</h2>
+          </div>
+          <div className="projects-grid">
+            {visible.map((proj, i) => (
+              <div key={proj.id} className="proj-card reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
+                <div className="proj-img">
+                  <img src={proj.image} alt={proj.name} loading="lazy" />
+                  <div className="proj-img-overlay" />
+                  <span className={`proj-tech-badge${proj.status === 'in-design' ? ' proj-tech-badge--design' : ''}`}>
+                    {proj.status === 'in-design' ? '✦ In Design' : proj.tech}
+                  </span>
+                </div>
+                <div className="proj-body">
+                  <div className="proj-category">{proj.category}</div>
+                  <h3>{proj.name}</h3>
+                  <div className="proj-problem"><span>Problem →</span> {proj.problem}</div>
+                  <p className="proj-desc">{proj.desc}</p>
+                  <div className={`proj-outcome${proj.status === 'in-design' ? ' proj-outcome--design' : ''}`}>
+                    <span className="proj-outcome-dot" style={proj.status === 'in-design' ? { background: '#FBD34D' } : {}} />
+                    {proj.outcome}
+                  </div>
+                  <div className="proj-chips">{proj.chips.map(c => <span key={c} className="proj-chip">{c}</span>)}</div>
+                  <div className="proj-footer">
+                    <div className="proj-links">
+                      {proj.status === 'in-design' ? (
+                        <span className="proj-link" style={{ color: '#FBD34D', cursor: 'default' }}>Designing ✦</span>
+                      ) : (
+                        <>
+                          <a href={proj.liveUrl ?? '#'} className="proj-link">Live <IconExternal /></a>
+                          <a href={proj.githubUrl ?? '#'} className="proj-link ghost"><IconGithub /> GitHub</a>
+                        </>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
@@ -773,78 +578,91 @@ export default function About() {
         </div>
       </section>
 
-      {/* SELECTED WORK TEASER */}
-      <section>
-        <div className="container work-teaser-section">
+      {/* WORDPRESS / OTHER WORK */}
+      <section className="other-section">
+        <div className="container">
           <div className="reveal">
-            <span className="section-tag">Selected Work</span>
-            <h2 className="section-title">Some of what<br />I have shipped.</h2>
+            <span className="section-tag">Other Work</span>
+            <h2 className="section-title">WordPress builds<br />for real businesses.</h2>
           </div>
-          <div className="work-teaser-grid">
-            <a href="/projects/zolarux" className="work-teaser-card reveal">
-              <span className="work-teaser-tag">Flutter · Supabase</span>
-              <h3>Zolarux — Trust Layer for Social Commerce</h3>
-              <p>
-                End-to-end marketplace with escrow payments, vendor verification, risk scoring, and
-                dispute mediation. Built and launched solo.
-              </p>
-              <div className="work-teaser-footer">
-                <div className="work-teaser-pills">
-                  <span className="work-teaser-pill">Live</span>
-                  <span className="work-teaser-pill">Payments</span>
-                  <span className="work-teaser-pill">RLS</span>
+          <div className="other-grid">
+            {wordpressProjects.map((proj, i) => (
+              <a
+                key={proj.name}
+                href={proj.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="other-card reveal"
+                style={{ transitionDelay: `${i * 0.08}s` }}
+              >
+                <div className="other-card-top">
+                  <span className="other-tag">{proj.tag}</span>
+                  <span className="other-platform">WordPress</span>
                 </div>
-                <span className="work-teaser-arrow">View →</span>
-              </div>
-            </a>
-            <a href="/projects" className="work-teaser-card reveal" style={{ transitionDelay: '0.08s' }}>
-              <span className="work-teaser-tag">Flutter · Dart</span>
-              <h3>EduPanion — Phonics Assessment Tool</h3>
-              <p>
-                Interactive reading assessment app for primary school students. Offline-first,
-                optimised for low-bandwidth environments.
-              </p>
-              <div className="work-teaser-footer">
-                <div className="work-teaser-pills">
-                  <span className="work-teaser-pill">Flutter</span>
-                  <span className="work-teaser-pill">Offline-first</span>
+                <h3>{proj.name}</h3>
+                <p>{proj.desc}</p>
+                <div className="other-card-footer">
+                  <div className="other-chips">{proj.chips.map(c => <span key={c} className="other-chip">{c}</span>)}</div>
+                  <span className="other-link">Visit →</span>
                 </div>
-                <span className="work-teaser-arrow">View →</span>
-              </div>
-            </a>
-            <a href="/projects" className="work-teaser-card reveal" style={{ transitionDelay: '0.16s' }}>
-              <span className="work-teaser-tag">Flutter · Firebase</span>
-              <h3>Admin Command Center — Real-Time Ops Dashboard</h3>
-              <p>
-                Role-based operations dashboard for monitoring vendor risk scores, processing orders,
-                and managing flagged accounts in real-time.
-              </p>
-              <div className="work-teaser-footer">
-                <div className="work-teaser-pills">
-                  <span className="work-teaser-pill">Real-time</span>
-                  <span className="work-teaser-pill">RBAC</span>
-                </div>
-                <span className="work-teaser-arrow">View →</span>
-              </div>
-            </a>
+              </a>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CLOSING CTA */}
-      <section>
-        <div className="container about-cta-section">
-          <div className="about-cta-inner reveal">
-            <div className="about-cta-text">
-              <h2>If you are building something ambitious and need an engineer who thinks in systems — let us talk.</h2>
+      {/* HOW I BUILD */}
+      <section className="approach-section">
+        <div className="container">
+          <div className="approach-inner reveal">
+            <div className="approach-left">
+              <span className="section-tag">My Development Approach</span>
+              <h2 className="section-title">Every project.<br />Same standard.</h2>
               <p>
-                Open to freelance projects, product consulting, and technical co-founding. Tell me what you are
-                building and let us figure out if we are a good fit.
+                I do not build differently based on the size of the project. Whether it is an MVP or a
+                scaling product, the <strong>architecture, security, and deployment discipline stay the same</strong>.
+              </p>
+              <p style={{ marginTop: '16px' }}>
+                That is what makes software maintainable. That is what protects your users. And that is what
+                keeps the codebase from becoming a liability six months later.
               </p>
             </div>
-            <div className="about-cta-actions">
-              <a href="mailto:hello@zolarux.com" className="btn-primary">Work With Me</a>
-              <a href="/projects" className="btn-ghost">See My Work →</a>
+            <div className="approach-right">
+              <div className="approach-steps">
+                {approachSteps.map(step => (
+                  <div key={step.n} className="approach-step">
+                    <div className="step-left">
+                      <div className="step-num-box">{step.n}</div>
+                      <div className="step-connector" />
+                    </div>
+                    <div className="step-content">
+                      <h4>{step.title}</h4>
+                      <p>{step.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="projects-cta-section">
+        <div className="container">
+          <div className="projects-cta-inner reveal">
+            <h2>Let's build something serious.</h2>
+            <p>
+              If you are building a product that needs structure, security, and long-term scalability —
+              not just something that works today — let's talk.
+            </p>
+            <div className="cta-scarcity">
+              <span className="cta-scarcity-dot" />
+              I take on a limited number of projects each quarter. Currently accepting Q2 2026 work.
+            </div>
+            <div className="cta-buttons">
+              <a href="mailto:hello@zolarux.com" className="btn-primary">Start a Project</a>
+              <a href="/about" className="btn-ghost">Learn How I Work →</a>
             </div>
           </div>
         </div>
@@ -853,7 +671,7 @@ export default function About() {
       {/* FOOTER */}
       <footer>
         <div className="footer-left">
-          <p>2026 <span>Rex Orokumue</span> · Built with Next.js and intention.</p>
+          <p>© 2026 <span>Rex Orokumue</span> · Built with Next.js & intention.</p>
         </div>
         <div className="footer-links">
           <a href="#">Twitter</a>

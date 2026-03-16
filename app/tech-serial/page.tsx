@@ -1,6 +1,54 @@
 // app/tech-serial/page.tsx
 
-export default function TechSerialPage() {
+interface LatestVideo {
+  title: string;
+  description: string;
+  videoId: string;
+  thumbnail: string;
+  url: string;
+  publishedAt: string;
+}
+
+async function getLatestVideo(): Promise<LatestVideo | null> {
+  const channelId = process.env.YOUTUBE_CHANNEL_ID;
+  if (!channelId) return null;
+
+  try {
+    const res = await fetch(
+      `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`,
+      { next: { revalidate: 3600 } }
+    );
+    if (!res.ok) return null;
+
+    const xml = await res.text();
+
+    const entry = xml.match(/<entry>([\s\S]*?)<\/entry>/)?.[1];
+    if (!entry) return null;
+
+    const videoId   = entry.match(/<yt:videoId>(.*?)<\/yt:videoId>/)?.[1] ?? '';
+    const title     = entry.match(/<title>(.*?)<\/title>/)?.[1] ?? '';
+    const published = entry.match(/<published>(.*?)<\/published>/)?.[1] ?? '';
+    const rawDesc   = entry.match(/<media:description>([\s\S]*?)<\/media:description>/)?.[1]?.trim() ?? '';
+    const desc      = rawDesc ? rawDesc.slice(0, 120) + '…' : '';
+
+    return {
+      videoId,
+      title,
+      description: desc,
+      thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+      url: `https://www.youtube.com/watch?v=${videoId}`,
+      publishedAt: published
+        ? new Date(published).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+        : '',
+    };
+  } catch {
+    return null;
+  }
+}
+
+export default async function TechSerialPage() {
+  const latest = await getLatestVideo();
+  const hasVideo = Boolean(latest?.videoId);
   return (
     <>
       <style>{`
@@ -30,13 +78,8 @@ export default function TechSerialPage() {
         .ts-sub { margin-top: 18px; font-size: 1rem; color: var(--muted); line-height: 1.75; font-weight: 300; max-width: 480px; animation: fadeUp .7s .30s ease both; }
         .ts-sub strong { color: var(--text); font-weight: 500; }
 
-        /* Platform links */
         .ts-platforms { display: flex; flex-direction: column; gap: 10px; margin-top: 32px; animation: fadeUp .7s .40s ease both; }
-        .platform-link {
-          display: flex; align-items: center; gap: 14px; padding: 14px 18px;
-          border-radius: 12px; border: 1px solid var(--border); background: var(--card-bg);
-          text-decoration: none; transition: all .25s; backdrop-filter: blur(12px);
-        }
+        .platform-link { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 12px; border: 1px solid var(--border); background: var(--card-bg); text-decoration: none; transition: all .25s; backdrop-filter: blur(12px); }
         .platform-link:hover { border-color: var(--border-hover); transform: translateX(5px); }
         .platform-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
         .platform-icon.yt { background: rgba(255,0,0,0.12); border: 1px solid rgba(255,0,0,0.25); }
@@ -48,22 +91,11 @@ export default function TechSerialPage() {
         .platform-handle { font-size: .75rem; color: var(--muted); margin-top: 2px; }
         .platform-arrow { font-size: .78rem; color: var(--accent); flex-shrink: 0; }
 
-        /* Hero right — featured card */
-        .ts-featured-card {
-          border-radius: 20px; border: 1px solid var(--border); background: var(--card-bg);
-          backdrop-filter: blur(16px); overflow: hidden; animation: fadeUp .7s .25s ease both;
-        }
-        .ts-featured-thumb {
-          width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(15,23,42,0.8));
-          display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
-        }
+        .ts-featured-card { border-radius: 20px; border: 1px solid var(--border); background: var(--card-bg); backdrop-filter: blur(16px); overflow: hidden; animation: fadeUp .7s .25s ease both; display: block; transition: border-color .25s, transform .25s; }
+        .ts-featured-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+        .ts-featured-thumb { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(15,23,42,0.8)); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
         .ts-featured-thumb img { width: 100%; height: 100%; object-fit: cover; }
-        .ts-play-btn {
-          position: absolute; width: 56px; height: 56px; border-radius: 50%;
-          background: rgba(59,130,246,0.9); border: 2px solid rgba(255,255,255,0.3);
-          display: flex; align-items: center; justify-content: center;
-          backdrop-filter: blur(8px); cursor: pointer; transition: transform .2s;
-        }
+        .ts-play-btn { position: absolute; width: 56px; height: 56px; border-radius: 50%; background: rgba(59,130,246,0.9); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); cursor: pointer; transition: transform .2s; }
         .ts-play-btn:hover { transform: scale(1.1); }
         .ts-play-btn svg { margin-left: 3px; }
         .ts-featured-body { padding: 20px 22px; }
@@ -71,13 +103,8 @@ export default function TechSerialPage() {
         .ts-featured-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .95rem; color: var(--text); line-height: 1.3; }
         .ts-featured-desc { font-size: .78rem; color: var(--muted); margin-top: 6px; line-height: 1.55; }
 
-        /* WHAT IS section */
         .ts-about { padding: 0 0 80px; }
-        .ts-about-inner {
-          border-radius: 20px; border: 1px solid var(--border); background: var(--card-bg);
-          backdrop-filter: blur(16px); padding: 56px 60px; display: grid;
-          grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
-        }
+        .ts-about-inner { border-radius: 20px; border: 1px solid var(--border); background: var(--card-bg); backdrop-filter: blur(16px); padding: 56px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
         .ts-about-left h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 20px; }
         .ts-about-left p { font-size: .9rem; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
         .ts-about-left p strong { color: var(--text); font-weight: 500; }
@@ -89,7 +116,6 @@ export default function TechSerialPage() {
         .ts-topic-text h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .85rem; color: var(--text); margin-bottom: 3px; }
         .ts-topic-text p { font-size: .75rem; color: var(--muted); line-height: 1.5; }
 
-        /* CTA */
         .ts-cta { padding: 0 0 120px; }
         .ts-cta-inner { border-radius: 20px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(30,41,59,.9), rgba(15,23,42,.95)); backdrop-filter: blur(20px); padding: 72px 80px; text-align: center; position: relative; overflow: hidden; }
         .ts-cta-inner::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 60%; height: 250px; background: radial-gradient(ellipse, rgba(59,130,246,.12), transparent 70%); pointer-events: none; }
@@ -137,10 +163,10 @@ export default function TechSerialPage() {
 
               <div className="ts-platforms">
                 {[
-                  { icon: '▶', cls: 'yt', name: 'YouTube',          handle: '@RexOrokumue', url: 'https://youtube.com' },
-                  { icon: '♪', cls: 'tt', name: 'TikTok',            handle: '@RexOrokumue', url: 'https://tiktok.com' },
-                  { icon: '◈', cls: 'ig', name: 'Instagram',         handle: '@RexOrokumue', url: 'https://instagram.com' },
-                  { icon: '✆', cls: 'wa', name: 'WhatsApp Channel',  handle: 'The Tech Serial', url: 'https://whatsapp.com/channel' },
+                  { icon: '▶', cls: 'yt', name: 'YouTube',         handle: '@TheTechSerial',  url: 'https://www.youtube.com/@TheTechSerial' },
+                  { icon: '♪', cls: 'tt', name: 'TikTok',           handle: '@thetechserial',  url: 'https://www.tiktok.com/@thetechserial' },
+                  { icon: '◈', cls: 'ig', name: 'Instagram',        handle: '@thetechserial',  url: 'https://www.instagram.com/thetechserial' },
+                  { icon: '✆', cls: 'wa', name: 'WhatsApp Channel', handle: 'The Tech Serial', url: 'https://whatsapp.com/channel/0029Vb7i8oR17En0yhOjDA1h' },
                 ].map(p => (
                   <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer" className="platform-link">
                     <div className={`platform-icon ${p.cls}`}>{p.icon}</div>
@@ -154,22 +180,42 @@ export default function TechSerialPage() {
               </div>
             </div>
 
-            {/* Featured episode card */}
-            <div className="ts-featured-card">
+            {/* Featured episode — auto-updates from YouTube RSS, no API key needed */}
+            <a
+              href={latest?.url ?? 'https://www.youtube.com/@TheTechSerial'}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ts-featured-card"
+              style={{ textDecoration: 'none' }}
+            >
               <div className="ts-featured-thumb">
-                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=700&q=80" alt="Tech Serial episode" />
-                <div className="ts-play-btn">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                </div>
+                {hasVideo ? (
+                  <img src={latest!.thumbnail} alt={latest!.title} />
+                ) : (
+                  <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, rgba(59,130,246,0.2), rgba(15,23,42,0.9))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--muted)', fontSize: '.82rem' }}>
+                    First episode coming soon
+                  </div>
+                )}
+                {hasVideo && (
+                  <div className="ts-play-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                )}
               </div>
               <div className="ts-featured-body">
-                <div className="ts-featured-label">Latest Episode</div>
-                <div className="ts-featured-title">What is an API — and why does every app need one?</div>
-                <div className="ts-featured-desc">Explained in under 60 seconds. No coding required to understand it.</div>
+                <div className="ts-featured-label">
+                  Latest Episode {latest?.publishedAt && `· ${latest.publishedAt}`}
+                </div>
+                <div className="ts-featured-title">
+                  {latest?.title ?? 'Coming soon — first episode dropping shortly.'}
+                </div>
+                <div className="ts-featured-desc">
+                  {latest?.description ?? 'Subscribe on YouTube to be notified when the first episode drops.'}
+                </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </section>
@@ -222,10 +268,10 @@ export default function TechSerialPage() {
             <h2>New episode every week.<br />Pick your platform.</h2>
             <p>Follow on whichever platform you are already on. The content is the same everywhere — short, clear, and actually useful.</p>
             <div className="platform-btn-row">
-              <a href="https://youtube.com"      target="_blank" rel="noopener noreferrer" className="platform-btn">▶ YouTube</a>
-              <a href="https://tiktok.com"       target="_blank" rel="noopener noreferrer" className="platform-btn">♪ TikTok</a>
-              <a href="https://instagram.com"    target="_blank" rel="noopener noreferrer" className="platform-btn">◈ Instagram</a>
-              <a href="https://whatsapp.com/channel" target="_blank" rel="noopener noreferrer" className="platform-btn">✆ WhatsApp</a>
+              <a href="https://www.youtube.com/@TheTechSerial"                        target="_blank" rel="noopener noreferrer" className="platform-btn">▶ YouTube</a>
+              <a href="https://www.tiktok.com/@thetechserial"                         target="_blank" rel="noopener noreferrer" className="platform-btn">♪ TikTok</a>
+              <a href="https://www.instagram.com/thetechserial"                       target="_blank" rel="noopener noreferrer" className="platform-btn">◈ Instagram</a>
+              <a href="https://whatsapp.com/channel/0029Vb7i8oR17En0yhOjDA1h"        target="_blank" rel="noopener noreferrer" className="platform-btn">✆ WhatsApp</a>
             </div>
           </div>
         </div>

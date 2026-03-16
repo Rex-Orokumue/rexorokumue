@@ -925,7 +925,7 @@ const projects = [
     description: 'Trust-first social commerce platform for the Nigerian market. Escrow payments, vendor verification, and dispute mediation — available on mobile app and web.',
     tech: 'Flutter',
     tags: ['Supabase', 'Dart', 'REST API'],
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&q=80',
+    image: '/zolarux-marketplace.jpeg',
     liveUrl: 'https://zolarux.com.ng',
     caseStudyUrl: '/projects/zolarux',
     status: 'live',
@@ -936,18 +936,18 @@ const projects = [
     description: 'Comprehensive operations dashboard for managing vendors, orders, risk flags and disputes in real-time. Available on mobile app, web, and Windows desktop.',
     tech: 'Flutter',
     tags: ['Firebase', 'RBAC', 'Realtime'],
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=80',
+    image: '/zolarux-admin.png',
     liveUrl: '#',
     caseStudyUrl: null,
     status: 'live',
   },
   {
     id: 3,
-    name: 'EduPanion — Phonics Assessment Tool',
-    description: 'Interactive reading assessment platform covering Nursery through Senior Secondary School curricula. Built specifically for Nigerian classrooms with offline-first support.',
-    tech: 'Next.js',
-    tags: ['React', 'TypeScript', 'EdTech'],
-    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=700&q=80',
+    name: 'EduPanion — Phonics & Literacy Assessment Tool',
+    description: 'Phonics and literacy assessment platform for Nigerian classroom teachers. Run assessments, monitor student growth across six levels (Nursery to Senior Secondary), and get actionable insights — all offline-capable.',
+    tech: 'Flutter',
+    tags: ['Dart', 'Offline-first', 'EdTech'],
+    image: '/edupanion-screenshot.jpeg',
     liveUrl: '#',
     caseStudyUrl: null,
     status: 'live',
@@ -958,7 +958,7 @@ const projects = [
     description: 'A comprehensive embedded finance layer for the Zolarux ecosystem — powering wallet infrastructure, transaction routing, and balance management directly inside the buyer app.',
     tech: 'Figma → Flutter',
     tags: ['FinTech', 'Wallet', 'Payments'],
-    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=700&q=80',
+    image: '/escrowpay-engine.jpeg',
     liveUrl: null,
     caseStudyUrl: null,
     status: 'in-design',
@@ -1064,8 +1064,10 @@ export default function Home() {
           </div>
 
           <div className="hero-actions fade-up-5">
-            <a href="#work" className="btn-primary">See My Work</a>
-            <a href="mailto:hello@zolarux.com" className="btn-ghost">Get in Touch →</a>
+            <a href="/projects" className="btn-primary">See My Work</a>
+            <a href="http://wa.me/2348120288390" className="btn-ghost" target="_blank" rel="noopener noreferrer">
+              Get in Touch →
+            </a>
           </div>
 
           <div className="hero-scroll fade-up-5">
@@ -1348,8 +1350,8 @@ export default function Home() {
               Let's ship something people will actually use.
             </p>
             <div className="cta-buttons">
-              <a href="mailto:hello@zolarux.com" className="btn-primary">Hire Me</a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="btn-ghost">
+              <a href="mailto:gorokumue@gmail.com" className="btn-primary">Hire Me</a>
+              <a href="https://github.com/Rex-Orokumue" target="_blank" rel="noopener noreferrer" className="btn-ghost">
                 View GitHub →
               </a>
             </div>
@@ -1363,10 +1365,10 @@ export default function Home() {
           <p>© 2026 <span>Rex Orokumue</span> · Built with Next.js &amp; intention.</p>
         </div>
         <div className="footer-links">
-          <a href="#">Twitter</a>
-          <a href="#">LinkedIn</a>
-          <a href="#">GitHub</a>
-          <a href="mailto:hello@zolarux.com">Email</a>
+          <a href="https://x.com/iamrexorokumue">𝕏</a>
+          <a href="https://www.linkedin.com/in/rex-orokumue-2550251b7/">LinkedIn</a>
+          <a href="https://github.com/Rex-Orokumue">GitHub</a>
+          <a href="mailto:gorokumue@gmail.com">Email</a>
         </div>
       </footer>
     </>

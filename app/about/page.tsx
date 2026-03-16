@@ -799,7 +799,7 @@ export default function About() {
             </a>
             <a href="/projects" className="work-teaser-card reveal" style={{ transitionDelay: '0.08s' }}>
               <span className="work-teaser-tag">Flutter · Dart</span>
-              <h3>EduPanion — Phonics Assessment Tool</h3>
+              <h3>EduPanion — Phonics & Literacy Assessment Tool</h3>
               <p>
                 Interactive reading assessment app for primary school students. Offline-first,
                 optimised for low-bandwidth environments.
@@ -843,7 +843,7 @@ export default function About() {
               </p>
             </div>
             <div className="about-cta-actions">
-              <a href="mailto:hello@zolarux.com" className="btn-primary">Work With Me</a>
+              <a href="mailto:gorokumue@gmail.com" className="btn-primary">Work With Me</a>
               <a href="/projects" className="btn-ghost">See My Work →</a>
             </div>
           </div>

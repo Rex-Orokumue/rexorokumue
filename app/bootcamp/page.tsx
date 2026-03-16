@@ -177,7 +177,9 @@ export default function BootcampPage() {
           .bc-stat { border-right: none; border-bottom: 1px solid var(--border); }
           .bc-stat:last-child { border-bottom: none; }
           .outcomes-grid { grid-template-columns: 1fr; }
+          .pricing-inner { grid-template-columns: 1fr; }
           .bc-cta-inner { padding: 48px 20px; }
+          .section-title { word-break: break-word; hyphens: auto; }
           footer { padding: 24px 20px; }
         }
       `}</style>
@@ -314,15 +316,23 @@ export default function BootcampPage() {
       <section className="bc-pricing" id="enroll">
         <div className="container">
           <span className="section-tag">Pricing</span>
-          <h2 className="section-title">Straightforward pricing.<br />No hidden fees.</h2>
+          <h2 className="section-title">Two ways to join.<br />Same full experience.</h2>
           <div className="pricing-inner">
             <div className="pricing-card">
               <span className="pricing-badge standard">Monthly</span>
               <div className="pricing-name">Pay Monthly</div>
               <div className="pricing-price">₦60k <em>/ month</em></div>
-              <p className="pricing-desc">Spread across 3 months. Full access to all sessions, materials, and community throughout the cohort.</p>
+              <p className="pricing-desc">₦180k total across 3 months. Full access to everything — spread out to make it easier.</p>
               <div className="pricing-features">
-                {['Full 3-month curriculum', 'Recorded video sessions', 'Student community access', 'Project feedback', 'Certificate of completion'].map(f => (
+                {[
+                  'Full 3-month curriculum',
+                  'Live weekly sessions with Rex',
+                  'Pre-recorded video sessions',
+                  'Direct 1-on-1 build reviews',
+                  'Accountability partner system',
+                  'Student community access',
+                  'Certificate of completion',
+                ].map(f => (
                   <div key={f} className="pricing-feature"><span className="pricing-feature-check">✓</span>{f}</div>
                 ))}
               </div>
@@ -332,15 +342,16 @@ export default function BootcampPage() {
               <span className="pricing-badge best">Save ₦30k</span>
               <div className="pricing-name">Pay Upfront</div>
               <div className="pricing-price">₦150k <em>one-time</em></div>
-              <p className="pricing-desc">Pay once and save ₦30k compared to the monthly plan. Everything included — live sessions, direct feedback, and the full experience.</p>
+              <p className="pricing-desc">Pay once and save ₦30k. Exactly the same experience as the monthly plan — just cheaper overall.</p>
               <div className="pricing-features">
                 {[
-                  'Everything in Monthly',
-                  'Weekly live sessions with Rex',
+                  'Full 3-month curriculum',
+                  'Live weekly sessions with Rex',
+                  'Pre-recorded video sessions',
                   'Direct 1-on-1 build reviews',
                   'Accountability partner system',
-                  'Priority support channel',
-                  'Cohort graduation showcase',
+                  'Student community access',
+                  'Certificate of completion',
                 ].map(f => (
                   <div key={f} className="pricing-feature"><span className="pricing-feature-check">✓</span>{f}</div>
                 ))}
