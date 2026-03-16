@@ -386,7 +386,7 @@ export default function BootcampPage() {
         </div>
         <div className="footer-links">
           <a href="https://x.com/iamrexorokumue">𝕏</a>
-          <a href="https://www.linkedin.com/in/rex-orokumue-2550251b7/">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/rexorokumue/">LinkedIn</a>
           <a href="https://github.com/Rex-Orokumue">GitHub</a>
           <a href="mailto:gorokumue@gmail.com">Email</a>
         </div>
