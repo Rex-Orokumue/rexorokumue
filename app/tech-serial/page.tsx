@@ -70,7 +70,7 @@ export default async function TechSerialPage() {
         .container { max-width: 1100px; margin: 0 auto; padding: 0 64px; }
 
         /* HERO */
-        .ts-hero { padding-top: 160px; padding-bottom: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .ts-hero { padding-top: 160px; padding-bottom: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: -20px; }
         .ts-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 8px; border-radius: 100px; border: 1px solid var(--accent-glow); background: var(--accent-dim); font-size: .70rem; font-weight: 600; letter-spacing: .10em; text-transform: uppercase; color: var(--accent); margin-top: -60px; margin-bottom: 28px; width: fit-content; animation: fadeUp .7s .05s ease both; }
         .ts-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; flex-shrink: 0; }
         .ts-headline { font-family: 'Syne', sans-serif; font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-weight: 800; line-height: 1.0; letter-spacing: -.03em; animation: fadeUp .7s .18s ease both; }

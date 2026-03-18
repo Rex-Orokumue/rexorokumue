@@ -113,6 +113,7 @@ const GlobalStyles = () => (
       min-height: 70vh; display: flex; flex-direction: column;
       justify-content: flex-start;
       padding-top: 160px; padding-bottom: 100px;
+      margin-top: -60px;
     }
     .about-eyebrow {
       display: inline-flex; align-items: center; gap: 10px;

@@ -94,6 +94,7 @@ const GlobalStyles = () => (
       justify-content: flex-start;
       padding-top: 160px;
       padding-bottom: 100px;
+      margin-top: -60px;
     }
 
     .hero-eyebrow {

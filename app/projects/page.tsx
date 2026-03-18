@@ -91,6 +91,7 @@ const GlobalStyles = () => (
     .projects-hero {
       min-height: 52vh; display: flex; flex-direction: column;
       justify-content: flex-end; padding-top: 160px; padding-bottom: 80px;
+      margin-top: 20px;
     }
     .hero-label {
       display: inline-flex; align-items: center;

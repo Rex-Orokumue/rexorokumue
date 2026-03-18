@@ -42,12 +42,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         .container { max-width: 900px; margin: 0 auto; padding: 0 64px; }
 
         /* ── BACK NAV ── */
-        .back-nav { padding: 100px 0 0; }
+        .back-nav { padding: 100px 0 0; margin-top: 80px; }
         .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: .82rem; color: var(--muted); text-decoration: none; transition: color .2s; }
         .back-link:hover { color: var(--text); }
 
         /* ── HERO ── */
-        .hero { padding: 32px 0 64px; }
+        .hero { padding: 32px 0 64px; margin-top: 60px; }
         .hero-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
         .status-pill { padding: 3px 12px; border-radius: 100px; font-size: .68rem; font-weight: 700; letter-spacing: .06em; }
         .category-pill { padding: 3px 12px; border-radius: 100px; font-size: .68rem; font-weight: 500; color: var(--muted); background: rgba(255,255,255,0.04); border: 1px solid var(--border); }
