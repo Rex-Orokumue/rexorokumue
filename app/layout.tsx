@@ -13,6 +13,9 @@ export const metadata: Metadata = {
     description: 'AI-first engineer building trust-driven products.',
     type: 'website',
   },
+  verification: {
+      google: 'S4xdXdeEwxhrganIaZXe-q8UECjP9Ehi-_0YdvKrdqA',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -138,6 +138,9 @@ export default async function BuildLogsPage() {
         .log-tag.launch   { background: rgba(52,211,153,.10); border: 1px solid rgba(52,211,153,.25); color: var(--green); }
         .log-tag.learning { background: rgba(251,146,60,.08); border: 1px solid rgba(251,146,60,.25); color: #FED7AA; }
         .log-body { font-size: .855rem; line-height: 1.75; color: var(--muted); }
+        .log-body p { margin-bottom: 12px; }
+        .log-body p:last-child { margin-bottom: 0; }
+        .log-body code { font-family: 'JetBrains Mono', monospace; font-size: .78rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 4px; padding: 1px 6px; color: #93C5FD; }
         .log-decision { margin-top: 12px; padding: 10px 14px; border-radius: 8px; border-left: 2px solid var(--accent); background: rgba(59,130,246,.06); font-size: .80rem; line-height: 1.65; color: var(--muted); }
         .log-decision-label { font-family: var(--mono); font-size: .58rem; font-weight: 600; letter-spacing: .10em; text-transform: uppercase; color: var(--accent); margin-bottom: 3px; }
         .empty-logs { padding: 80px 0; text-align: center; color: var(--muted-2); font-size: .9rem; }
