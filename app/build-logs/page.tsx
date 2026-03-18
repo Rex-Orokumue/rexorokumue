@@ -38,6 +38,7 @@ const PROJECT_META: ProjectMeta[] = [
   { id: 'portfolio', name: 'Portfolio Website',            icon: '🌐', desc: 'This site — building in public from scratch',              status: 'building' },
   { id: 'zolarux',  name: 'Zolarux',                       icon: '🔐', desc: 'Trust infrastructure for Nigerian social commerce',         status: 'live'     },
   { id: 'edupanion',name: 'EduPanion',                     icon: '📚', desc: 'Interactive phonics & literacy tool for Nigerian classrooms',status: 'building' },
+  { id: 'e-technix',name: 'E-Technix',                     icon: '💻', desc: 'A digital skills training platform for people who want real tech careers',          status: 'building' },
   { id: 'admin',    name: 'Zolarux Admin Control Center',  icon: '⚙️', desc: 'Real-time ops dashboard — mobile, web & Windows',          status: 'live'     },
 ];
 

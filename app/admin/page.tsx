@@ -11,12 +11,13 @@ const supabase = createClient(
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type Tag = 'build' | 'design' | 'fix' | 'launch' | 'learning';
-type ProjectId = 'portfolio' | 'zolarux' | 'edupanion' | 'admin';
+type ProjectId = 'portfolio' | 'zolarux' | 'edupanion' | 'e-technix' | 'admin';
 
 const PROJECTS = [
   { id: 'portfolio', label: '🌐 Portfolio Website' },
   { id: 'zolarux',  label: '🔐 Zolarux' },
   { id: 'edupanion',label: '📚 EduPanion' },
+  { id: 'e-technix',label: '💻 E-Technix' },
   { id: 'admin',    label: '⚙️ Admin Control Center' },
 ] as const;
 
