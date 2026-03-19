@@ -1,4 +1,19 @@
 // app/tech-serial/page.tsx
+import type { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'The Tech Serial',
+  description:
+    'Weekly short-form videos explaining tech concepts in plain language — no jargon, no gatekeeping. Follow on YouTube, TikTok, Instagram, and WhatsApp.',
+  openGraph: {
+    title: 'The Tech Serial — Tech Explained Simply',
+    description:
+      'Weekly short-form videos explaining tech concepts in plain language. New episode every week.',
+    url: 'https://rexorokumue.vercel.app/tech-serial',
+    images: [{ url: '/portfolio_thumbnail.png', width: 1200, height: 627 }],
+  },
+  alternates: { canonical: 'https://rexorokumue.vercel.app/tech-serial' },
+};
 
 interface LatestVideo {
   title: string;

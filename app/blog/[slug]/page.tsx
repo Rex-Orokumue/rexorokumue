@@ -1,9 +1,8 @@
 // app/blog/[slug]/page.tsx
-// Server component — fetches individual blog post from Supabase
-
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 
@@ -65,6 +64,37 @@ function estimateReadTime(body: string): number {
   return Math.max(1, Math.ceil(words / 200));
 }
 
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPost(slug);
+  if (!post) return { title: 'Post Not Found' };
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: `https://rexorokumue.vercel.app/blog/${slug}`,
+      type: 'article',
+      publishedTime: post.published_at,
+      authors: ['Rex Orokumue'],
+      images: [{ url: '/portfolio_thumbnail.png', width: 1200, height: 627 }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: ['/portfolio_thumbnail.png'],
+    },
+    alternates: {
+      canonical: `https://rexorokumue.vercel.app/blog/${slug}`,
+    },
+  };
+}
+
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await getPost(slug);
@@ -93,133 +123,49 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         section, nav, footer { position: relative; z-index: 1; }
         .container { max-width: 720px; margin: 0 auto; padding: 0 64px; }
         .container-wide { max-width: 1000px; margin: 0 auto; padding: 0 64px; }
-
-        /* BACK */
         .back-nav { padding: 100px 0 0; margin-top: 80px; }
         .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: .82rem; color: var(--muted); text-decoration: none; transition: color .2s; }
         .back-link:hover { color: var(--text); }
-
-        /* HEADER */
         .post-header { padding: 32px 0 48px; }
         .post-meta-row { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
-        .post-category {
-          padding: 3px 12px; border-radius: 100px; font-size: .68rem;
-          font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
-        }
+        .post-category { padding: 3px 12px; border-radius: 100px; font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
         .post-date { font-size: .78rem; color: var(--muted-2); }
         .post-read-time { font-size: .78rem; color: var(--muted-2); }
         .meta-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--muted-2); flex-shrink: 0; }
-
-        .post-title {
-          font-family: 'Syne', sans-serif;
-          font-size: clamp(2rem, 4.5vw, 3rem);
-          font-weight: 800; line-height: 1.05;
-          letter-spacing: -.03em; margin-bottom: 20px;
-        }
-        .post-excerpt {
-          font-size: 1.1rem; color: var(--muted);
-          line-height: 1.75; font-weight: 300;
-          border-left: 3px solid var(--accent);
-          padding-left: 20px; margin-bottom: 28px;
-        }
+        .post-title { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 800; line-height: 1.05; letter-spacing: -.03em; margin-bottom: 20px; }
+        .post-excerpt { font-size: 1.1rem; color: var(--muted); line-height: 1.75; font-weight: 300; border-left: 3px solid var(--accent); padding-left: 20px; margin-bottom: 28px; }
         .post-tags { display: flex; gap: 7px; flex-wrap: wrap; }
-        .post-tag {
-          padding: 3px 10px; border-radius: 5px;
-          background: var(--accent-dim); border: 1px solid var(--accent-glow);
-          font-size: .65rem; color: var(--accent-light); font-weight: 500;
-        }
-
-        /* DIVIDER */
+        .post-tag { padding: 3px 10px; border-radius: 5px; background: var(--accent-dim); border: 1px solid var(--accent-glow); font-size: .65rem; color: var(--accent-light); font-weight: 500; }
         .post-divider { border: none; border-top: 1px solid var(--border); margin: 0 0 48px; }
-
-        /* BODY */
-        .post-body {
-          font-size: 1.02rem; line-height: 1.85;
-          color: #CBD5E1;
-          padding-bottom: 64px;
-        }
-        .post-body h1,
-        .post-body h2 {
-          font-family: 'Syne', sans-serif;
-          font-weight: 800; letter-spacing: -.025em;
-          color: var(--text); margin: 40px 0 16px;
-          line-height: 1.15;
-        }
+        .post-body { font-size: 1.02rem; line-height: 1.85; color: #CBD5E1; padding-bottom: 64px; }
+        .post-body h1, .post-body h2 { font-family: 'Syne', sans-serif; font-weight: 800; letter-spacing: -.025em; color: var(--text); margin: 40px 0 16px; line-height: 1.15; }
         .post-body h1 { font-size: 1.8rem; }
         .post-body h2 { font-size: 1.4rem; }
-        .post-body h3 {
-          font-family: 'Syne', sans-serif; font-weight: 700;
-          font-size: 1.1rem; color: var(--text);
-          margin: 32px 0 12px; line-height: 1.3;
-        }
+        .post-body h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--text); margin: 32px 0 12px; line-height: 1.3; }
         .post-body p { margin-bottom: 20px; }
         .post-body p:last-child { margin-bottom: 0; }
         .post-body strong { color: var(--text); font-weight: 600; }
         .post-body em { color: var(--muted); font-style: italic; }
         .post-body a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--accent-glow); }
         .post-body a:hover { color: var(--accent-light); }
-        .post-body ul, .post-body ol {
-          padding-left: 20px; margin-bottom: 20px;
-        }
+        .post-body ul, .post-body ol { padding-left: 20px; margin-bottom: 20px; }
         .post-body li { margin-bottom: 8px; line-height: 1.7; }
-        .post-body blockquote {
-          border-left: 3px solid var(--accent);
-          padding: 16px 20px; margin: 28px 0;
-          background: var(--accent-dim); border-radius: 0 8px 8px 0;
-          color: var(--muted); font-style: italic; font-size: .97rem;
-        }
-        .post-body code {
-          font-family: 'JetBrains Mono', 'Courier New', monospace;
-          font-size: .82em; background: rgba(255,255,255,0.06);
-          border: 1px solid var(--border); border-radius: 4px;
-          padding: 1px 6px; color: var(--accent-light);
-        }
-        .post-body pre {
-          background: rgba(15,23,42,0.8); border: 1px solid var(--border);
-          border-radius: 10px; padding: 20px 24px; margin: 24px 0;
-          overflow-x: auto;
-        }
-        .post-body pre code {
-          background: transparent; border: none;
-          padding: 0; font-size: .85rem; color: #CBD5E1;
-        }
-        .post-body hr {
-          border: none; border-top: 1px solid var(--border);
-          margin: 40px 0;
-        }
-        .post-body img {
-          width: 100%; border-radius: 10px;
-          border: 1px solid var(--border); margin: 24px 0;
-        }
-
-        /* RELATED */
+        .post-body blockquote { border-left: 3px solid var(--accent); padding: 16px 20px; margin: 28px 0; background: var(--accent-dim); border-radius: 0 8px 8px 0; color: var(--muted); font-style: italic; font-size: .97rem; }
+        .post-body code { font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: .82em; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; color: var(--accent-light); }
+        .post-body pre { background: rgba(15,23,42,0.8); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin: 24px 0; overflow-x: auto; }
+        .post-body pre code { background: transparent; border: none; padding: 0; font-size: .85rem; color: #CBD5E1; }
+        .post-body hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+        .post-body img { width: 100%; border-radius: 10px; border: 1px solid var(--border); margin: 24px 0; }
         .related-section { padding: 0 0 80px; border-top: 1px solid var(--border); }
-        .related-title {
-          font-family: 'Syne', sans-serif; font-size: 1rem;
-          font-weight: 800; color: var(--text);
-          margin: 40px 0 20px; letter-spacing: -.01em;
-        }
+        .related-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--text); margin: 40px 0 20px; letter-spacing: -.01em; }
         .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        .related-card {
-          display: flex; flex-direction: column; padding: 20px 22px;
-          border-radius: 12px; border: 1px solid var(--border);
-          background: var(--card); text-decoration: none;
-          transition: all .2s;
-        }
+        .related-card { display: flex; flex-direction: column; padding: 20px 22px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); text-decoration: none; transition: all .2s; }
         .related-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
         .related-cat { font-size: .62rem; font-weight: 700; letter-spacing: .10em; text-transform: uppercase; margin-bottom: 8px; }
         .related-card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .88rem; color: var(--text); line-height: 1.3; margin-bottom: 6px; }
         .related-card-excerpt { font-size: .78rem; color: var(--muted); line-height: 1.55; flex: 1; }
         .related-arrow { font-size: .72rem; color: var(--accent); margin-top: 12px; font-weight: 600; }
-
-        /* CTA */
-        .post-cta {
-          padding: 40px; border-radius: 16px;
-          border: 1px solid var(--border);
-          background: linear-gradient(135deg, rgba(30,41,59,.9), rgba(15,23,42,.95));
-          backdrop-filter: blur(20px); text-align: center;
-          margin-bottom: 64px; position: relative; overflow: hidden;
-        }
+        .post-cta { padding: 40px; border-radius: 16px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(30,41,59,.9), rgba(15,23,42,.95)); backdrop-filter: blur(20px); text-align: center; margin-bottom: 64px; position: relative; overflow: hidden; }
         .post-cta::before { content: ''; position: absolute; top: -40%; left: 50%; transform: translateX(-50%); width: 60%; height: 200px; background: radial-gradient(ellipse, rgba(59,130,246,.10), transparent 70%); pointer-events: none; }
         .post-cta h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
         .post-cta p { font-size: .875rem; color: var(--muted); margin-bottom: 20px; line-height: 1.65; }
@@ -227,15 +173,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px var(--accent-glow); }
         .btn-ghost { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border: 1px solid var(--border); color: var(--muted); border-radius: 8px; font-weight: 500; font-size: .875rem; text-decoration: none; background: transparent; transition: all .2s; margin-left: 10px; }
         .btn-ghost:hover { border-color: var(--border-hover); color: var(--text); }
-
-        /* FOOTER */
         footer { border-top: 1px solid var(--border); padding: 32px 64px; max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
         .footer-text { font-size: .78rem; color: var(--muted-2); }
         .footer-text span { color: var(--accent); }
         .footer-links { display: flex; gap: 24px; }
         .footer-links a { font-size: .78rem; color: var(--muted-2); text-decoration: none; transition: color .2s; }
         .footer-links a:hover { color: var(--text); }
-
         @media (max-width: 768px) {
           .container, .container-wide { padding: 0 20px; }
           .post-title { font-size: 1.9rem; }
@@ -247,22 +190,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       <div className="bg-mesh" aria-hidden="true" />
 
-      {/* BACK */}
       <nav>
         <div className="container back-nav">
           <Link href="/blog" className="back-link">← Back to Blog</Link>
         </div>
       </nav>
 
-      {/* HEADER */}
       <section>
         <div className="container">
           <div className="post-header">
             <div className="post-meta-row">
-              <span
-                className="post-category"
-                style={{ color: categoryColor, background: `${categoryColor}18`, border: `1px solid ${categoryColor}40` }}
-              >
+              <span className="post-category" style={{ color: categoryColor, background: `${categoryColor}18`, border: `1px solid ${categoryColor}40` }}>
                 {post.category}
               </span>
               <span className="meta-sep" />
@@ -270,10 +208,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               <span className="meta-sep" />
               <span className="post-read-time">{readTime} min read</span>
             </div>
-
             <h1 className="post-title">{post.title}</h1>
             <p className="post-excerpt">{post.excerpt}</p>
-
             {post.tags.length > 0 && (
               <div className="post-tags">
                 {post.tags.map(tag => (
@@ -285,18 +221,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
       </section>
 
-      {/* BODY */}
       <section>
         <div className="container">
           <hr className="post-divider" />
-          <div
-            className="post-body"
-            dangerouslySetInnerHTML={{ __html: post.body }}
-          />
+          <div className="post-body" dangerouslySetInnerHTML={{ __html: post.body }} />
         </div>
       </section>
 
-      {/* CTA */}
       <section>
         <div className="container">
           <div className="post-cta">
@@ -308,7 +239,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
       </section>
 
-      {/* RELATED POSTS */}
       {related.length > 0 && (
         <section>
           <div className="container">

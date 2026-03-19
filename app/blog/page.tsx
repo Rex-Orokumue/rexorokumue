@@ -2,6 +2,21 @@
 
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'Blog',
+  description:
+    'Engineering decisions, product lessons, AI workflows, and honest observations from building in public. Written by Rex Orokumue.',
+  openGraph: {
+    title: 'Blog — Rex Orokumue',
+    description:
+      'Engineering decisions, product lessons, and observations from building in public.',
+    url: 'https://rexorokumue.vercel.app/blog',
+    images: [{ url: '/portfolio_thumbnail.png', width: 1200, height: 627 }],
+  },
+  alternates: { canonical: 'https://rexorokumue.vercel.app/blog' },
+};
 
 export const dynamic = 'force-dynamic'; // ← add this
 

@@ -1,4 +1,19 @@
 // app/bootcamp/page.tsx
+import type { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'AI Builder Bootcamp',
+  description:
+    'A 3-month hands-on programme where you go from zero to shipping a real website, web app, and mobile app using AI tools the way professionals use them. ₦150k upfront or ₦60k/month.',
+  openGraph: {
+    title: 'AI Builder Bootcamp — Rex Orokumue',
+    description:
+      '3 months. 3 real products shipped. Learn to build with Flutter, Next.js, Supabase, and AI tools.',
+    url: 'https://rexorokumue.vercel.app/bootcamp',
+    images: [{ url: '/portfolio_thumbnail.png', width: 1200, height: 627 }],
+  },
+  alternates: { canonical: 'https://rexorokumue.vercel.app/bootcamp' },
+};
 
 export default function BootcampPage() {
   const curriculum = [

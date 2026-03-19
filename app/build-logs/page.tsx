@@ -2,6 +2,21 @@
 // Server component — fetches live from Supabase on every request
 
 import { createClient } from '@supabase/supabase-js';
+import type { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'Build Logs',
+  description:
+    'Building in public — every decision, mistake, and milestone documented across all active projects. No polished post-mortems. Just the real process.',
+  openGraph: {
+    title: 'Build Logs — Rex Orokumue',
+    description:
+      'Building in public — every decision, mistake, and milestone documented as it happens.',
+    url: 'https://rexorokumue.vercel.app/build-logs',
+    images: [{ url: '/portfolio_thumbnail.png', width: 1200, height: 627 }],
+  },
+  alternates: { canonical: 'https://rexorokumue.vercel.app/build-logs' },
+};
 
 export const dynamic = 'force-dynamic'; // ← add this
 
