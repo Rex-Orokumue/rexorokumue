@@ -11,14 +11,15 @@ const supabase = createClient(
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type Tag = 'build' | 'design' | 'fix' | 'launch' | 'learning';
-type ProjectId = 'portfolio' | 'zolarux' | 'edupanion' | 'e-technix' | 'admin';
+type ProjectId = 'portfolio' | 'zolarux' | 'escrowpay' | 'edupanion' | 'e-technix' | 'admin';
 
 const PROJECTS = [
-  { id: 'portfolio', label: '🌐 Portfolio Website' },
-  { id: 'zolarux',  label: '🔐 Zolarux' },
-  { id: 'edupanion',label: '📚 EduPanion' },
-  { id: 'e-technix',label: '💻 E-Technix' },
-  { id: 'admin',    label: '⚙️ Admin Control Center' },
+  { id: 'portfolio',  label: '🌐 Portfolio Website' },
+  { id: 'zolarux',   label: '🔐 Zolarux' },
+  { id: 'escrowpay', label: '💳 EscrowPay Engine' },
+  { id: 'edupanion', label: '📚 EduPanion' },
+  { id: 'e-technix', label: '💻 E-Technix' },
+  { id: 'admin',     label: '⚙️ Admin Control Center' },
 ] as const;
 
 const TAGS: { id: Tag; label: string }[] = [
