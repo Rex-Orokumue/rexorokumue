@@ -24,10 +24,10 @@ export default function BootcampPage() {
       colorDim: 'var(--accent-dim)',
       colorGlow: 'var(--accent-glow)',
       weeks: [
-        { week: 'Week 1–2', title: 'Product Thinking First', desc: 'How to define what to build, who it is for, and what success looks like before touching any code.' },
-        { week: 'Week 3–4', title: 'Building with Next.js & React', desc: 'Structure, routing, components, and deploying a fully functional website to Vercel.' },
-        { week: 'Week 5–6', title: 'AI-Assisted Development', desc: 'Using Cursor, Claude, and AI tools as force multipliers — faster builds without losing engineering discipline.' },
-        { week: 'Week 7–8', title: 'Ship: Your Live Website', desc: 'Students ship a complete, production-deployed website by end of month one.' },
+        { week: 'Week 1', title: 'Product Thinking First', desc: 'How to define what to build, who it is for, and what success looks like before touching any code.' },
+        { week: 'Week 2', title: 'Building with Next.js & React', desc: 'Structure, routing, components, and deploying a fully functional website to Vercel.' },
+        { week: 'Week 3', title: 'AI-Assisted Development', desc: 'Using Cursor, Claude, and AI tools as force multipliers — faster builds without losing engineering discipline.' },
+        { week: 'Week 4', title: 'Ship: Your Live Website', desc: 'Students ship a complete, production-deployed website by end of month one.' },
       ],
     },
     {
@@ -37,10 +37,10 @@ export default function BootcampPage() {
       colorDim: 'rgba(167,139,250,0.10)',
       colorGlow: 'rgba(167,139,250,0.30)',
       weeks: [
-        { week: 'Week 1–2', title: 'Supabase & PostgreSQL', desc: 'Database design, tables, relationships, and querying data. How to structure a backend that scales.' },
-        { week: 'Week 3–4', title: 'Authentication & Security', desc: 'User login, JWT tokens, Row-Level Security, and keeping user data safe from day one.' },
-        { week: 'Week 5–6', title: 'REST APIs & Real-Time', desc: 'Building and consuming APIs, real-time subscriptions, and webhooks.' },
-        { week: 'Week 7–8', title: 'Ship: Your Live Web App', desc: 'A fully functional web app with auth, database, and real users by end of month two.' },
+        { week: 'Week 1', title: 'Supabase & PostgreSQL', desc: 'Database design, tables, relationships, and querying data. How to structure a backend that scales.' },
+        { week: 'Week 2', title: 'Authentication & Security', desc: 'User login, JWT tokens, Row-Level Security, and keeping user data safe from day one.' },
+        { week: 'Week 3', title: 'REST APIs & Real-Time', desc: 'Building and consuming APIs, real-time subscriptions, and webhooks.' },
+        { week: 'Week 4', title: 'Ship: Your Live Web App', desc: 'A fully functional web app with auth, database, and real users by end of month two.' },
       ],
     },
     {
@@ -50,10 +50,10 @@ export default function BootcampPage() {
       colorDim: 'rgba(52,211,153,0.10)',
       colorGlow: 'rgba(52,211,153,0.30)',
       weeks: [
-        { week: 'Week 1–2', title: 'Flutter Fundamentals', desc: 'Dart basics, widgets, state management, and building your first mobile screen.' },
-        { week: 'Week 3–4', title: 'Connecting Mobile to Backend', desc: 'Integrating your Supabase backend into the Flutter app — auth, data, real-time updates.' },
-        { week: 'Week 5–6', title: 'Polish, Test & Deploy', desc: 'UI refinement, error handling, and submitting to the Google Play Store.' },
-        { week: 'Week 7–8', title: 'Ship: Your Mobile App', desc: 'A live mobile app in the Play Store by the end of the programme.' },
+        { week: 'Week 1', title: 'Flutter Fundamentals', desc: 'Dart basics, widgets, state management, and building your first mobile screen.' },
+        { week: 'Week 2', title: 'Connecting Mobile to Backend', desc: 'Integrating your Supabase backend into the Flutter app — auth, data, real-time updates.' },
+        { week: 'Week 3', title: 'Polish, Test & Deploy', desc: 'UI refinement, error handling, and submitting to the Google Play Store.' },
+        { week: 'Week 4', title: 'Ship: Your Mobile App', desc: 'A live mobile app in the Play Store by the end of the programme.' },
       ],
     },
   ];
