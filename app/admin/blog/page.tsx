@@ -32,7 +32,8 @@ interface Post {
   tags: string[];
   published: boolean;
   published_at: string | null;
-  scheduled_at: string | null;   // ← NEW
+  scheduled_at: string | null;
+  cover_image: string | null;
   created_at: string;
 }
 
@@ -44,7 +45,8 @@ const EMPTY_FORM = {
   category: 'general' as Category,
   tags: '' as string,
   published: false,
-  scheduled_at: '',   // ← NEW  (datetime-local string)
+  scheduled_at: '',
+  cover_image: '',
 };
 
 function slugify(text: string) {
@@ -158,6 +160,8 @@ const css = `
   .uploaded-img-name { font-size: .75rem; color: var(--text); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .btn-insert-img { padding: 5px 10px; border-radius: 6px; border: 1px solid var(--accent-glow); background: var(--accent-dim); color: var(--accent-light); font-size: .70rem; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all .2s; white-space: nowrap; flex-shrink: 0; }
   .btn-insert-img:hover { background: rgba(59,130,246,.2); }
+  .btn-cover-img { padding: 5px 10px; border-radius: 6px; border: 1px solid rgba(167,139,250,.3); background: rgba(167,139,250,.1); color: #A78BFA; font-size: .70rem; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all .2s; white-space: nowrap; flex-shrink: 0; margin-left: 6px; }
+  .btn-cover-img:hover { background: rgba(167,139,250,.2); }
   .btn-delete-img { padding: 5px 8px; border-radius: 6px; border: 1px solid rgba(248,113,113,.2); background: transparent; color: var(--red); font-size: .70rem; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all .2s; flex-shrink: 0; }
   .btn-delete-img:hover { background: rgba(248,113,113,.1); }
 
@@ -398,6 +402,7 @@ export default function AdminBlog() {
       body:         form.body,
       category:     form.category,
       tags:         tagsArray,
+      cover_image:  form.cover_image || null,
       published:    scheduleNow ? false : shouldPublish,
       published_at: shouldPublish && !scheduleNow ? new Date().toISOString() : null,
       scheduled_at: scheduleNow && form.scheduled_at
@@ -439,8 +444,9 @@ export default function AdminBlog() {
       category:     post.category,
       tags:         post.tags.join(', '),
       published:    post.published,
+      cover_image:  post.cover_image || '',
       scheduled_at: post.scheduled_at
-        ? new Date(post.scheduled_at).toISOString().slice(0, 16) // datetime-local format
+        ? new Date(post.scheduled_at).toISOString().slice(0, 16)
         : '',
     });
     setEditId(post.id);
@@ -651,14 +657,24 @@ export default function AdminBlog() {
                               <button type="button" className="btn-insert-img" onClick={() => insertImageTag(img.url)}>
                                 Insert ↓
                               </button>
-                              <button type="button" className="btn-delete-img" onClick={() => deleteUploadedImage(img.url, img.name)}>
+                              <button type="button" className="btn-cover-img" onClick={() => setForm(f => ({ ...f, cover_image: img.url }))}>
+                                Set as Cover
+                              </button>
+                              <button type="button" className="btn-delete-img" style={{ marginLeft: 6 }} onClick={() => deleteUploadedImage(img.url, img.name)}>
                                 ✕
                               </button>
                             </div>
                           ))}
                         </div>
                       )}
-                      <span className="hint">After uploading, click "Insert ↓" to drop the image tag at your cursor in the body.</span>
+                      <span className="hint">After uploading, click "Insert ↓" to drop the image tag at your cursor in the body, or "Set as Cover" to use it as the main thumbnail.</span>
+                    </div>
+
+                    {/* Cover Image Input */}
+                    <div className="form-group full">
+                      <label>Cover Image URL (Optional)</label>
+                      <input value={form.cover_image} onChange={e => setForm(f => ({ ...f, cover_image: e.target.value }))} placeholder="https://..." />
+                      <span className="hint">Used on the main blog dashboard and at the top of the post. Fill this manually or use "Set as Cover" above.</span>
                     </div>
 
                     {/* Body */}

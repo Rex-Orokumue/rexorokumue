@@ -3,7 +3,6 @@ import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import DOMPurify from 'isomorphic-dompurify';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,6 +22,7 @@ interface Post {
   published_at: string;
   created_at: string;
   scheduled_at?: string | null;
+  cover_image?: string | null;
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -75,6 +75,8 @@ export async function generateMetadata(
   const post = await getPost(slug);
   if (!post) return { title: 'Post Not Found' };
 
+  const finalImage = post.cover_image || '/portfolio_thumbnail.png';
+
   return {
     title: post.title,
     description: post.excerpt,
@@ -85,13 +87,13 @@ export async function generateMetadata(
       type: 'article',
       publishedTime: post.published_at,
       authors: ['Rex Orokumue'],
-      images: [{ url: '/portfolio_thumbnail.png', width: 1200, height: 627 }],
+      images: [{ url: finalImage, width: 1200, height: 627 }],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: ['/portfolio_thumbnail.png'],
+      images: [finalImage],
     },
     alternates: {
       canonical: `https://rexorokumue.vercel.app/blog/${slug}`,
@@ -124,27 +126,28 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         body::after { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.5; }
         .bg-mesh { position: fixed; inset: 0; z-index: 0; background: radial-gradient(ellipse 60% 50% at 0% 0%, rgba(59,130,246,0.10) 0%, transparent 55%), radial-gradient(ellipse 50% 50% at 100% 100%, rgba(59,130,246,0.05) 0%, transparent 55%), var(--bg); }
         section, nav, footer { position: relative; z-index: 1; }
-        .container { max-width: 720px; margin: 0 auto; padding: 0 64px; }
-        .container-wide { max-width: 1000px; margin: 0 auto; padding: 0 64px; }
-        .back-nav { padding: 100px 0 0; margin-top: 80px; }
-        .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: .82rem; color: var(--muted); text-decoration: none; transition: color .2s; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 5%; }
+        .container-wide { max-width: 1280px; margin: 0 auto; padding: 0 5%; }
+        .back-nav { padding: 100px 0 0; margin-top: 80px; max-width: 1400px; margin-left: auto; margin-right: auto; }
+        .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: .9rem; color: var(--muted); text-decoration: none; transition: color .2s; }
         .back-link:hover { color: var(--text); }
-        .post-header { padding: 32px 0 48px; }
-        .post-meta-row { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
-        .post-category { padding: 3px 12px; border-radius: 100px; font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-        .post-date { font-size: .78rem; color: var(--muted-2); }
-        .post-read-time { font-size: .78rem; color: var(--muted-2); }
-        .meta-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--muted-2); flex-shrink: 0; }
-        .post-title { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 800; line-height: 1.05; letter-spacing: -.03em; margin-bottom: 20px; }
-        .post-excerpt { font-size: 1.1rem; color: var(--muted); line-height: 1.75; font-weight: 300; border-left: 3px solid var(--accent); padding-left: 20px; margin-bottom: 28px; }
+        .post-cover-image { width: 100%; max-height: 600px; object-fit: cover; border-radius: 24px; margin-bottom: 48px; border: 1px solid rgba(255,255,255,.05); box-shadow: 0 24px 64px rgba(0,0,0,0.5); display: block; }
+        .post-header { padding: 40px 0 56px; }
+        .post-meta-row { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+        .post-category { padding: 4px 14px; border-radius: 100px; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+        .post-date { font-size: .85rem; color: var(--muted-2); }
+        .post-read-time { font-size: .85rem; color: var(--muted-2); }
+        .meta-sep { width: 4px; height: 4px; border-radius: 50%; background: var(--muted-2); flex-shrink: 0; }
+        .post-title { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.05; letter-spacing: -.03em; margin-bottom: 24px; }
+        .post-excerpt { font-size: 1.25rem; color: var(--muted); line-height: 1.8; font-weight: 300; border-left: 3px solid var(--accent); padding-left: 24px; margin-bottom: 32px; }
         .post-tags { display: flex; gap: 7px; flex-wrap: wrap; }
         .post-tag { padding: 3px 10px; border-radius: 5px; background: var(--accent-dim); border: 1px solid var(--accent-glow); font-size: .65rem; color: var(--accent-light); font-weight: 500; }
-        .post-divider { border: none; border-top: 1px solid var(--border); margin: 0 0 48px; }
+        .post-divider { border: none; border-top: 1px solid rgba(255,255,255,.05); margin: 0 0 56px; }
 
-        .post-body { font-size: 1.02rem; line-height: 1.85; color: #CBD5E1; padding-bottom: 64px; }
-        .post-body h1, .post-body h2 { font-family: 'Syne', sans-serif; font-weight: 800; letter-spacing: -.025em; color: var(--text); margin: 40px 0 16px; line-height: 1.15; }
-        .post-body h1 { font-size: 1.8rem; }
-        .post-body h2 { font-size: 1.4rem; }
+        .post-body { font-size: 1.15rem; line-height: 1.9; color: #E2E8F0; padding-bottom: 80px; }
+        .post-body h1, .post-body h2 { font-family: 'Syne', sans-serif; font-weight: 800; letter-spacing: -.025em; color: var(--text); margin: 48px 0 20px; line-height: 1.15; }
+        .post-body h1 { font-size: 2.2rem; }
+        .post-body h2 { font-size: 1.8rem; }
         .post-body h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--text); margin: 32px 0 12px; line-height: 1.3; }
         .post-body p { margin-bottom: 20px; }
         .post-body p:last-child { margin-bottom: 0; }
@@ -205,25 +208,35 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         .footer-links a:hover { color: var(--text); }
 
         @media (max-width: 768px) {
-          .container, .container-wide { padding: 0 20px; }
-          .post-title { font-size: 1.9rem; }
+          .container, .container-wide { padding: 0 8%; }
+          .post-title { font-size: 2.2rem; }
+          .post-excerpt { font-size: 1.1rem; }
           .related-grid { grid-template-columns: 1fr; }
-          .post-cta { padding: 28px 20px; }
-          footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
+          .post-cta { padding: 32px 24px; }
+          footer { padding: 24px 8%; flex-direction: column; gap: 12px; text-align: center; }
         }
       `}</style>
 
       <div className="bg-mesh" aria-hidden="true" />
 
       <nav>
-        <div className="container back-nav">
+        <div className="container-wide back-nav">
           <Link href="/blog" className="back-link">← Back to Blog</Link>
         </div>
       </nav>
 
+      {post.cover_image && (
+        <section>
+          <div className="container-wide">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={post.cover_image} alt={post.title} className="post-cover-image" />
+          </div>
+        </section>
+      )}
+
       <section>
         <div className="container">
-          <div className="post-header">
+          <div className="post-header" style={{ paddingTop: post.cover_image ? 0 : 32 }}>
             <div className="post-meta-row">
               <span className="post-category" style={{ color: categoryColor, background: `${categoryColor}18`, border: `1px solid ${categoryColor}40` }}>
                 {post.category}
@@ -249,7 +262,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <section>
         <div className="container">
           <hr className="post-divider" />
-          <div className="post-body" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.body) }} />
+          <div className="post-body" dangerouslySetInnerHTML={{ __html: post.body }} />
         </div>
       </section>
 

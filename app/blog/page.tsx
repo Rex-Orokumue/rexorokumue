@@ -33,6 +33,7 @@ interface Post {
   category: string;
   tags: string[];
   published_at: string;
+  cover_image?: string | null;
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -45,7 +46,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 async function getPosts(category?: string): Promise<Post[]> {
   let query = supabase
     .from('blog_posts')
-    .select('id, slug, title, excerpt, category, tags, published_at')
+    .select('id, slug, title, excerpt, category, tags, published_at, cover_image')
     .eq('published', true)
     .order('published_at', { ascending: false });
 
@@ -105,6 +106,9 @@ export default async function BlogPage({
         .post-card { display: flex; flex-direction: column; padding: 28px; border-radius: 16px; border: 1px solid var(--border); background: var(--card-bg); backdrop-filter: blur(12px); text-decoration: none; transition: all .25s; }
         .post-card:hover { border-color: var(--border-hover); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.35); }
         .post-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .post-cover-wrapper { width: calc(100% + 56px); margin: -28px -28px 20px; height: 180px; overflow: hidden; border-radius: 16px 16px 0 0; background: rgba(0,0,0,0.2); }
+        .post-cover-image { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+        .post-card:hover .post-cover-image { transform: scale(1.05); }
         .post-category { font-size: .65rem; font-weight: 700; letter-spacing: .10em; text-transform: uppercase; }
         .post-date { font-size: .72rem; color: var(--muted-2); }
         .post-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 10px; }
@@ -147,13 +151,14 @@ export default async function BlogPage({
               const catKey = cat.toLowerCase();
               const isActive = catKey === activeCategory || (catKey === 'all' && activeCategory === 'all');
               return (
-                <a
+                <Link
                   key={cat}
                   href={cat === 'All' ? '/blog' : `/blog?category=${catKey}`}
+                  scroll={false}
                   className={`filter-chip${isActive ? ' active' : ''}`}
                 >
                   {cat}
-                </a>
+                </Link>
               );
             })}
           </div>
@@ -170,6 +175,12 @@ export default async function BlogPage({
             <div className="posts-grid">
               {posts.map(post => (
                 <Link key={post.id} href={`/blog/${post.slug}`} className="post-card">
+                  {post.cover_image && (
+                    <div className="post-cover-wrapper">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={post.cover_image} alt={post.title} className="post-cover-image" loading="lazy" />
+                    </div>
+                  )}
                   <div className="post-card-top">
                     <span className="post-category" style={{ color: CATEGORY_COLORS[post.category] ?? 'var(--muted)' }}>
                       {post.category}
