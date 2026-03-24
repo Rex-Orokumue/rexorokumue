@@ -59,7 +59,6 @@ function formatDate(iso: string) {
 // CSS
 // ────────────────────────────────────────────────
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --bg: #0F172A; --surface: rgba(30,41,59,0.7); --surface-2: rgba(15,23,42,0.8);
@@ -170,7 +169,7 @@ const css = `
     background: rgba(251,191,36,.05);
     margin-top: 4px;
   }
-  .schedule-box label { color: var(--amber); }
+  .schedule-box label { color: var(--amber); display: block; margin-bottom: 8px; }
   .schedule-status {
     display: inline-flex; align-items: center; gap: 6px;
     font-size: .72rem; color: var(--amber); margin-top: 6px;
@@ -249,6 +248,7 @@ export default function AdminBlog() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [dragging,       setDragging]       = useState(false);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
+  const publishedIdsRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     if (sessionStorage.getItem('admin_authed') === 'true') setAuthed(true);
@@ -276,9 +276,12 @@ export default function AdminBlog() {
     const toPublish = posts.filter(p =>
       !p.published &&
       p.scheduled_at &&
-      new Date(p.scheduled_at) <= now
+      new Date(p.scheduled_at) <= now &&
+      !publishedIdsRef.current.has(p.id)   // ← skip already-processed
     );
     if (toPublish.length === 0) return;
+    // Mark them immediately so a re-render doesn't re-trigger
+    toPublish.forEach(p => publishedIdsRef.current.add(p.id));
     Promise.all(
       toPublish.map(p =>
         supabase.from('blog_posts').update({
@@ -289,9 +292,14 @@ export default function AdminBlog() {
     ).then(() => fetchPosts());
   }, [authed, posts]);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (pw === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
+    const res = await fetch('/api/admin-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw }),
+    });
+    if (res.ok) {
       sessionStorage.setItem('admin_authed', 'true');
       setAuthed(true);
     } else {
@@ -321,7 +329,7 @@ export default function AdminBlog() {
         .upload(path, file, { cacheControl: '3600', upsert: false });
 
       if (error) {
-        showToast(`Upload failed: ${file.name}`, 'error');
+        showToast(`Upload failed: ${error.message || file.name}`, 'error');
       } else {
         const { data: urlData } = supabase.storage
           .from(IMAGE_BUCKET)
@@ -584,7 +592,7 @@ export default function AdminBlog() {
                     {/* Category */}
                     <div className="form-group">
                       <label>Category *</label>
-                      <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value as Category }))}>
+                      <select title="Category" value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value as Category }))}>
                         {CATEGORIES.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}
                       </select>
                     </div>
@@ -613,6 +621,7 @@ export default function AdminBlog() {
                       >
                         <input
                           type="file"
+                          title="Upload images"
                           accept="image/*"
                           multiple
                           onChange={e => handleImageUpload(e.target.files)}
@@ -672,7 +681,7 @@ export default function AdminBlog() {
                       <label>Status</label>
                       <div className="toggle-row">
                         <label className="toggle">
-                          <input type="checkbox" checked={form.published} onChange={e => setForm(f => ({ ...f, published: e.target.checked, scheduled_at: e.target.checked ? '' : f.scheduled_at }))} />
+                          <input type="checkbox" aria-label="Published status" checked={form.published} onChange={e => setForm(f => ({ ...f, published: e.target.checked, scheduled_at: e.target.checked ? '' : f.scheduled_at }))} />
                           <span className="toggle-slider" />
                         </label>
                         <span className="toggle-label">
@@ -685,9 +694,10 @@ export default function AdminBlog() {
                     {!form.published && (
                       <div className="form-group full">
                         <div className="schedule-box">
-                          <label style={{ display: 'block', marginBottom: 8 }}>⏰ Schedule publishing (optional)</label>
+                          <label className="schedule-label">⏰ Schedule publishing (optional)</label>
                           <input
                             type="datetime-local"
+                            title="Scheduled publish date"
                             value={form.scheduled_at}
                             min={new Date().toISOString().slice(0, 16)}
                             onChange={e => setForm(f => ({ ...f, scheduled_at: e.target.value }))}

@@ -3,7 +3,7 @@
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 import type { Metadata } from 'next';
- 
+
 export const metadata: Metadata = {
   title: 'Blog',
   description:
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://rexorokumue.vercel.app/blog' },
 };
 
-export const dynamic = 'force-dynamic'; // ← add this
+export const dynamic = 'force-dynamic';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -42,12 +42,18 @@ const CATEGORY_COLORS: Record<string, string> = {
   general:     'var(--muted)',
 };
 
-async function getPosts(): Promise<Post[]> {
-  const { data, error } = await supabase
+async function getPosts(category?: string): Promise<Post[]> {
+  let query = supabase
     .from('blog_posts')
     .select('id, slug, title, excerpt, category, tags, published_at')
     .eq('published', true)
     .order('published_at', { ascending: false });
+
+  if (category && category !== 'all') {
+    query = query.eq('category', category);
+  }
+
+  const { data, error } = await query;
   if (error) { console.error(error); return []; }
   return data ?? [];
 }
@@ -56,13 +62,18 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-export default async function BlogPage() {
-  const posts = await getPosts();
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) {
+  const { category } = await searchParams;
+  const activeCategory = category?.toLowerCase() ?? 'all';
+  const posts = await getPosts(activeCategory);
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
           --secondary: #0F172A; --accent: #3B82F6; --accent-dim: rgba(59,130,246,0.10);
@@ -79,19 +90,16 @@ export default async function BlogPage() {
         section { position: relative; z-index: 1; }
         .container { max-width: 1000px; margin: 0 auto; padding: 0 64px; }
 
-        /* HERO */
         .blog-hero { padding-top: 160px; padding-bottom: 64px; margin-top: -20px; }
         .blog-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 8px; border-radius: 100px; border: 1px solid var(--accent-glow); background: var(--accent-dim); font-size: .70rem; font-weight: 600; letter-spacing: .10em; text-transform: uppercase; color: var(--accent); margin-top: -60px; margin-bottom: 28px; width: fit-content; animation: fadeUp .7s .05s ease both; }
         .blog-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; flex-shrink: 0; }
         .blog-headline { font-family: 'Syne', sans-serif; font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-weight: 800; line-height: 1.0; letter-spacing: -.03em; animation: fadeUp .7s .18s ease both; }
         .blog-sub { margin-top: 16px; font-size: 1rem; color: var(--muted); max-width: 520px; font-weight: 300; line-height: 1.75; animation: fadeUp .7s .30s ease both; }
 
-        /* FILTER */
         .blog-filter { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 0 40px; animation: fadeUp .7s .40s ease both; }
         .filter-chip { padding: 6px 16px; border-radius: 100px; border: 1px solid var(--border); background: transparent; font-size: .75rem; font-weight: 500; color: var(--muted); cursor: pointer; font-family: 'DM Sans', sans-serif; text-decoration: none; transition: all .2s; }
         .filter-chip:hover, .filter-chip.active { border-color: var(--accent-glow); background: var(--accent-dim); color: var(--accent); }
 
-        /* POSTS GRID */
         .posts-section { padding-bottom: 120px; }
         .posts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         .post-card { display: flex; flex-direction: column; padding: 28px; border-radius: 16px; border: 1px solid var(--border); background: var(--card-bg); backdrop-filter: blur(12px); text-decoration: none; transition: all .25s; }
@@ -106,12 +114,10 @@ export default async function BlogPage() {
         .post-tag { padding: 2px 8px; border-radius: 4px; background: var(--accent-dim); border: 1px solid var(--accent-glow); font-size: .63rem; color: var(--accent-light); font-weight: 500; }
         .post-arrow { font-size: .78rem; color: var(--accent); font-weight: 600; flex-shrink: 0; }
 
-        /* EMPTY */
         .blog-empty { padding: 80px 20px; text-align: center; border: 1px dashed var(--border); border-radius: 16px; color: var(--muted-2); }
         .blog-empty p { font-size: .9rem; }
         .blog-empty a { color: var(--accent); }
 
-        /* FOOTER */
         footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 36px 64px; max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
         .footer-left p { font-size: .78rem; color: var(--muted-2); }
         .footer-left p span { color: var(--accent); }
@@ -137,11 +143,19 @@ export default async function BlogPage() {
           <p className="blog-sub">Engineering decisions, product lessons, AI workflows, and honest observations from building in public.</p>
 
           <div className="blog-filter" style={{ marginTop: 28 }}>
-            {['All', 'Engineering', 'Product', 'AI', 'General'].map(cat => (
-              <a key={cat} href={cat === 'All' ? '/blog' : `/blog?category=${cat.toLowerCase()}`} className="filter-chip">
-                {cat}
-              </a>
-            ))}
+            {['All', 'Engineering', 'Product', 'AI', 'General'].map(cat => {
+              const catKey = cat.toLowerCase();
+              const isActive = catKey === activeCategory || (catKey === 'all' && activeCategory === 'all');
+              return (
+                <a
+                  key={cat}
+                  href={cat === 'All' ? '/blog' : `/blog?category=${catKey}`}
+                  className={`filter-chip${isActive ? ' active' : ''}`}
+                >
+                  {cat}
+                </a>
+              );
+            })}
           </div>
         </div>
       </section>

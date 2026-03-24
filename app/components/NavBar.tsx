@@ -11,7 +11,7 @@ const links = [
   { href: '/blog',         label: 'Blog' },
   { href: '/tech-serial',  label: 'Tech Serial' },
   { href: '/bootcamp',     label: 'Bootcamp' },
-  { href: '/build-logs',         label: 'Build Logs' },
+  { href: '/build-logs',   label: 'Build Logs' },
 ];
 
 export default function NavBar() {
@@ -25,7 +25,6 @@ export default function NavBar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close menu on route change
   useEffect(() => { setMenuOpen(false); }, [pathname]);
 
   return (
@@ -39,7 +38,7 @@ export default function NavBar() {
           border-bottom: 1px solid ${scrolled ? 'rgba(255,255,255,0.07)' : 'transparent'};
         }
         .nav-inner {
-          max-width: 1180px; margin: 0 auto; padding: 0 64px;
+          width: 100%; padding: 0 40px;
           height: 68px; display: flex; align-items: center; justify-content: space-between;
         }
         .nav-logo {
@@ -82,6 +81,9 @@ export default function NavBar() {
           display: block; width: 22px; height: 1.5px; background: #94A3B8;
           border-radius: 2px; transition: all .25s;
         }
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
         .nav-mobile {
           display: none; position: fixed; top: 68px; left: 0; right: 0;
           background: rgba(15,23,42,0.98); backdrop-filter: blur(24px);
@@ -126,10 +128,10 @@ export default function NavBar() {
           </div>
 
           {/* Mobile hamburger */}
-          <button className="nav-hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
-            <span style={menuOpen ? { transform: 'translateY(6px) rotate(45deg)' }  : {}} />
-            <span style={menuOpen ? { opacity: 0 } : {}} />
-            <span style={menuOpen ? { transform: 'translateY(-6px) rotate(-45deg)' } : {}} />
+          <button className={`nav-hamburger${menuOpen ? ' open' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+            <span />
+            <span />
+            <span />
           </button>
         </div>
       </nav>

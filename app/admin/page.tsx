@@ -57,7 +57,6 @@ const EMPTY_FORM = {
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --bg: #0F172A; --surface: rgba(30,41,59,0.7); --surface-2: rgba(15,23,42,0.8);
@@ -235,9 +234,14 @@ export default function AdminLogs() {
   useEffect(() => { if (authed) fetchEntries(); }, [authed]);
 
   // Login
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (pw === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
+    const res = await fetch('/api/admin-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw }),
+    });
+    if (res.ok) {
       sessionStorage.setItem('admin_authed', 'true');
       setAuthed(true);
     } else {
@@ -408,7 +412,7 @@ export default function AdminLogs() {
                     {/* Project */}
                     <div className="form-group">
                       <label>Project *</label>
-                      <select value={form.project_id} onChange={e => setForm(f => ({ ...f, project_id: e.target.value as ProjectId }))}>
+                      <select title="Project" value={form.project_id} onChange={e => setForm(f => ({ ...f, project_id: e.target.value as ProjectId }))}>
                         {PROJECTS.map(p => <option key={p.id} value={p.id}>{p.label}</option>)}
                       </select>
                     </div>
@@ -416,7 +420,7 @@ export default function AdminLogs() {
                     {/* Sort order */}
                     <div className="form-group">
                       <label>Sort Order</label>
-                      <input type="number" value={form.sort_order} onChange={e => setForm(f => ({ ...f, sort_order: parseInt(e.target.value) || 0 }))} />
+                      <input type="number" placeholder="0" value={form.sort_order} onChange={e => setForm(f => ({ ...f, sort_order: parseInt(e.target.value) || 0 }))} />
                       <span className="hint">Lower = shown first within project (0, 1, 2…)</span>
                     </div>
 
@@ -474,7 +478,7 @@ export default function AdminLogs() {
                       <label>Mark as latest entry for this project?</label>
                       <div className="toggle-row">
                         <label className="toggle">
-                          <input type="checkbox" checked={form.is_latest} onChange={e => setForm(f => ({ ...f, is_latest: e.target.checked }))} />
+                          <input type="checkbox" aria-label="Mark as latest entry" checked={form.is_latest} onChange={e => setForm(f => ({ ...f, is_latest: e.target.checked }))} />
                           <span className="toggle-slider" />
                         </label>
                         <span className="toggle-label">{form.is_latest ? 'Yes — will show LATEST badge and blue dot' : 'No'}</span>
