@@ -23,6 +23,7 @@ const PROJECT_META: ProjectMeta[] = [
   { id: 'edupanion', name: 'EduPanion',                    icon: '📚', desc: 'Interactive phonics & literacy tool for Nigerian classrooms', status: 'building' },
   { id: 'admin',     name: 'Zolarux Admin Control Center', icon: '⚙️', desc: 'Real-time ops dashboard — mobile, web & Windows',           status: 'live'     },
   { id: 'e-technix', name: 'E-Technix',                    icon: '🎓', desc: 'Digital & tech skills training platform — Nigeria & UK',     status: 'building' },
+  { id: 'ican-warri', name: 'ICAN Warri District',          icon: '🏛️', desc: 'Regional website for ICAN Warri',                    status: 'building' },
 ];
 
 const ALL_TAGS: Tag[] = ['build', 'design', 'fix', 'launch', 'learning'];
