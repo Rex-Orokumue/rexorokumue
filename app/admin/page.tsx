@@ -20,6 +20,7 @@ const PROJECTS = [
   { id: 'edupanion', label: '📚 EduPanion' },
   { id: 'e-technix', label: '💻 E-Technix' },
   { id: 'admin',     label: '⚙️ Admin Control Center' },
+  { id: 'ican-warri', label: '🏛️ ICAN Warri District' },
 ] as const;
 
 const TAGS: { id: Tag; label: string }[] = [
