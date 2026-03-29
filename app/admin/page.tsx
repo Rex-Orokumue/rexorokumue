@@ -21,6 +21,7 @@ const PROJECTS = [
   { id: 'e-technix', label: '💻 E-Technix' },
   { id: 'admin',     label: '⚙️ Admin Control Center' },
   { id: 'ican-warri', label: '🏛️ ICAN Warri District' },
+  { id: 'foodgram',  label: '🍔 FoodGram' },  // ADD THIS LINE
 ] as const;
 
 const TAGS: { id: Tag; label: string }[] = [
