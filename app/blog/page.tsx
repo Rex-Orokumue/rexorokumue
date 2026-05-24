@@ -48,6 +48,7 @@ async function getPosts(category?: string): Promise<Post[]> {
     .from('blog_posts')
     .select('id, slug, title, excerpt, category, tags, published_at, cover_image')
     .eq('published', true)
+    .eq('site', 'portfolio')
     .order('published_at', { ascending: false });
 
   if (category && category !== 'all') {

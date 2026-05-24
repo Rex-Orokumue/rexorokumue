@@ -39,6 +39,7 @@ async function getPost(slug: string): Promise<Post | null> {
     .select('*')
     .eq('slug', slug)
     .eq('published', true)
+    .eq('site', 'portfolio')
     .or(`scheduled_at.is.null,scheduled_at.lte.${now}`)
     .single();
   if (error || !data) return null;
