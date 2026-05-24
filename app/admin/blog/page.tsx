@@ -35,6 +35,7 @@ interface Post {
   scheduled_at: string | null;
   cover_image: string | null;
   created_at: string;
+  site: 'portfolio' | 'zolarux';
 }
 
 const EMPTY_FORM = {
@@ -47,6 +48,7 @@ const EMPTY_FORM = {
   published: false,
   scheduled_at: '',
   cover_image: '',
+  site: 'portfolio' as 'portfolio' | 'zolarux',
 };
 
 function slugify(text: string) {
@@ -403,6 +405,7 @@ export default function AdminBlog() {
       category:     form.category,
       tags:         tagsArray,
       cover_image:  form.cover_image || null,
+      site:         form.site,
       published:    scheduleNow ? false : shouldPublish,
       published_at: shouldPublish && !scheduleNow ? new Date().toISOString() : null,
       scheduled_at: scheduleNow && form.scheduled_at
@@ -445,6 +448,7 @@ export default function AdminBlog() {
       tags:         post.tags.join(', '),
       published:    post.published,
       cover_image:  post.cover_image || '',
+      site:         post.site ?? 'portfolio',
       scheduled_at: post.scheduled_at
         ? new Date(post.scheduled_at).toISOString().slice(0, 16)
         : '',
@@ -608,6 +612,16 @@ export default function AdminBlog() {
                       <label>Tags</label>
                       <input value={form.tags} onChange={e => setForm(f => ({ ...f, tags: e.target.value }))} placeholder="supabase, flutter, auth" />
                       <span className="hint">Comma-separated.</span>
+                    </div>
+
+                    {/* Site */}
+                    <div className="form-group">
+                      <label>Publish to Site *</label>
+                      <select title="Site" value={form.site} onChange={e => setForm(f => ({ ...f, site: e.target.value as 'portfolio' | 'zolarux' }))}>
+                        <option value="portfolio">Portfolio (rexorokumue.vercel.app)</option>
+                        <option value="zolarux">Zolarux (zolarux.com.ng)</option>
+                      </select>
+                      <span className="hint">Controls which website this post appears on.</span>
                     </div>
 
                     {/* Excerpt */}
