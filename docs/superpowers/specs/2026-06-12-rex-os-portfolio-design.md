@@ -17,7 +17,8 @@ strong enough to make Rex memorable to recruiters and clients.
 ## 2. Goal
 
 A unique, ownable portfolio concept — **"Rex OS"**, a build-in-public operating
-system — that:
+system — that wins remote full-stack/frontend opportunities by pairing a
+distinctive design with recruiter-grade content:
 
 - Is **dashboard-first** so recruiters/clients see all work instantly (no forced
   interaction).
@@ -27,9 +28,18 @@ system — that:
   go stale.
 - Escapes the "AI-ish" aesthetic with a distinctive design system and a
   dual-theme (dark amber-phosphor default + light editorial "paper") toggle.
+- Leads with **sharp positioning, clear availability, and proof-based project
+  content** (problem → action → result), because content — not the gimmick — is
+  what converts a recruiter.
 
-Success = a first-time visitor immediately understands who Rex is and what he has
-built, *and* remembers the site as distinctive ("the one that's a little OS").
+**Target audience:** hiring managers / recruiters at remote-first startups and
+agencies (abroad, or Nigeria at ₦1M+/mo), plus freelance clients. They filter
+hard for: ships production web apps, works independently/remotely, communicates
+clearly.
+
+Success = a first-time recruiter immediately understands who Rex is, sees proof
+he ships real work, finds an obvious hire/next step, *and* remembers the site as
+distinctive ("the one that's a little OS").
 
 ## 3. Scope
 
@@ -38,11 +48,15 @@ built, *and* remembers the site as distinctive ("the one that's a little OS").
 2. Design-system tokens (dual theme) replacing the current global styles.
 3. Interactive terminal component.
 4. Live GitHub data integration (server route + caching).
+5. **Recruiter-grade homepage content** (Section 9): real positioning line,
+   availability, a proof-based **Selected Work** section with outcome bullets,
+   proof panels, and a frictionless hire CTA. Copy is real, not placeholder.
 
 **Out of scope (fast follow-up specs):** reskinning sub-pages (`/about`,
 `/blog`, `/projects`, `/build-logs`, `/bootcamp`, `/tech-serial`, `/admin`) to
-match the new design system. They keep working; only the homepage changes in
-this phase. Existing routes and data (`projectsData.ts`, blog, Supabase) are
+match the new design system, **and full per-project case-study pages** (the deep
+Problem→Result writeups). They keep working; only the homepage changes in this
+phase. Existing routes and data (`projectsData.ts`, blog, Supabase) are
 untouched except where panels read from them.
 
 ## 4. Concept
@@ -185,7 +199,55 @@ of variables each — no duplicated component styles.
 - **Two themes = double work** → mitigated by token-only theming (no per-theme
   component code).
 
-## 9. Open items (decide during planning)
+## 9. Content strategy
+
+Content is the conversion lever; the design earns attention, content earns the
+reply. All copy on the homepage must be **real** — no invented metrics or
+testimonials. Where a real number isn't available, use a concrete qualitative
+outcome, never a fabricated figure.
+
+### 9.1 Positioning
+
+Replace "AI-First Product Builder" with a specific, recruiter-legible line.
+Working draft (refine wording with Rex):
+
+> **Full-stack developer building fast, production-ready web apps with Next.js,
+> TypeScript & Supabase. Open to remote roles.**
+
+Specific stack + "production" + "remote" beats any buzzword for this audience.
+
+### 9.2 Homepage content pillars
+
+1. **Availability** — explicit and scannable: e.g. "Open to remote full-stack
+   roles · freelance welcome · works WAT, overlaps EU/US mornings." Recruiters
+   filter on this in seconds.
+2. **Selected Work (proof-based)** — the single biggest lever. Each flagship
+   project rendered as a mini case study:
+   **Problem → What I built → Result/outcome → Stack → [Live] [Code].**
+   Real outcomes where they exist; concrete qualitative result otherwise.
+3. **Proof of shipping** — the live GitHub activity + build-logs feed (already
+   designed). Differentiator most candidates can't show.
+4. **About (short, credible)** — the build-in-public growth arc (bootcamp →
+   shipping real client work) framed as "learns fast, delivers."
+5. **Social proof** — any genuine testimonial/result line from clients
+   (ICAN Warri, e-technix, FoodGram). Omit if none yet rather than fake it.
+6. **Hire step (frictionless)** — resume download, email, optional Cal.com link,
+   and a stated typical response time.
+
+### 9.3 Required inputs from Rex (gathered during implementation)
+
+Collected project-by-project so it isn't one large upfront ask:
+
+- For top 2–3 projects (FoodGram, e-technix, ICAN Warri): the problem it solved,
+  what he specifically built, any result/number, his role, live + repo links.
+- Any real testimonial or client-result line.
+- Resume (link or file for `/public`).
+- Confirmation/refinement of the positioning line and exact availability wording.
+
+If a real input is missing at build time, that piece ships as a clearly-marked
+TODO placeholder (not fabricated content) and is filled in before launch.
+
+## 10. Open items (decide during planning)
 
 - Exact display font for headings (pair with JetBrains Mono).
 - Whether "active mission" is a new flag in `projectsData.ts` or inferred.
