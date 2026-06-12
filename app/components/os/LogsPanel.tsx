@@ -28,7 +28,6 @@ export default function LogsPanel() {
           building in public — every decision, mistake, and milestone documented as it happens.
         </span>
         <span
-          className="os-mono"
           style={{ fontSize: '0.65rem', color: 'var(--muted)', lineHeight: 1.5 }}
         >
           no polished post-mortems. just the real process.

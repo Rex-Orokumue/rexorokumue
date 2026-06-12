@@ -63,7 +63,7 @@ export default function MissionsPanel() {
               </span>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem' }}>
                 <span
-                  className="os-mono"
+                  className="os-display"
                   style={{ fontSize: '0.78rem', color: 'var(--text)', fontWeight: 600, lineHeight: 1.3 }}
                 >
                   {project.name}

@@ -32,12 +32,11 @@ export default function IdentityPanel() {
 
       {/* positioning line */}
       <p
-        className="os-mono"
         style={{
           margin: 0,
-          fontSize: '0.72rem',
-          color: 'var(--muted)',
-          lineHeight: 1.55,
+          fontSize: 'clamp(0.95rem, 1.4vw, 1.05rem)',
+          color: 'var(--text)',
+          lineHeight: 1.6,
         }}
       >
         Full-stack developer building production-ready web &amp; mobile apps with Next.js, Flutter &amp; Supabase. Founder of Zolarux.
@@ -50,8 +49,8 @@ export default function IdentityPanel() {
           display: 'flex',
           alignItems: 'center',
           gap: '0.4rem',
-          fontSize: '0.65rem',
-          color: 'var(--muted)',
+          fontSize: '0.72rem',
+          color: 'var(--text)',
         }}
       >
         <span style={{ color: 'var(--ok)', fontSize: '0.7rem' }}>●</span>

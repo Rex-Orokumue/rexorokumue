@@ -29,7 +29,11 @@ body {
     linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 100% 28px,
     var(--bg);
   color: var(--text);
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
 }
+.os-prose { font-family: 'DM Sans', system-ui, sans-serif; }
 .os-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
 .os-display { font-family: 'Space Grotesk', system-ui, sans-serif; }
 .os-panel {

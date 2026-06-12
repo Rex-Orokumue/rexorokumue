@@ -75,7 +75,6 @@ export default function ContactPanel() {
 
         {/* reply time note */}
         <span
-          className="os-mono"
           style={{ fontSize: '0.63rem', color: 'var(--muted)' }}
         >
           usually replies within 24h
