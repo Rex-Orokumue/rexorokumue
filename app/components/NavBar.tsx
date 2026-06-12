@@ -14,8 +14,7 @@ const links = [
   { href: '/build-logs',   label: 'Build Logs' },
 ];
 
-export default function NavBar() {
-  const pathname = usePathname();
+function NavBarInner({ pathname }: { pathname: string }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -160,4 +159,10 @@ export default function NavBar() {
       </div>
     </>
   );
+}
+
+export default function NavBar() {
+  const pathname = usePathname();
+  if (pathname === '/') return null;
+  return <NavBarInner pathname={pathname} />;
 }

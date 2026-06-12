@@ -63,6 +63,12 @@ function ShellGrid({ githubData }: { githubData: GitHubData | null }) {
               "logs"
               "terminal"
               "contact";
+            padding: 1rem 1rem 3rem;
+          }
+        }
+        @media (max-width: 480px) {
+          .rex-os-grid {
+            padding: 0.75rem 0.75rem 3rem;
           }
         }
       `}</style>

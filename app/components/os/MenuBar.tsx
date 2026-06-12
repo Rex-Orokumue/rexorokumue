@@ -49,9 +49,9 @@ export default function MenuBar({ streak }: MenuBarProps) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 1.5rem',
-        height: '42px',
-        gap: '1rem',
+        padding: '0.25rem 1rem',
+        minHeight: '42px',
+        gap: '0.5rem',
         flexWrap: 'wrap',
       }}
     >
