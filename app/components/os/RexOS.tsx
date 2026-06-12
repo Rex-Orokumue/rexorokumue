@@ -7,6 +7,9 @@ import ActivityPanel from './ActivityPanel';
 import ProjectsPanel from './ProjectsPanel';
 import MissionsPanel from './MissionsPanel';
 import LogsPanel from './LogsPanel';
+import IdentityPanel from './IdentityPanel';
+import Terminal from './Terminal';
+import ContactPanel from './ContactPanel';
 
 interface GitHubData {
   ok: boolean;
@@ -65,23 +68,9 @@ function ShellGrid({ githubData }: { githubData: GitHubData | null }) {
       `}</style>
 
       <main className="rex-os-grid">
-        {/* identity — placeholder for next task */}
-        <div
-          className="os-panel panel-identity"
-          style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
-        >
-          <span
-            className="os-mono"
-            style={{ fontSize: '0.68rem', color: 'var(--muted)', letterSpacing: '0.04em' }}
-          >
-            ~/identity
-          </span>
-          <span
-            className="os-mono"
-            style={{ fontSize: '0.72rem', color: 'var(--border)', marginTop: 'auto' }}
-          >
-            — placeholder —
-          </span>
+        {/* identity */}
+        <div className="panel-identity">
+          <IdentityPanel />
         </div>
 
         {/* activity — real data */}
@@ -104,42 +93,14 @@ function ShellGrid({ githubData }: { githubData: GitHubData | null }) {
           <LogsPanel />
         </div>
 
-        {/* terminal — placeholder for next task */}
-        <div
-          className="os-panel panel-terminal"
-          style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
-        >
-          <span
-            className="os-mono"
-            style={{ fontSize: '0.68rem', color: 'var(--muted)', letterSpacing: '0.04em' }}
-          >
-            ~/terminal
-          </span>
-          <span
-            className="os-mono"
-            style={{ fontSize: '0.72rem', color: 'var(--border)', marginTop: 'auto' }}
-          >
-            — placeholder —
-          </span>
+        {/* terminal */}
+        <div className="panel-terminal">
+          <Terminal />
         </div>
 
-        {/* contact — placeholder for next task */}
-        <div
-          className="os-panel panel-contact"
-          style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
-        >
-          <span
-            className="os-mono"
-            style={{ fontSize: '0.68rem', color: 'var(--muted)', letterSpacing: '0.04em' }}
-          >
-            ~/contact
-          </span>
-          <span
-            className="os-mono"
-            style={{ fontSize: '0.72rem', color: 'var(--border)', marginTop: 'auto' }}
-          >
-            — placeholder —
-          </span>
+        {/* contact */}
+        <div className="panel-contact">
+          <ContactPanel />
         </div>
       </main>
     </>
