@@ -3,24 +3,21 @@
 import { useEffect, useState } from 'react';
 import { ThemeProvider } from './ThemeProvider';
 import MenuBar from './MenuBar';
+import ActivityPanel from './ActivityPanel';
+import ProjectsPanel from './ProjectsPanel';
+import MissionsPanel from './MissionsPanel';
+import LogsPanel from './LogsPanel';
 
 interface GitHubData {
   ok: boolean;
+  commitsThisWeek?: number;
   currentStreakDays?: number;
   publicRepos?: number;
-  totalContributions?: number;
+  totalThisYear?: number;
+  days?: { date: string; contributionCount: number }[];
   profileUrl?: string;
+  error?: string;
 }
-
-const PANELS = [
-  { id: 'identity',  label: '~/identity',  gridArea: 'identity' },
-  { id: 'activity',  label: '~/activity',  gridArea: 'activity' },
-  { id: 'missions',  label: '~/missions',  gridArea: 'missions' },
-  { id: 'projects',  label: '~/projects',  gridArea: 'projects' },
-  { id: 'logs',      label: '~/logs',      gridArea: 'logs' },
-  { id: 'terminal',  label: '~/terminal',  gridArea: 'terminal' },
-  { id: 'contact',   label: '~/contact',   gridArea: 'contact' },
-] as const;
 
 function ShellGrid({ githubData }: { githubData: GitHubData | null }) {
   return (
@@ -68,26 +65,82 @@ function ShellGrid({ githubData }: { githubData: GitHubData | null }) {
       `}</style>
 
       <main className="rex-os-grid">
-        {PANELS.map(panel => (
-          <div
-            key={panel.id}
-            className={`os-panel panel-${panel.id}`}
-            style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
+        {/* identity — placeholder for next task */}
+        <div
+          className="os-panel panel-identity"
+          style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
+        >
+          <span
+            className="os-mono"
+            style={{ fontSize: '0.68rem', color: 'var(--muted)', letterSpacing: '0.04em' }}
           >
-            <span
-              className="os-mono"
-              style={{ fontSize: '0.68rem', color: 'var(--muted)', letterSpacing: '0.04em' }}
-            >
-              {panel.label}
-            </span>
-            <span
-              className="os-mono"
-              style={{ fontSize: '0.72rem', color: 'var(--border)', marginTop: 'auto' }}
-            >
-              — placeholder —
-            </span>
-          </div>
-        ))}
+            ~/identity
+          </span>
+          <span
+            className="os-mono"
+            style={{ fontSize: '0.72rem', color: 'var(--border)', marginTop: 'auto' }}
+          >
+            — placeholder —
+          </span>
+        </div>
+
+        {/* activity — real data */}
+        <div className="panel-activity">
+          <ActivityPanel data={githubData} />
+        </div>
+
+        {/* missions — real data */}
+        <div className="panel-missions">
+          <MissionsPanel />
+        </div>
+
+        {/* projects — real data */}
+        <div className="panel-projects">
+          <ProjectsPanel />
+        </div>
+
+        {/* logs — real data */}
+        <div className="panel-logs">
+          <LogsPanel />
+        </div>
+
+        {/* terminal — placeholder for next task */}
+        <div
+          className="os-panel panel-terminal"
+          style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
+        >
+          <span
+            className="os-mono"
+            style={{ fontSize: '0.68rem', color: 'var(--muted)', letterSpacing: '0.04em' }}
+          >
+            ~/terminal
+          </span>
+          <span
+            className="os-mono"
+            style={{ fontSize: '0.72rem', color: 'var(--border)', marginTop: 'auto' }}
+          >
+            — placeholder —
+          </span>
+        </div>
+
+        {/* contact — placeholder for next task */}
+        <div
+          className="os-panel panel-contact"
+          style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
+        >
+          <span
+            className="os-mono"
+            style={{ fontSize: '0.68rem', color: 'var(--muted)', letterSpacing: '0.04em' }}
+          >
+            ~/contact
+          </span>
+          <span
+            className="os-mono"
+            style={{ fontSize: '0.72rem', color: 'var(--border)', marginTop: 'auto' }}
+          >
+            — placeholder —
+          </span>
+        </div>
       </main>
     </>
   );
