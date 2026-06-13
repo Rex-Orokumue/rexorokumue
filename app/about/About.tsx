@@ -9,43 +9,25 @@ const GlobalStyles = () => (
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --primary:      #1E293B;
-      --secondary:    #0F172A;
-      --accent:       #3B82F6;
-      --accent-dim:   rgba(59,130,246,0.10);
-      --accent-glow:  rgba(59,130,246,0.30);
-      --accent-light: #93C5FD;
-      --text:         #F1F5F9;
-      --muted:        #94A3B8;
-      --muted-2:      #64748B;
-      --border:       rgba(255,255,255,0.07);
-      --border-hover: rgba(59,130,246,0.25);
-      --card-bg:      rgba(30,41,59,0.55);
+      --primary:      var(--panel);
+      --secondary:    var(--bg);
+      --accent-dim:   color-mix(in srgb, var(--accent) 12%, transparent);
+      --accent-glow:  transparent;
+      --accent-light: var(--accent);
+      --muted-2:      var(--muted);
+      --border-hover: var(--accent);
+      --card-bg:      var(--panel);
     }
 
     html { scroll-behavior: smooth; }
     body {
-      background: var(--secondary);
-      color: var(--text);
       font-family: 'DM Sans', sans-serif;
       overflow-x: hidden;
       line-height: 1.6;
     }
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.5;
-    }
     .bg-mesh {
       position: fixed; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 70% 50% at 0% 10%, rgba(59,130,246,0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 55% 65% at 100% 85%, rgba(59,130,246,0.07) 0%, transparent 55%),
-        var(--secondary);
+      background: transparent;
     }
 
     @keyframes fadeUp   { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
@@ -84,7 +66,7 @@ const GlobalStyles = () => (
       color: var(--accent); margin-bottom: 14px;
     }
     .section-title {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(1.9rem, 3.5vw, 2.9rem);
       font-weight: 800; line-height: 1.1;
       letter-spacing: -0.025em; color: var(--text);
@@ -95,10 +77,9 @@ const GlobalStyles = () => (
       border-radius: 8px; font-weight: 600; font-size: 0.9rem;
       text-decoration: none; letter-spacing: 0.02em;
       transition: all 0.25s;
-      box-shadow: 0 4px 28px var(--accent-glow);
       border: 1px solid transparent;
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 36px var(--accent-glow); }
+    .btn-primary:hover { transform: translateY(-2px); }
     .btn-ghost {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 13px 30px; border: 1px solid var(--border);
@@ -124,7 +105,7 @@ const GlobalStyles = () => (
       margin-bottom: 36px; width: fit-content;
     }
     .about-headline {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(2.2rem, 4vw, 3.4rem);
       font-weight: 800; line-height: 1.0;
       letter-spacing: -0.03em; color: var(--text); max-width: 780px;
@@ -132,8 +113,7 @@ const GlobalStyles = () => (
     .about-headline .line-accent {
       display: block;
       min-height: 1.1em;
-      background: linear-gradient(120deg, var(--accent) 20%, var(--accent-light) 80%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      color: var(--accent);
     }
     .about-intro {
       margin-top: 32px; font-size: 1.15rem; line-height: 1.8;
@@ -172,12 +152,12 @@ const GlobalStyles = () => (
     }
     .help-item:hover { border-color: var(--border-hover); transform: translateX(4px); }
     .help-num {
-      font-family: 'Syne', sans-serif; font-size: 0.70rem;
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.70rem;
       font-weight: 800; color: var(--accent);
       letter-spacing: 0.06em; flex-shrink: 0; padding-top: 2px;
     }
     .help-item-text h4 {
-      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
       font-size: 0.92rem; color: var(--text); margin-bottom: 4px;
     }
     .help-item-text p { font-size: 0.80rem; color: var(--muted); line-height: 1.5; }
@@ -192,7 +172,7 @@ const GlobalStyles = () => (
     .philosophy-inner::before {
       content: ''; position: absolute; top: -40%; right: -5%;
       width: 500px; height: 500px;
-      background: radial-gradient(ellipse, rgba(59,130,246,0.07), transparent 70%);
+      background: transparent;
       pointer-events: none;
     }
     .philosophy-header {
@@ -211,7 +191,7 @@ const GlobalStyles = () => (
     }
     .philosophy-quote::before {
       content: '"'; position: absolute; top: -16px; left: 24px;
-      font-family: 'Syne', sans-serif; font-size: 4rem; font-weight: 800;
+      font-family: 'Space Grotesk', sans-serif; font-size: 4rem; font-weight: 800;
       color: var(--accent); line-height: 1; opacity: 0.4;
     }
     .philosophy-quote p {
@@ -235,7 +215,7 @@ const GlobalStyles = () => (
     .principle:hover { border-color: var(--border-hover); transform: translateY(-3px); }
     .principle-icon { font-size: 1.4rem; margin-bottom: 14px; display: block; }
     .principle h4 {
-      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
       font-size: 0.88rem; color: var(--text); margin-bottom: 8px;
     }
     .principle p { font-size: 0.78rem; line-height: 1.6; color: var(--muted); }
@@ -262,7 +242,7 @@ const GlobalStyles = () => (
     }
     .milestone-line {
       width: 1px; flex: 1;
-      background: linear-gradient(to bottom, var(--accent-glow), transparent);
+      background: var(--border);
       margin-top: 8px; min-height: 32px;
     }
     .milestone:last-child .milestone-line { display: none; }
@@ -271,7 +251,7 @@ const GlobalStyles = () => (
       text-transform: uppercase; color: var(--accent); margin-bottom: 6px;
     }
     .milestone-content h4 {
-      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
       font-size: 0.90rem; color: var(--text); margin-bottom: 4px;
     }
     .milestone-content p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
@@ -290,7 +270,7 @@ const GlobalStyles = () => (
     }
     .focus-card::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(to right, transparent, var(--accent-glow), transparent);
+      background: var(--border);
     }
     .focus-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
     .focus-card-label {
@@ -298,7 +278,7 @@ const GlobalStyles = () => (
       text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
     }
     .focus-card h3 {
-      font-family: 'Syne', sans-serif; font-size: 1.1rem;
+      font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem;
       font-weight: 700; color: var(--text); margin-bottom: 12px;
     }
     .focus-card p { font-size: 0.85rem; line-height: 1.75; color: var(--muted); }
@@ -324,7 +304,7 @@ const GlobalStyles = () => (
       text-align: center;
     }
     .focus-metric-val {
-      font-family: 'Syne', sans-serif; font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-family: 'Space Grotesk', sans-serif; font-size: clamp(1rem, 2.5vw, 1.3rem);
       font-weight: 800; color: var(--text); line-height: 1;
     }
     .focus-metric-val em { color: var(--accent); font-style: normal; font-size: 0.85em; }
@@ -348,7 +328,7 @@ const GlobalStyles = () => (
       text-transform: uppercase; color: var(--accent);
     }
     .work-teaser-card h3 {
-      font-family: 'Syne', sans-serif; font-size: 0.95rem;
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem;
       font-weight: 700; color: var(--text); line-height: 1.3;
     }
     .work-teaser-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; flex: 1; }
@@ -392,7 +372,7 @@ const GlobalStyles = () => (
     .about-cta-section { padding: 0 0 140px; }
     .about-cta-inner {
       border-radius: 24px; border: 1px solid var(--border);
-      background: linear-gradient(135deg, rgba(30,41,59,0.9), rgba(15,23,42,0.95));
+      background: var(--panel);
       backdrop-filter: blur(24px); padding: 90px 80px;
       display: grid; grid-template-columns: 1fr auto;
       gap: 64px; align-items: center;
@@ -401,11 +381,11 @@ const GlobalStyles = () => (
     .about-cta-inner::before {
       content: ''; position: absolute; bottom: -40%; left: -5%;
       width: 400px; height: 400px;
-      background: radial-gradient(ellipse, rgba(59,130,246,0.10), transparent 70%);
+      background: transparent;
       pointer-events: none;
     }
     .about-cta-text h2 {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(1.8rem, 3vw, 2.8rem);
       font-weight: 800; letter-spacing: -0.025em;
       line-height: 1.1; margin-bottom: 16px;

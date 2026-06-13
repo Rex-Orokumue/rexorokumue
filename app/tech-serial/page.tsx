@@ -70,15 +70,17 @@ export default async function TechSerialPage() {
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-          --secondary: #0F172A; --accent: #3B82F6; --accent-dim: rgba(59,130,246,0.10);
-          --accent-glow: rgba(59,130,246,0.30); --accent-light: #93C5FD;
-          --text: #F1F5F9; --muted: #94A3B8; --muted-2: #64748B;
-          --border: rgba(255,255,255,0.07); --border-hover: rgba(59,130,246,0.25);
-          --card-bg: rgba(30,41,59,0.55); --green: #34D399;
+          --secondary:    var(--bg);
+          --accent-dim:   color-mix(in srgb, var(--accent) 12%, transparent);
+          --accent-glow:  transparent;
+          --accent-light: var(--accent);
+          --muted-2:      var(--muted);
+          --border-hover: var(--accent);
+          --card-bg:      var(--panel);
+          --green: #34D399;
         }
-        body { background: var(--secondary); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; line-height: 1.6; }
-        body::after { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.5; }
-        .bg-mesh { position: fixed; inset: 0; z-index: 0; background: radial-gradient(ellipse 70% 50% at 5% 0%, rgba(59,130,246,0.11) 0%, transparent 60%), radial-gradient(ellipse 50% 55% at 95% 90%, rgba(59,130,246,0.06) 0%, transparent 55%), var(--secondary); }
+        body { font-family: 'DM Sans', sans-serif; overflow-x: hidden; line-height: 1.6; }
+        .bg-mesh { position: fixed; inset: 0; z-index: 0; background: transparent; }
         @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
         section { position: relative; z-index: 1; }
@@ -88,7 +90,7 @@ export default async function TechSerialPage() {
         .ts-hero { padding-top: 160px; padding-bottom: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: -20px; }
         .ts-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 8px; border-radius: 100px; border: 1px solid var(--accent-glow); background: var(--accent-dim); font-size: .70rem; font-weight: 600; letter-spacing: .10em; text-transform: uppercase; color: var(--accent); margin-top: -60px; margin-bottom: 28px; width: fit-content; animation: fadeUp .7s .05s ease both; }
         .ts-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; flex-shrink: 0; }
-        .ts-headline { font-family: 'Syne', sans-serif; font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-weight: 800; line-height: 1.0; letter-spacing: -.03em; animation: fadeUp .7s .18s ease both; }
+        .ts-headline { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-weight: 800; line-height: 1.0; letter-spacing: -.03em; animation: fadeUp .7s .18s ease both; }
         .ts-headline .accent { color: var(--accent); }
         .ts-sub { margin-top: 18px; font-size: 1rem; color: var(--muted); line-height: 1.75; font-weight: 300; max-width: 480px; animation: fadeUp .7s .30s ease both; }
         .ts-sub strong { color: var(--text); font-weight: 500; }
@@ -102,25 +104,25 @@ export default async function TechSerialPage() {
         .platform-icon.ig { background: rgba(225,48,108,0.12); border: 1px solid rgba(225,48,108,0.25); }
         .platform-icon.wa { background: rgba(37,211,102,0.12); border: 1px solid rgba(37,211,102,0.25); }
         .platform-info { flex: 1; min-width: 0; }
-        .platform-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .88rem; color: var(--text); }
+        .platform-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .88rem; color: var(--text); }
         .platform-handle { font-size: .75rem; color: var(--muted); margin-top: 2px; }
         .platform-arrow { font-size: .78rem; color: var(--accent); flex-shrink: 0; }
 
         .ts-featured-card { border-radius: 20px; border: 1px solid var(--border); background: var(--card-bg); backdrop-filter: blur(16px); overflow: hidden; animation: fadeUp .7s .25s ease both; display: block; transition: border-color .25s, transform .25s; }
         .ts-featured-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
-        .ts-featured-thumb { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(15,23,42,0.8)); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .ts-featured-thumb { width: 100%; aspect-ratio: 16/9; background: var(--panel-2); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
         .ts-featured-thumb img { width: 100%; height: 100%; object-fit: cover; }
-        .ts-play-btn { position: absolute; width: 56px; height: 56px; border-radius: 50%; background: rgba(59,130,246,0.9); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); cursor: pointer; transition: transform .2s; }
+        .ts-play-btn { position: absolute; width: 56px; height: 56px; border-radius: 50%; background: var(--accent); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); cursor: pointer; transition: transform .2s; }
         .ts-play-btn:hover { transform: scale(1.1); }
         .ts-play-btn svg { margin-left: 3px; }
         .ts-featured-body { padding: 20px 22px; }
         .ts-featured-label { font-size: .65rem; font-weight: 700; letter-spacing: .10em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-        .ts-featured-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .95rem; color: var(--text); line-height: 1.3; }
+        .ts-featured-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .95rem; color: var(--text); line-height: 1.3; }
         .ts-featured-desc { font-size: .78rem; color: var(--muted); margin-top: 6px; line-height: 1.55; }
 
         .ts-about { padding: 0 0 80px; }
         .ts-about-inner { border-radius: 20px; border: 1px solid var(--border); background: var(--card-bg); backdrop-filter: blur(16px); padding: 56px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-        .ts-about-left h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 20px; }
+        .ts-about-left h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 20px; }
         .ts-about-left p { font-size: .9rem; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
         .ts-about-left p strong { color: var(--text); font-weight: 500; }
         .section-tag { display: inline-block; font-size: .70rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
@@ -128,13 +130,13 @@ export default async function TechSerialPage() {
         .ts-topic { display: flex; gap: 14px; padding: 16px 18px; border-radius: 10px; border: 1px solid var(--border); background: rgba(15,23,42,0.4); transition: all .2s; }
         .ts-topic:hover { border-color: var(--border-hover); transform: translateX(4px); }
         .ts-topic-icon { font-size: 1.2rem; flex-shrink: 0; width: 32px; text-align: center; }
-        .ts-topic-text h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .85rem; color: var(--text); margin-bottom: 3px; }
+        .ts-topic-text h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .85rem; color: var(--text); margin-bottom: 3px; }
         .ts-topic-text p { font-size: .75rem; color: var(--muted); line-height: 1.5; }
 
         .ts-cta { padding: 0 0 120px; }
-        .ts-cta-inner { border-radius: 20px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(30,41,59,.9), rgba(15,23,42,.95)); backdrop-filter: blur(20px); padding: 72px 80px; text-align: center; position: relative; overflow: hidden; }
-        .ts-cta-inner::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 60%; height: 250px; background: radial-gradient(ellipse, rgba(59,130,246,.12), transparent 70%); pointer-events: none; }
-        .ts-cta-inner h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; letter-spacing: -.025em; margin-bottom: 14px; }
+        .ts-cta-inner { border-radius: 20px; border: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(20px); padding: 72px 80px; text-align: center; position: relative; overflow: hidden; }
+        .ts-cta-inner::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 60%; height: 250px; background: transparent; pointer-events: none; }
+        .ts-cta-inner h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; letter-spacing: -.025em; margin-bottom: 14px; }
         .ts-cta-inner p { font-size: .9rem; color: var(--muted); max-width: 440px; margin: 0 auto 36px; line-height: 1.75; }
         .platform-btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
         .platform-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border-radius: 8px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); text-decoration: none; font-size: .83rem; font-weight: 500; transition: all .2s; }
@@ -207,7 +209,7 @@ export default async function TechSerialPage() {
                 {hasVideo ? (
                   <img src={latest!.thumbnail} alt={latest!.title} />
                 ) : (
-                  <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, rgba(59,130,246,0.2), rgba(15,23,42,0.9))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--muted)', fontSize: '.82rem' }}>
+                  <div style={{ width: '100%', height: '100%', background: 'var(--panel-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--muted)', fontSize: '.82rem' }}>
                     First episode coming soon
                   </div>
                 )}

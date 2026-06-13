@@ -64,27 +64,29 @@ export default function BootcampPage() {
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-          --secondary: #0F172A; --accent: #3B82F6; --accent-dim: rgba(59,130,246,0.10);
-          --accent-glow: rgba(59,130,246,0.30); --accent-light: #93C5FD;
-          --text: #F1F5F9; --muted: #94A3B8; --muted-2: #64748B;
-          --border: rgba(255,255,255,0.07); --border-hover: rgba(59,130,246,0.25);
-          --card-bg: rgba(30,41,59,0.55); --green: #34D399;
+          --secondary:    var(--bg);
+          --accent-dim:   color-mix(in srgb, var(--accent) 12%, transparent);
+          --accent-glow:  transparent;
+          --accent-light: var(--accent);
+          --muted-2:      var(--muted);
+          --border-hover: var(--accent);
+          --card-bg:      var(--panel);
+          --green: #34D399;
         }
-        body { background: var(--secondary); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; line-height: 1.6; }
-        body::after { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.5; }
-        .bg-mesh { position: fixed; inset: 0; z-index: 0; background: radial-gradient(ellipse 70% 50% at 5% 0%, rgba(59,130,246,0.13) 0%, transparent 60%), radial-gradient(ellipse 50% 55% at 95% 90%, rgba(59,130,246,0.06) 0%, transparent 55%), var(--secondary); }
+        body { font-family: 'DM Sans', sans-serif; overflow-x: hidden; line-height: 1.6; }
+        .bg-mesh { position: fixed; inset: 0; z-index: 0; background: transparent; }
         @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
         section { position: relative; z-index: 1; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 64px; }
         .section-tag { display: inline-block; font-size: .70rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
-        .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 3.5vw, 2.9rem); font-weight: 800; line-height: 1.1; letter-spacing: -.025em; color: var(--text); }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.9rem, 3.5vw, 2.9rem); font-weight: 800; line-height: 1.1; letter-spacing: -.025em; color: var(--text); }
 
         /* HERO */
         .bc-hero { padding-top: 160px; padding-bottom: 80px; }
         .bc-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 8px; border-radius: 100px; border: 1px solid rgba(52,211,153,0.35); background: rgba(52,211,153,0.08); font-size: .70rem; font-weight: 600; letter-spacing: .10em; text-transform: uppercase; color: var(--green); margin-top: -60px; margin-bottom: 28px; width: fit-content; animation: fadeUp .7s .05s ease both; }
         .bc-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; flex-shrink: 0; }
-        .bc-headline { font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5.5vw, 4.6rem); font-weight: 800; line-height: .95; letter-spacing: -.04em; animation: fadeUp .7s .18s ease both; }
+        .bc-headline { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.4rem, 5.5vw, 4.6rem); font-weight: 800; line-height: .95; letter-spacing: -.04em; animation: fadeUp .7s .18s ease both; }
         .bc-headline .line2 { color: var(--accent); display: block; }
         .bc-sub { margin-top: 24px; font-size: 1.05rem; color: var(--muted); max-width: 580px; font-weight: 300; line-height: 1.75; animation: fadeUp .7s .30s ease both; }
         .bc-sub strong { color: var(--text); font-weight: 500; }
@@ -93,14 +95,14 @@ export default function BootcampPage() {
         .bc-stats { display: flex; gap: 0; margin-top: 40px; border: 1px solid var(--border); border-radius: 14px; background: var(--card-bg); backdrop-filter: blur(12px); overflow: hidden; animation: fadeUp .7s .40s ease both; width: fit-content; }
         .bc-stat { padding: 20px 32px; text-align: center; border-right: 1px solid var(--border); }
         .bc-stat:last-child { border-right: none; }
-        .bc-stat-val { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text); line-height: 1; }
+        .bc-stat-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text); line-height: 1; }
         .bc-stat-val em { color: var(--accent); font-style: normal; }
         .bc-stat-label { font-size: .70rem; color: var(--muted); margin-top: 5px; letter-spacing: .04em; }
 
         /* Hero CTA */
         .bc-hero-actions { display: flex; gap: 14px; margin-top: 40px; flex-wrap: wrap; animation: fadeUp .7s .50s ease both; }
-        .btn-enroll { padding: 15px 36px; background: var(--green); color: #0F172A; border-radius: 8px; font-weight: 700; font-size: .9rem; text-decoration: none; letter-spacing: .02em; transition: all .25s; box-shadow: 0 4px 28px rgba(52,211,153,.3); border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-        .btn-enroll:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(52,211,153,.4); }
+        .btn-enroll { padding: 15px 36px; background: var(--green); color: #0F172A; border-radius: 8px; font-weight: 700; font-size: .9rem; text-decoration: none; letter-spacing: .02em; transition: all .25s; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+        .btn-enroll:hover { transform: translateY(-2px); }
         .btn-ghost { padding: 14px 28px; border: 1px solid var(--border); color: var(--text); border-radius: 8px; font-weight: 500; font-size: .9rem; text-decoration: none; transition: all .25s; background: transparent; }
         .btn-ghost:hover { border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.04); }
 
@@ -113,7 +115,7 @@ export default function BootcampPage() {
         .bc-who-card { display: flex; gap: 14px; padding: 16px 18px; border-radius: 12px; border: 1px solid var(--border); background: var(--card-bg); transition: all .2s; }
         .bc-who-card:hover { border-color: var(--border-hover); transform: translateX(4px); }
         .bc-who-icon { font-size: 1.3rem; flex-shrink: 0; width: 32px; }
-        .bc-who-text h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .88rem; color: var(--text); margin-bottom: 3px; }
+        .bc-who-text h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .88rem; color: var(--text); margin-bottom: 3px; }
         .bc-who-text p { font-size: .78rem; color: var(--muted); line-height: 1.5; }
 
         /* CURRICULUM */
@@ -123,13 +125,13 @@ export default function BootcampPage() {
         .month-card:hover { transform: translateY(-4px); border-color: var(--border-hover); box-shadow: 0 16px 48px rgba(0,0,0,.35); }
         .month-header { padding: 24px 24px 20px; border-bottom: 1px solid var(--border); }
         .month-label { font-family: 'JetBrains Mono', monospace; font-size: .65rem; font-weight: 600; letter-spacing: .10em; text-transform: uppercase; margin-bottom: 8px; }
-        .month-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.0rem; color: var(--text); line-height: 1.25; }
+        .month-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.0rem; color: var(--text); line-height: 1.25; }
         .month-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 14px; }
         .week-item { display: flex; gap: 12px; }
         .week-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
         .week-content {}
         .week-label { font-family: 'JetBrains Mono', monospace; font-size: .60rem; font-weight: 600; letter-spacing: .08em; margin-bottom: 3px; }
-        .week-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .83rem; color: var(--text); margin-bottom: 3px; }
+        .week-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .83rem; color: var(--text); margin-bottom: 3px; }
         .week-desc { font-size: .75rem; color: var(--muted); line-height: 1.55; }
 
         /* WHAT YOU BUILD */
@@ -138,20 +140,20 @@ export default function BootcampPage() {
         .outcomes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
         .outcome-card { padding: 24px; border-radius: 14px; border: 1px solid var(--border); background: rgba(15,23,42,.5); text-align: center; }
         .outcome-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
-        .outcome-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .92rem; color: var(--text); margin-bottom: 6px; }
+        .outcome-card h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .92rem; color: var(--text); margin-bottom: 6px; }
         .outcome-card p { font-size: .78rem; color: var(--muted); line-height: 1.55; }
 
         /* PRICING */
         .bc-pricing { padding: 0 0 80px; }
         .pricing-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
         .pricing-card { border-radius: 20px; border: 1px solid var(--border); background: var(--card-bg); backdrop-filter: blur(12px); padding: 36px; position: relative; overflow: hidden; }
-        .pricing-card.featured { border-color: var(--accent-glow); }
-        .pricing-card.featured::before { content: ''; position: absolute; top: -30%; right: -10%; width: 300px; height: 300px; background: radial-gradient(ellipse, rgba(59,130,246,.08), transparent 70%); pointer-events: none; }
+        .pricing-card.featured { border-color: var(--accent); }
+        .pricing-card.featured::before { content: ''; position: absolute; top: -30%; right: -10%; width: 300px; height: 300px; background: transparent; pointer-events: none; }
         .pricing-badge { display: inline-block; padding: 3px 12px; border-radius: 100px; font-size: .63rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 16px; }
         .pricing-badge.standard { background: var(--accent-dim); border: 1px solid var(--accent-glow); color: var(--accent-light); }
         .pricing-badge.best { background: rgba(52,211,153,.10); border: 1px solid rgba(52,211,153,.3); color: var(--green); }
-        .pricing-name { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
-        .pricing-price { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--text); line-height: 1; }
+        .pricing-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+        .pricing-price { font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--text); line-height: 1; }
         .pricing-price em { font-size: 1rem; font-style: normal; color: var(--muted); font-weight: 400; }
         .pricing-desc { font-size: .82rem; color: var(--muted); margin-top: 10px; line-height: 1.65; margin-bottom: 24px; }
         .pricing-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
@@ -160,9 +162,9 @@ export default function BootcampPage() {
 
         /* CTA */
         .bc-cta { padding: 0 0 120px; }
-        .bc-cta-inner { border-radius: 24px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(30,41,59,.9), rgba(15,23,42,.95)); backdrop-filter: blur(24px); padding: 90px 80px; text-align: center; position: relative; overflow: hidden; }
-        .bc-cta-inner::before { content: ''; position: absolute; top: -60%; left: 50%; transform: translateX(-50%); width: 70%; height: 300px; background: radial-gradient(ellipse, rgba(52,211,153,.10), transparent 70%); pointer-events: none; }
-        .bc-cta-inner h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.9rem, 3.5vw, 3rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 16px; }
+        .bc-cta-inner { border-radius: 24px; border: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(24px); padding: 90px 80px; text-align: center; position: relative; overflow: hidden; }
+        .bc-cta-inner::before { content: ''; position: absolute; top: -60%; left: 50%; transform: translateX(-50%); width: 70%; height: 300px; background: transparent; pointer-events: none; }
+        .bc-cta-inner h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.9rem, 3.5vw, 3rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 16px; }
         .bc-cta-inner > p { font-size: 1rem; color: var(--muted); max-width: 480px; margin: 0 auto 44px; line-height: 1.75; font-weight: 300; }
         .cohort-note { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 32px; padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(52,211,153,.3); background: rgba(52,211,153,.08); font-size: .75rem; color: var(--green); }
         .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }

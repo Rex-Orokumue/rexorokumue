@@ -78,15 +78,16 @@ export default async function BlogPage({
       <style>{`
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-          --secondary: #0F172A; --accent: #3B82F6; --accent-dim: rgba(59,130,246,0.10);
-          --accent-glow: rgba(59,130,246,0.30); --accent-light: #93C5FD;
-          --text: #F1F5F9; --muted: #94A3B8; --muted-2: #64748B;
-          --border: rgba(255,255,255,0.07); --border-hover: rgba(59,130,246,0.25);
-          --card-bg: rgba(30,41,59,0.55);
+          --secondary:    var(--bg);
+          --accent-dim:   color-mix(in srgb, var(--accent) 12%, transparent);
+          --accent-glow:  transparent;
+          --accent-light: var(--accent);
+          --muted-2:      var(--muted);
+          --border-hover: var(--accent);
+          --card-bg:      var(--panel);
         }
-        body { background: var(--secondary); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; line-height: 1.6; }
-        body::after { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.5; }
-        .bg-mesh { position: fixed; inset: 0; z-index: 0; background: radial-gradient(ellipse 70% 50% at 5% 0%, rgba(59,130,246,0.11) 0%, transparent 60%), radial-gradient(ellipse 50% 55% at 95% 90%, rgba(59,130,246,0.06) 0%, transparent 55%), var(--secondary); }
+        body { font-family: 'DM Sans', sans-serif; overflow-x: hidden; line-height: 1.6; }
+        .bg-mesh { position: fixed; inset: 0; z-index: 0; background: transparent; }
         @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
         section { position: relative; z-index: 1; }
@@ -95,7 +96,7 @@ export default async function BlogPage({
         .blog-hero { padding-top: 160px; padding-bottom: 64px; margin-top: -20px; }
         .blog-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 8px; border-radius: 100px; border: 1px solid var(--accent-glow); background: var(--accent-dim); font-size: .70rem; font-weight: 600; letter-spacing: .10em; text-transform: uppercase; color: var(--accent); margin-top: -60px; margin-bottom: 28px; width: fit-content; animation: fadeUp .7s .05s ease both; }
         .blog-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; flex-shrink: 0; }
-        .blog-headline { font-family: 'Syne', sans-serif; font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-weight: 800; line-height: 1.0; letter-spacing: -.03em; animation: fadeUp .7s .18s ease both; }
+        .blog-headline { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-weight: 800; line-height: 1.0; letter-spacing: -.03em; animation: fadeUp .7s .18s ease both; }
         .blog-sub { margin-top: 16px; font-size: 1rem; color: var(--muted); max-width: 520px; font-weight: 300; line-height: 1.75; animation: fadeUp .7s .30s ease both; }
 
         .blog-filter { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 0 40px; animation: fadeUp .7s .40s ease both; }
@@ -112,7 +113,7 @@ export default async function BlogPage({
         .post-card:hover .post-cover-image { transform: scale(1.05); }
         .post-category { font-size: .65rem; font-weight: 700; letter-spacing: .10em; text-transform: uppercase; }
         .post-date { font-size: .72rem; color: var(--muted-2); }
-        .post-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 10px; }
+        .post-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 10px; }
         .post-excerpt { font-size: .83rem; color: var(--muted); line-height: 1.7; flex: 1; }
         .post-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
         .post-tags { display: flex; gap: 6px; flex-wrap: wrap; }
