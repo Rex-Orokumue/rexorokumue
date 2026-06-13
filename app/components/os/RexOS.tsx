@@ -10,6 +10,7 @@ import LogsPanel from './LogsPanel';
 import IdentityPanel from './IdentityPanel';
 import Terminal from './Terminal';
 import ContactPanel from './ContactPanel';
+import ExperiencePanel from './ExperiencePanel';
 
 interface GitHubData {
   ok: boolean;
@@ -30,10 +31,11 @@ function ShellGrid({ githubData }: { githubData: GitHubData | null }) {
           display: grid;
           grid-template-columns: 1fr 1fr;
           grid-template-areas:
-            "identity  activity"
-            "missions  projects"
-            "logs      terminal"
-            "contact   contact";
+            "identity   activity"
+            "experience experience"
+            "missions   projects"
+            "logs       terminal"
+            "contact    contact";
           gap: 1rem;
           max-width: 1100px;
           margin: 0 auto;
@@ -45,6 +47,7 @@ function ShellGrid({ githubData }: { githubData: GitHubData | null }) {
         .rex-os-grid .panel-projects  { grid-area: projects; }
         .rex-os-grid .panel-logs      { grid-area: logs; }
         .rex-os-grid .panel-terminal  { grid-area: terminal; }
+        .rex-os-grid .panel-experience { grid-area: experience; }
         .rex-os-grid .panel-contact   { grid-area: contact; }
 
         /* identity gets a bit more height to feel like a hero card */
@@ -58,6 +61,7 @@ function ShellGrid({ githubData }: { githubData: GitHubData | null }) {
             grid-template-areas:
               "identity"
               "activity"
+              "experience"
               "missions"
               "projects"
               "logs"
@@ -82,6 +86,11 @@ function ShellGrid({ githubData }: { githubData: GitHubData | null }) {
         {/* activity — real data */}
         <div className="panel-activity">
           <ActivityPanel data={githubData} />
+        </div>
+
+        {/* experience + skills */}
+        <div className="panel-experience">
+          <ExperiencePanel />
         </div>
 
         {/* missions — real data */}
