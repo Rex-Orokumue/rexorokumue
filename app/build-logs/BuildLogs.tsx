@@ -24,21 +24,13 @@ const PROJECT_META: ProjectMeta[] = [
   { id: 'admin',     name: 'Zolarux Admin Control Center', icon: '⚙️', desc: 'Real-time ops dashboard — mobile, web & Windows',           status: 'live'     },
   { id: 'e-technix', name: 'E-Technix',                    icon: '🎓', desc: 'Digital & tech skills training platform — Nigeria & UK',     status: 'building' },
   { id: 'ican-warri', name: 'ICAN Warri District',         icon: '🏛️', desc: 'Regional website for ICAN Warri',                           status: 'building' },
-  { id: 'foodgram',  name: 'FoodGram',                     icon: '🍔', desc: 'Food social network — Node.js, PostgreSQL & Flutter',        status: 'building' }, // ADD THIS
+  { id: 'foodgram',  name: 'FoodGram',                     icon: '🍔', desc: 'Food social network — Node.js, PostgreSQL & Flutter',        status: 'building' },
 ];
 
 const ALL_TAGS: Tag[] = ['build', 'design', 'fix', 'launch', 'learning'];
 
 const TAG_LABELS: Record<Tag, string> = {
   build: 'Build', design: 'Design', fix: 'Fix', launch: 'Launch', learning: 'Learning',
-};
-
-const TAG_COLORS: Record<Tag, { bg: string; border: string; color: string }> = {
-  build:    { bg: 'var(--accent-dim)',           border: 'var(--accent-glow)',              color: 'var(--accent-light)' },
-  design:   { bg: 'rgba(167,139,250,.10)',        border: 'rgba(167,139,250,.25)',            color: '#C4B5FD' },
-  fix:      { bg: 'rgba(251,191,36,.08)',         border: 'rgba(251,191,36,.25)',             color: '#FDE68A' },
-  launch:   { bg: 'rgba(52,211,153,.10)',         border: 'rgba(52,211,153,.25)',             color: '#34D399' },
-  learning: { bg: 'rgba(251,146,60,.08)',         border: 'rgba(251,146,60,.25)',             color: '#FED7AA' },
 };
 
 interface Props { entries: Entry[]; }
@@ -78,323 +70,257 @@ export default function BuildLogs({ entries }: Props) {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500;600&display=swap');
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-          --secondary:    var(--bg);
-          --accent-dim:   color-mix(in srgb, var(--accent) 12%, transparent);
-          --accent-glow:  transparent;
-          --accent-light: var(--accent);
-          --muted-2:      var(--muted);
-          --border-hover: var(--accent);
-          --card-bg:      var(--panel);
-          --green: #34D399;
-          --mono: 'JetBrains Mono', monospace;
-        }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'DM Sans', sans-serif; overflow-x: hidden; line-height: 1.6; }
-        .bg-mesh { position: fixed; inset: 0; z-index: 0; background: transparent; }
-        @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
-        @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-        section { position: relative; z-index: 1; }
-        .container { max-width: 900px; margin: 0 auto; padding: 0 64px; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+        .bl-page { animation: fadeIn .35s ease both; }
 
         /* HERO */
-        .logs-hero { padding-top: 160px; padding-bottom: 40px; }
-        .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 8px; border-radius: 100px; border: 1px solid var(--accent-glow); background: var(--accent-dim); font-size: .70rem; font-weight: 600; letter-spacing: .10em; text-transform: uppercase; color: var(--accent); margin-top: -60px; margin-bottom: 28px; width: fit-content; }
-        .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; flex-shrink: 0; }
-        .logs-headline { font-family: 'Space Grotesk',sans-serif; font-size: clamp(2.2rem,5vw,3.8rem); font-weight: 800; line-height: 1.0; letter-spacing: -.03em; color: var(--text); }
-        .logs-headline .accent { color: var(--accent); }
-        .logs-sub { margin-top: 18px; font-size: 1rem; line-height: 1.75; color: var(--muted); max-width: 560px; font-weight: 300; }
-        .logs-sub strong { color: var(--text); font-weight: 500; }
-        .logs-meta { display: flex; align-items: center; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
-        .meta-pill { display: flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card-bg); font-size: .75rem; color: var(--muted); }
-        .meta-pill .live { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; flex-shrink: 0; }
-        .meta-pill strong { color: var(--text); font-weight: 500; }
-        .logs-admin-link { display: inline-flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card-bg); font-size: .75rem; color: var(--muted); text-decoration: none; transition: border-color .2s, color .2s; }
-        .logs-admin-link:hover { border-color: var(--border-hover); color: var(--text); }
+        .bl-hero { padding-top: 7rem; padding-bottom: 2.5rem; }
+        .bl-headline { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem,4.5vw,3.2rem); font-weight: 700; line-height: 1.05; letter-spacing: -.03em; color: var(--text); margin-bottom: .75rem; }
+        .bl-headline .accent { color: var(--accent); }
+        .bl-sub { font-size: .9rem; line-height: 1.75; color: var(--muted); max-width: 540px; font-weight: 300; }
+        .bl-sub strong { color: var(--text); font-weight: 500; }
+        .bl-meta { display: flex; align-items: center; gap: 10px; margin-top: 1.25rem; flex-wrap: wrap; }
+        .bl-meta-pill { display: flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--panel); font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: var(--muted); }
+        .bl-meta-pill strong { color: var(--text); font-weight: 600; }
+        .bl-meta-live { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); flex-shrink: 0; }
 
         /* FILTERS */
-        .filter-bar { padding: 28px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 0; }
-        .filter-row { display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
-        .filter-group { display: flex; flex-direction: column; gap: 10px; }
-        .filter-label { font-family: var(--mono); font-size: .60rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted-2); }
-        .filter-chips { display: flex; gap: 7px; flex-wrap: wrap; }
-        .filter-divider { width: 1px; background: var(--border); align-self: stretch; margin: 0 4px; flex-shrink: 0; }
-        .chip {
-          padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border);
-          background: transparent; font-size: .74rem; font-weight: 500;
-          color: var(--muted); cursor: pointer; font-family: 'DM Sans', sans-serif;
-          transition: all .18s; white-space: nowrap;
-        }
-        .chip:hover { border-color: var(--border-hover); color: var(--text); }
-        .chip.active {
-          border-color: var(--accent-glow); background: var(--accent-dim); color: var(--accent);
-        }
-        .chip.tag-design.active  { background: rgba(167,139,250,.12); border-color: rgba(167,139,250,.35); color: #C4B5FD; }
-        .chip.tag-fix.active     { background: rgba(251,191,36,.10); border-color: rgba(251,191,36,.35); color: #FDE68A; }
-        .chip.tag-launch.active  { background: rgba(52,211,153,.10); border-color: rgba(52,211,153,.30); color: #34D399; }
-        .chip.tag-learning.active { background: rgba(251,146,60,.10); border-color: rgba(251,146,60,.30); color: #FED7AA; }
+        .bl-filter-bar { padding: 1.5rem 0 2rem; border-bottom: 1px solid var(--border); }
+        .bl-filter-row { display: flex; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap; }
+        .bl-filter-group { display: flex; flex-direction: column; gap: 8px; }
+        .bl-filter-divider { width: 1px; background: var(--border); align-self: stretch; margin: 0 4px; flex-shrink: 0; }
+        .bl-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+        .bl-chip { padding: 4px 12px; border-radius: 6px; border: 1px solid var(--border); background: transparent; font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: var(--muted); cursor: pointer; transition: border-color .15s, color .15s; white-space: nowrap; }
+        .bl-chip:hover { border-color: var(--accent); color: var(--text); }
+        .bl-chip.active { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent); }
 
-        /* FILTER STATE BAR */
-        .filter-state { display: flex; align-items: center; gap: 10px; padding: 14px 0 0; flex-wrap: wrap; }
-        .filter-state-text { font-size: .78rem; color: var(--muted-2); }
-        .filter-state-text strong { color: var(--text); }
-        .clear-btn { padding: 4px 12px; border-radius: 6px; border: 1px solid var(--border); background: transparent; font-size: .72rem; color: var(--muted); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .18s; }
-        .clear-btn:hover { border-color: var(--border-hover); color: var(--text); }
+        /* FILTER STATE */
+        .bl-filter-state { display: flex; align-items: center; gap: 10px; padding: 1rem 0 0; flex-wrap: wrap; }
+        .bl-filter-state-text { font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: var(--muted); }
+        .bl-filter-state-text strong { color: var(--text); }
+        .bl-clear { padding: 3px 10px; border-radius: 5px; border: 1px solid var(--border); background: transparent; font-family: 'JetBrains Mono', monospace; font-size: .65rem; color: var(--muted); cursor: pointer; transition: border-color .15s, color .15s; }
+        .bl-clear:hover { border-color: var(--accent); color: var(--text); }
 
         /* BODY */
-        .logs-body { padding-bottom: 120px; }
-        .project-group { margin-top: 56px; animation: fadeIn .3s ease both; }
-        .group-header { display: flex; align-items: center; gap: 16px; padding-bottom: 20px; margin-bottom: 28px; border-bottom: 1px solid var(--border); }
-        .group-icon { width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0; border: 1px solid var(--border); background: var(--card-bg); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-        .group-name { font-family: 'Space Grotesk',sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--text); }
-        .group-meta { display: flex; align-items: center; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
-        .group-desc { font-size: .78rem; color: var(--muted); }
-        .group-count { font-family: var(--mono); font-size: .63rem; font-weight: 600; color: var(--accent); letter-spacing: .08em; padding: 2px 8px; border-radius: 4px; background: var(--accent-dim); border: 1px solid var(--accent-glow); }
-        .status-pill { font-size: .63rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; }
-        .status-pill.live     { background: rgba(52,211,153,.10); border: 1px solid rgba(52,211,153,.25); color: var(--green); }
-        .status-pill.building { background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.25); color: #FDE68A; }
-        .status-pill.design   { background: rgba(167,139,250,.10); border: 1px solid rgba(167,139,250,.25); color: #C4B5FD; }
+        .bl-body { padding-bottom: 5rem; }
+        .bl-project-group { margin-top: 3rem; }
+        .bl-group-header { display: flex; align-items: center; gap: 12px; padding-bottom: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+        .bl-group-icon { width: 38px; height: 38px; border-radius: 8px; flex-shrink: 0; border: 1px solid var(--border); background: var(--panel); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+        .bl-group-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); }
+        .bl-group-meta { display: flex; align-items: center; gap: 8px; margin-top: 3px; flex-wrap: wrap; }
+        .bl-group-desc { font-size: .76rem; color: var(--muted); }
+        .bl-group-count { font-family: 'JetBrains Mono', monospace; font-size: .62rem; color: var(--accent); padding: 1px 7px; border-radius: 4px; background: color-mix(in srgb, var(--accent) 10%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); }
+        .bl-status { font-family: 'JetBrains Mono', monospace; font-size: .62rem; letter-spacing: .05em; padding: 1px 7px; border-radius: 4px; }
+        .bl-status.live     { background: color-mix(in srgb, var(--ok) 10%, transparent); border: 1px solid color-mix(in srgb, var(--ok) 25%, transparent); color: var(--ok); }
+        .bl-status.building { background: color-mix(in srgb, var(--accent) 8%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent); color: var(--accent); }
+        .bl-status.design   { background: rgba(167,139,250,.10); border: 1px solid rgba(167,139,250,.25); color: #C4B5FD; }
 
         /* TIMELINE */
-        .timeline { position: relative; }
-        .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1px; background: var(--border); }
-        .log-entry { position: relative; padding: 0 0 40px 40px; animation: fadeIn .25s ease both; }
-        .log-entry:last-child { padding-bottom: 0; }
-        .log-dot { position: absolute; left: -5px; top: 10px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--border); }
-        .log-dot.latest { background: var(--accent); border-color: var(--accent); }
-        .log-day { font-family: var(--mono); font-size: .67rem; font-weight: 600; color: var(--accent); letter-spacing: .10em; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        .log-day-sep { width: 16px; height: 1px; background: var(--accent-glow); }
-        .log-day-date { color: var(--muted-2); font-weight: 400; }
-        .latest-badge { padding: 2px 7px; border-radius: 4px; background: rgba(52,211,153,.10); border: 1px solid rgba(52,211,153,.3); font-size: .58rem; color: var(--green); font-family: var(--mono); letter-spacing: .08em; }
-        .log-card { border-radius: 12px; border: 1px solid var(--border); background: var(--card-bg); backdrop-filter: blur(12px); padding: 20px 24px; }
-        .log-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
-        .log-title { font-family: 'Space Grotesk',sans-serif; font-weight: 700; font-size: .95rem; color: var(--text); line-height: 1.3; }
-        .log-tags { display: flex; gap: 5px; flex-wrap: wrap; flex-shrink: 0; }
-        .log-tag { padding: 2px 9px; border-radius: 4px; font-size: .60rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
-        .log-tag.build    { background: var(--accent-dim);            border: 1px solid var(--accent-glow);             color: var(--accent-light); }
-        .log-tag.design   { background: rgba(167,139,250,.10);         border: 1px solid rgba(167,139,250,.25);           color: #C4B5FD; }
-        .log-tag.fix      { background: rgba(251,191,36,.08);          border: 1px solid rgba(251,191,36,.25);            color: #FDE68A; }
-        .log-tag.launch   { background: rgba(52,211,153,.10);          border: 1px solid rgba(52,211,153,.25);            color: var(--green); }
-        .log-tag.learning { background: rgba(251,146,60,.08);          border: 1px solid rgba(251,146,60,.25);            color: #FED7AA; }
-        .log-body { font-size: .855rem; line-height: 1.75; color: var(--muted); }
-        .log-body p { margin-bottom: 12px; }
-        .log-body p:last-child { margin-bottom: 0; }
-        .log-body strong { color: var(--text); font-weight: 600; }
-        .log-body code { font-family: var(--mono); font-size: .78rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 4px; padding: 1px 6px; color: #93C5FD; }
-        .log-decision { margin-top: 12px; padding: 10px 14px; border-radius: 8px; border-left: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 6%, transparent); font-size: .80rem; line-height: 1.65; color: var(--muted); }
-        .log-decision-label { font-family: var(--mono); font-size: .58rem; font-weight: 600; letter-spacing: .10em; text-transform: uppercase; color: var(--accent); margin-bottom: 3px; }
+        .bl-timeline { position: relative; }
+        .bl-timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1px; background: var(--border); }
+        .bl-entry { position: relative; padding: 0 0 2.25rem 2.25rem; }
+        .bl-entry:last-child { padding-bottom: 0; }
+        .bl-dot { position: absolute; left: -4px; top: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); }
+        .bl-dot.latest { background: var(--accent); border-color: var(--accent); }
+        .bl-day { font-family: 'JetBrains Mono', monospace; font-size: .65rem; color: var(--accent); letter-spacing: .08em; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .bl-day-date { color: var(--muted); font-weight: 400; }
+        .bl-latest-badge { padding: 1px 6px; border-radius: 3px; background: color-mix(in srgb, var(--ok) 10%, transparent); border: 1px solid color-mix(in srgb, var(--ok) 28%, transparent); font-size: .58rem; color: var(--ok); }
+        .bl-card-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .92rem; color: var(--text); line-height: 1.3; }
+        .bl-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+        .bl-tags { display: flex; gap: 5px; flex-wrap: wrap; flex-shrink: 0; }
+        .bl-tag { padding: 1px 8px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; font-size: .59rem; letter-spacing: .05em; }
+        .bl-tag.build    { background: color-mix(in srgb, var(--accent) 10%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); color: var(--accent); }
+        .bl-tag.design   { background: rgba(167,139,250,.10); border: 1px solid rgba(167,139,250,.25); color: #C4B5FD; }
+        .bl-tag.fix      { background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.22); color: #FDE68A; }
+        .bl-tag.launch   { background: color-mix(in srgb, var(--ok) 10%, transparent); border: 1px solid color-mix(in srgb, var(--ok) 25%, transparent); color: var(--ok); }
+        .bl-tag.learning { background: rgba(251,146,60,.08); border: 1px solid rgba(251,146,60,.22); color: #FED7AA; }
+        .bl-body-text { font-size: .845rem; line-height: 1.75; color: var(--muted); }
+        .bl-body-text p { margin-bottom: 10px; }
+        .bl-body-text p:last-child { margin-bottom: 0; }
+        .bl-body-text strong { color: var(--text); font-weight: 600; }
+        .bl-body-text code { font-family: 'JetBrains Mono', monospace; font-size: .78rem; background: rgba(255,255,255,.05); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; color: var(--accent); }
+        .bl-decision { margin-top: 10px; padding: 8px 12px; border-radius: 6px; border-left: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 5%, transparent); font-size: .79rem; line-height: 1.65; color: var(--muted); }
+        .bl-decision-label { font-family: 'JetBrains Mono', monospace; font-size: .57rem; letter-spacing: .09em; color: var(--accent); margin-bottom: 3px; }
 
-        /* EMPTY STATE */
-        .empty-state { padding: 72px 0; text-align: center; }
-        .empty-icon { font-size: 2rem; margin-bottom: 16px; opacity: .4; }
-        .empty-title { font-family: 'Space Grotesk',sans-serif; font-weight: 700; font-size: 1rem; color: var(--muted); margin-bottom: 8px; }
-        .empty-sub { font-size: .82rem; color: var(--muted-2); }
-        .empty-clear { display: inline-flex; margin-top: 20px; padding: 8px 20px; border-radius: 8px; border: 1px solid var(--border); background: transparent; font-size: .80rem; color: var(--muted); cursor: pointer; font-family: 'DM Sans',sans-serif; transition: all .18s; }
-        .empty-clear:hover { border-color: var(--border-hover); color: var(--text); }
+        /* EMPTY */
+        .bl-empty { padding: 4rem 0; text-align: center; }
+        .bl-empty-icon { font-size: 1.75rem; margin-bottom: 1rem; opacity: .4; }
+        .bl-empty-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .95rem; color: var(--muted); margin-bottom: 6px; }
+        .bl-empty-sub { font-size: .8rem; color: var(--muted); }
 
         /* CTA */
-        .logs-cta { margin-top: 72px; padding: 44px 40px; border-radius: 20px; border: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(20px); text-align: center; position: relative; overflow: hidden; }
-        .logs-cta::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 60%; height: 200px; background: transparent; pointer-events: none; }
-        .logs-cta h3 { font-family: 'Space Grotesk',sans-serif; font-size: clamp(1.2rem,2.5vw,1.7rem); font-weight: 800; letter-spacing: -.02em; margin-bottom: 10px; }
-        .logs-cta p { font-size: .875rem; color: var(--muted); max-width: 380px; margin: 0 auto 24px; line-height: 1.7; }
-        .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-        .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px; background: var(--accent); color: var(--accent-ink); border-radius: 8px; font-weight: 600; font-size: .875rem; text-decoration: none; border: 1px solid transparent; }
-        .btn-ghost { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border: 1px solid var(--border); color: var(--text); border-radius: 8px; font-weight: 500; font-size: .875rem; text-decoration: none; background: transparent; }
-
-        /* FOOTER */
-        footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 36px 64px; max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-        .footer-left p { font-size: .78rem; color: var(--muted-2); }
-        .footer-left p span { color: var(--accent); }
-        .footer-links { display: flex; gap: 28px; }
-        .footer-links a { font-size: .78rem; color: var(--muted-2); text-decoration: none; }
-        .footer-links a:hover { color: var(--text); }
+        .bl-cta { margin-top: 3.5rem; padding: 2.25rem 2rem; border-radius: 10px; border: 1px solid var(--border); background: var(--panel); text-align: center; }
+        .bl-cta h3 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.1rem,2vw,1.4rem); font-weight: 700; letter-spacing: -.02em; margin-bottom: 8px; }
+        .bl-cta p { font-size: .855rem; color: var(--muted); max-width: 360px; margin: 0 auto 1.25rem; line-height: 1.7; }
+        .bl-cta-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
         @media (max-width: 768px) {
-          .container { padding: 0 20px; }
-          footer { padding: 24px 20px; flex-direction: column; gap: 14px; text-align: center; }
-          .logs-hero { padding-top: 130px; }
-          .logs-headline { font-size: 2rem; }
-          .log-entry { padding-left: 28px; padding-bottom: 32px; }
-          .log-card { padding: 16px 18px; }
-          .log-card-header { flex-direction: column; gap: 8px; }
-          .logs-cta { padding: 32px 20px; }
-          .filter-row { flex-direction: column; gap: 16px; }
-          .filter-divider { display: none; }
+          .bl-hero { padding-top: 5.5rem; }
+          .bl-headline { font-size: 1.9rem; }
+          .bl-entry { padding-left: 1.5rem; padding-bottom: 1.75rem; }
+          .bl-filter-row { flex-direction: column; gap: 1rem; }
+          .bl-filter-divider { display: none; }
         }
       `}</style>
 
-      <div className="bg-mesh" aria-hidden="true" />
-
-      {/* HERO */}
-      <section>
-        <div className="container logs-hero">
-          <div className="hero-eyebrow"><span className="dot" /> Build Logs</div>
-          <h1 className="logs-headline">Building in<br /><span className="accent">public.</span></h1>
-          <p className="logs-sub">
-            Every decision, mistake, and milestone — documented as it happens across all active projects.
-            <strong> No polished post-mortems. Just the real process.</strong>
-          </p>
-          <div className="logs-meta">
-            <div className="meta-pill"><span className="live" /><span>Active · Updated regularly</span></div>
-            <div className="meta-pill"><strong>{presentProjects.length}</strong>&nbsp;active projects</div>
-            <div className="meta-pill"><strong>{entries.length}</strong>&nbsp;entries logged</div>
-            <a href="/admin" className="logs-admin-link">✎ Add Entry</a>
-          </div>
-        </div>
-      </section>
-
-      {/* FILTERS */}
-      <section>
-        <div className="container">
-          <div className="filter-bar">
-            <div className="filter-row">
-              {/* Project filter */}
-              <div className="filter-group">
-                <div className="filter-label">Project</div>
-                <div className="filter-chips">
-                  <button
-                    className={`chip${activeProject === 'all' ? ' active' : ''}`}
-                    onClick={() => setActiveProject('all')}
-                  >All</button>
-                  {presentProjects.map(p => (
-                    <button
-                      key={p.id}
-                      className={`chip${activeProject === p.id ? ' active' : ''}`}
-                      onClick={() => setActiveProject(p.id)}
-                    >
-                      {p.icon} {p.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="filter-divider" />
-
-              {/* Tag filter */}
-              <div className="filter-group">
-                <div className="filter-label">Tag</div>
-                <div className="filter-chips">
-                  <button
-                    className={`chip${activeTag === 'all' ? ' active' : ''}`}
-                    onClick={() => setActiveTag('all')}
-                  >All</button>
-                  {ALL_TAGS.map(tag => (
-                    <button
-                      key={tag}
-                      className={`chip tag-${tag}${activeTag === tag ? ' active' : ''}`}
-                      onClick={() => setActiveTag(tag)}
-                    >
-                      {TAG_LABELS[tag]}
-                    </button>
-                  ))}
-                </div>
-              </div>
+      <div className="bl-page">
+        {/* HERO */}
+        <section>
+          <div className="os-container bl-hero">
+            <span className="os-label">// build logs</span>
+            <h1 className="bl-headline">Building in<br /><span className="accent">public.</span></h1>
+            <p className="bl-sub">
+              Every decision, mistake, and milestone — documented as it happens across all active projects.
+              <strong> No polished post-mortems. Just the real process.</strong>
+            </p>
+            <div className="bl-meta">
+              <div className="bl-meta-pill"><span className="bl-meta-live" /><span>Active · Updated regularly</span></div>
+              <div className="bl-meta-pill"><strong>{presentProjects.length}</strong>&nbsp;active projects</div>
+              <div className="bl-meta-pill"><strong>{entries.length}</strong>&nbsp;entries logged</div>
+              <a href="/admin" className="os-btn">✎ Add Entry</a>
             </div>
-
-            {/* Active filter summary */}
-            {hasFilters && (
-              <div className="filter-state">
-                <span className="filter-state-text">
-                  Showing <strong>{totalFiltered}</strong> of {entries.length} entries
-                  {activeProject !== 'all' && <> · <strong>{PROJECT_META.find(p => p.id === activeProject)?.name}</strong></>}
-                  {activeTag !== 'all' && <> · tagged <strong>{TAG_LABELS[activeTag]}</strong></>}
-                </span>
-                <button className="clear-btn" onClick={() => { setActiveProject('all'); setActiveTag('all'); }}>
-                  Clear filters ×
-                </button>
-              </div>
-            )}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ENTRIES */}
-      <section className="logs-body">
-        <div className="container">
-          {grouped.length === 0 ? (
-            <div className="empty-state">
-              <div className="empty-icon">🔍</div>
-              <div className="empty-title">No entries match these filters</div>
-              <div className="empty-sub">Try a different project or tag combination</div>
-              <button className="empty-clear" onClick={() => { setActiveProject('all'); setActiveTag('all'); }}>
-                Clear filters
-              </button>
-            </div>
-          ) : (
-            grouped.map(proj => (
-              <div key={proj.id} className="project-group">
-                <div className="group-header">
-                  <div className="group-icon">{proj.icon}</div>
-                  <div>
-                    <div className="group-name">{proj.name}</div>
-                    <div className="group-meta">
-                      <span className="group-desc">{proj.desc}</span>
-                      <span className={`status-pill ${proj.status}`}>
-                        {proj.status === 'live' ? '● Live' : proj.status === 'building' ? '◐ Building' : '◇ Design'}
-                      </span>
-                      <span className="group-count">{proj.entries.length} entries</span>
-                    </div>
+        {/* FILTERS */}
+        <section>
+          <div className="os-container">
+            <div className="bl-filter-bar">
+              <div className="bl-filter-row">
+                {/* Project filter */}
+                <div className="bl-filter-group">
+                  <span className="os-label" style={{ marginBottom: 0 }}>// project</span>
+                  <div className="bl-chips">
+                    <button
+                      className={`bl-chip${activeProject === 'all' ? ' active' : ''}`}
+                      onClick={() => setActiveProject('all')}
+                    >all</button>
+                    {presentProjects.map(p => (
+                      <button
+                        key={p.id}
+                        className={`bl-chip${activeProject === p.id ? ' active' : ''}`}
+                        onClick={() => setActiveProject(p.id)}
+                      >
+                        {p.icon} {p.name}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
-                <div className="timeline">
-                  {proj.entries.map(entry => (
-                    <div key={entry.id} className="log-entry">
-                      <div className={`log-dot${entry.is_latest ? ' latest' : ''}`} />
-                      <div className="log-day">
-                        <span>{entry.day}</span>
-                        <span className="log-day-sep" />
-                        <span className="log-day-date">{entry.date}</span>
-                        {entry.is_latest && <span className="latest-badge">LATEST</span>}
-                      </div>
-                      <div className="log-card">
-                        <div className="log-card-header">
-                          <h3 className="log-title">{entry.title}</h3>
-                          <div className="log-tags">
-                            {entry.tags.map(tag => (
-                              <span key={tag} className={`log-tag ${tag}`}>{TAG_LABELS[tag as Tag]}</span>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="log-body" dangerouslySetInnerHTML={{ __html: entry.body }} />
-                        {entry.decision && (
-                          <div className="log-decision">
-                            <div className="log-decision-label">Decision</div>
-                            {entry.decision}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                <div className="bl-filter-divider" />
+
+                {/* Tag filter */}
+                <div className="bl-filter-group">
+                  <span className="os-label" style={{ marginBottom: 0 }}>// tag</span>
+                  <div className="bl-chips">
+                    <button
+                      className={`bl-chip${activeTag === 'all' ? ' active' : ''}`}
+                      onClick={() => setActiveTag('all')}
+                    >all</button>
+                    {ALL_TAGS.map(tag => (
+                      <button
+                        key={tag}
+                        className={`bl-chip${activeTag === tag ? ' active' : ''}`}
+                        onClick={() => setActiveTag(tag)}
+                      >
+                        {TAG_LABELS[tag].toLowerCase()}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
-            ))
-          )}
 
-          <div className="logs-cta">
-            <h3>Following the build?</h3>
-            <p>If you are a founder or engineer interested in working together, reach out.</p>
-            <div className="cta-row">
-              <a href="mailto:gorokumue@gmail.com" className="btn-primary">Work With Me</a>
-              <a href="/projects" className="btn-ghost">View Projects →</a>
+              {/* Active filter summary */}
+              {hasFilters && (
+                <div className="bl-filter-state">
+                  <span className="bl-filter-state-text">
+                    showing <strong>{totalFiltered}</strong> of {entries.length} entries
+                    {activeProject !== 'all' && <> · <strong>{PROJECT_META.find(p => p.id === activeProject)?.name}</strong></>}
+                    {activeTag !== 'all' && <> · tag:<strong>{TAG_LABELS[activeTag].toLowerCase()}</strong></>}
+                  </span>
+                  <button className="bl-clear" onClick={() => { setActiveProject('all'); setActiveTag('all'); }}>
+                    clear ×
+                  </button>
+                </div>
+              )}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <footer>
-        <div className="footer-left">
-          <p>© 2026 <span>Rex Orokumue</span> · Built with Next.js &amp; intention.</p>
-        </div>
-        <div className="footer-links">
-          <a href="https://x.com/iamrexorokumue">𝕏</a>
-          <a href="https://www.linkedin.com/in/rexorokumue/">LinkedIn</a>
-          <a href="https://github.com/Rex-Orokumue">GitHub</a>
-          <a href="mailto:gorokumue@gmail.com">Email</a>
-        </div>
-      </footer>
+        {/* ENTRIES */}
+        <section className="bl-body">
+          <div className="os-container">
+            {grouped.length === 0 ? (
+              <div className="bl-empty">
+                <div className="bl-empty-icon">🔍</div>
+                <div className="bl-empty-title">No entries match these filters</div>
+                <div className="bl-empty-sub">Try a different project or tag combination</div>
+                <button className="os-btn" style={{ marginTop: '1.25rem' }} onClick={() => { setActiveProject('all'); setActiveTag('all'); }}>
+                  clear filters
+                </button>
+              </div>
+            ) : (
+              grouped.map(proj => (
+                <div key={proj.id} className="bl-project-group">
+                  <div className="bl-group-header">
+                    <div className="bl-group-icon">{proj.icon}</div>
+                    <div>
+                      <div className="bl-group-name">{proj.name}</div>
+                      <div className="bl-group-meta">
+                        <span className="bl-group-desc">{proj.desc}</span>
+                        <span className={`bl-status ${proj.status}`}>
+                          {proj.status === 'live' ? '● live' : proj.status === 'building' ? '◐ building' : '◇ design'}
+                        </span>
+                        <span className="bl-group-count">{proj.entries.length} entries</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bl-timeline">
+                    {proj.entries.map(entry => (
+                      <div key={entry.id} className="bl-entry">
+                        <div className={`bl-dot${entry.is_latest ? ' latest' : ''}`} />
+                        <div className="bl-day">
+                          <span>{entry.day}</span>
+                          <span className="bl-day-date">{entry.date}</span>
+                          {entry.is_latest && <span className="bl-latest-badge">latest</span>}
+                        </div>
+                        <div className="os-card">
+                          <div className="bl-card-head">
+                            <h3 className="bl-card-title">{entry.title}</h3>
+                            <div className="bl-tags">
+                              {entry.tags.map(tag => (
+                                <span key={tag} className={`bl-tag ${tag}`}>{TAG_LABELS[tag as Tag].toLowerCase()}</span>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="bl-body-text" dangerouslySetInnerHTML={{ __html: entry.body }} />
+                          {entry.decision && (
+                            <div className="bl-decision">
+                              <div className="bl-decision-label">// decision</div>
+                              {entry.decision}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))
+            )}
+
+            <div className="bl-cta">
+              <h3>Following the build?</h3>
+              <p>If you are a founder or engineer interested in working together, reach out.</p>
+              <div className="bl-cta-row">
+                <a href="mailto:gorokumue@gmail.com" className="os-btn os-btn-primary">Work With Me</a>
+                <a href="/projects" className="os-btn">View Projects →</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </>
   );
 }
