@@ -139,3 +139,15 @@ Improve daily.
 ## 📖 This README Will Be Updated Daily
 
 This file serves as a live build log of the entire project.
+
+---
+
+## Environment
+
+### GITHUB_TOKEN
+
+`GITHUB_TOKEN` is a read-only GitHub fine-grained personal access token (public repository read access only). It powers the live GitHub activity panel on the site, which displays public repository count, weekly commits, and current contribution streak.
+
+- The token is fetched server-side in `app/api/github/route.ts` and the response is cached for **1 hour** (ISR revalidate).
+- It is stored in `.env.local` at the project root, which is listed in `.gitignore` and is **never committed** to version control.
+- Without this token the API route returns `{ ok: false, error: "no-token" }` and the activity panel gracefully degrades.

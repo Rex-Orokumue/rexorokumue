@@ -1,0 +1,46 @@
+/* Rex OS design tokens — dark "amber phosphor" default, light "paper" toggle */
+:root, [data-theme='dark'] {
+  --bg:        #0a0a0a;
+  --panel:     #111111;
+  --panel-2:   #161616;
+  --border:    #232323;
+  --text:      #ededed;
+  --muted:     #8a8a8a;
+  --accent:    #ffb000;
+  --accent-ink:#0a0a0a;
+  --grid:      rgba(255,255,255,0.03);
+  --ok:        #4ade80;
+}
+[data-theme='light'] {
+  --bg:        #f4f1ea;
+  --panel:     #fffdf8;
+  --panel-2:   #f0ece2;
+  --border:    #ddd6c8;
+  --text:      #1a1714;
+  --muted:     #6b6356;
+  --accent:    #b4500a;
+  --accent-ink:#fffdf8;
+  --grid:      rgba(0,0,0,0.03);
+  --ok:        #1a7f37;
+}
+* { box-sizing: border-box; }
+body {
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 100% 28px,
+    var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.os-prose { font-family: 'DM Sans', system-ui, sans-serif; }
+.os-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.os-display { font-family: 'Space Grotesk', system-ui, sans-serif; }
+.os-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.2rem;
+}
+.os-accent { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
