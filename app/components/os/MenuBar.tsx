@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { useTheme } from './ThemeProvider';
 
-interface MenuBarProps {
-  streak?: number;
+interface GitHubData {
+  ok: boolean;
+  currentStreakDays?: number;
 }
 
 function LiveClock() {
@@ -34,8 +36,36 @@ function LiveClock() {
   );
 }
 
-export default function MenuBar({ streak }: MenuBarProps) {
+const NAV_LINKS = [
+  { href: '/projects',   label: 'work' },
+  { href: '/about',      label: 'about' },
+  { href: '/blog',       label: 'writing' },
+  { href: '/build-logs', label: 'logs' },
+  { href: '/tech-serial',label: 'serial' },
+  { href: '/bootcamp',   label: 'bootcamp' },
+];
+
+export default function MenuBar() {
   const { theme, toggle } = useTheme();
+  const pathname = usePathname();
+  const [streak, setStreak] = useState<number | null>(null);
+
+  // Fetch streak on mount — runs unconditionally (hooks rule)
+  useEffect(() => {
+    fetch('/api/github')
+      .then(r => r.json())
+      .then((data: GitHubData) => {
+        if (data.ok && typeof data.currentStreakDays === 'number') {
+          setStreak(data.currentStreakDays);
+        } else {
+          setStreak(0);
+        }
+      })
+      .catch(() => setStreak(0));
+  }, []);
+
+  // Hide on resume — it has its own top bar
+  if (pathname === '/resume') return null;
 
   return (
     <header
@@ -53,15 +83,19 @@ export default function MenuBar({ streak }: MenuBarProps) {
         minHeight: '42px',
         gap: '0.5rem',
         flexWrap: 'wrap',
+        boxSizing: 'border-box',
       }}
     >
       {/* Left — wordmark */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0 }}>
+      <Link
+        href="/"
+        style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0, textDecoration: 'none' }}
+      >
         <span className="os-mono os-accent" style={{ fontSize: '0.9rem', lineHeight: 1 }}>◉</span>
         <span className="os-mono" style={{ fontSize: '0.78rem', letterSpacing: '0.04em', color: 'var(--text)' }}>
           rex os
         </span>
-      </div>
+      </Link>
 
       {/* Middle — status pill */}
       <div
@@ -74,13 +108,12 @@ export default function MenuBar({ streak }: MenuBarProps) {
           gap: '0.4rem',
           flexShrink: 0,
         }}
+        suppressHydrationWarning
       >
-        {streak && streak > 0 ? (
+        {streak !== null && streak > 0 ? (
           <>
             <span style={{ color: 'var(--ok)', lineHeight: 1 }}>●</span>
-            <span>
-              shipping — day {streak}
-            </span>
+            <span>shipping — day {streak}</span>
           </>
         ) : (
           <>
@@ -95,31 +128,59 @@ export default function MenuBar({ streak }: MenuBarProps) {
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '1.25rem',
+          gap: '0.9rem',
           flexShrink: 0,
+          flexWrap: 'wrap',
         }}
       >
-        {(['work', 'logs', 'writing', 'about'] as const).map((label, i) => {
-          const hrefs = ['/projects', '/build-logs', '/blog', '/about'];
-          return (
-            <Link
-              key={label}
-              href={hrefs[i]}
-              className="os-mono"
-              style={{
-                fontSize: '0.72rem',
-                color: 'var(--muted)',
-                textDecoration: 'none',
-                letterSpacing: '0.02em',
-                transition: 'color 0.15s',
-              }}
-              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text)')}
-              onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'var(--muted)')}
-            >
-              {label}
-            </Link>
-          );
-        })}
+        {NAV_LINKS.map(({ href, label }) => (
+          <Link
+            key={href}
+            href={href}
+            className="os-mono"
+            style={{
+              fontSize: '0.72rem',
+              color: pathname === href ? 'var(--text)' : 'var(--muted)',
+              textDecoration: 'none',
+              letterSpacing: '0.02em',
+              transition: 'color 0.15s',
+              whiteSpace: 'nowrap',
+            }}
+            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text)')}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.color =
+                pathname === href ? 'var(--text)' : 'var(--muted)';
+            }}
+          >
+            {label}
+          </Link>
+        ))}
+
+        {/* Hire me — amber accent */}
+        <Link
+          href="/resume"
+          className="os-mono"
+          style={{
+            fontSize: '0.72rem',
+            color: '#F59E0B',
+            textDecoration: 'none',
+            letterSpacing: '0.02em',
+            border: '1px solid rgba(245,158,11,0.35)',
+            borderRadius: '3px',
+            padding: '1px 6px',
+            transition: 'background 0.15s, color 0.15s',
+            whiteSpace: 'nowrap',
+          }}
+          onMouseEnter={e => {
+            const el = e.currentTarget as HTMLElement;
+            el.style.background = 'rgba(245,158,11,0.12)';
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.background = 'transparent';
+          }}
+        >
+          hire me
+        </Link>
 
         <LiveClock />
 

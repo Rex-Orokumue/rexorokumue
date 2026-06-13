@@ -1,4 +1,5 @@
-import NavBar from './components/NavBar';
+import ThemeProvider from './components/os/ThemeProvider';
+import MenuBar from './components/os/MenuBar';
 import './globals.css';
 import './components/os/os.css';
 import type { Metadata } from 'next';
@@ -142,8 +143,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           overflowX: 'hidden',
         }}
       >
-        <NavBar />
-        <main>{children}</main>
+        <ThemeProvider>
+          <MenuBar />
+          <main>{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );

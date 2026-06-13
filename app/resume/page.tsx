@@ -1,4 +1,3 @@
-import ThemeProvider from '../components/os/ThemeProvider';
 import ResumeView from '../components/os/resume/ResumeView';
 
 export const metadata = {
@@ -8,9 +7,5 @@ export const metadata = {
 };
 
 export default function ResumePage() {
-  return (
-    <ThemeProvider>
-      <ResumeView />
-    </ThemeProvider>
-  );
+  return <ResumeView />;
 }

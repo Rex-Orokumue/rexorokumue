@@ -1,8 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ThemeProvider } from './ThemeProvider';
-import MenuBar from './MenuBar';
 import ActivityPanel from './ActivityPanel';
 import ProjectsPanel from './ProjectsPanel';
 import MissionsPanel from './MissionsPanel';
@@ -122,7 +120,7 @@ function ShellGrid({ githubData }: { githubData: GitHubData | null }) {
   );
 }
 
-function RexOSInner() {
+export default function RexOS() {
   const [githubData, setGithubData] = useState<GitHubData | null>(null);
 
   useEffect(() => {
@@ -132,18 +130,5 @@ function RexOSInner() {
       .catch(() => setGithubData({ ok: false }));
   }, []);
 
-  return (
-    <>
-      <MenuBar streak={githubData?.currentStreakDays} />
-      <ShellGrid githubData={githubData} />
-    </>
-  );
-}
-
-export default function RexOS() {
-  return (
-    <ThemeProvider>
-      <RexOSInner />
-    </ThemeProvider>
-  );
+  return <ShellGrid githubData={githubData} />;
 }
