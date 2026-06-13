@@ -1,6 +1,6 @@
 // app/bootcamp/page.tsx
 import type { Metadata } from 'next';
- 
+
 export const metadata: Metadata = {
   title: 'AI Builder Bootcamp',
   description:
@@ -21,8 +21,6 @@ export default function BootcampPage() {
       month: 'Month 1',
       title: 'Foundation — Web Development',
       color: 'var(--accent)',
-      colorDim: 'var(--accent-dim)',
-      colorGlow: 'var(--accent-glow)',
       weeks: [
         { week: 'Week 1', title: 'Product Thinking First', desc: 'How to define what to build, who it is for, and what success looks like before touching any code.' },
         { week: 'Week 2', title: 'Building with Next.js & React', desc: 'Structure, routing, components, and deploying a fully functional website to Vercel.' },
@@ -34,8 +32,6 @@ export default function BootcampPage() {
       month: 'Month 2',
       title: 'Backend — APIs, Auth & Database',
       color: '#A78BFA',
-      colorDim: 'rgba(167,139,250,0.10)',
-      colorGlow: 'rgba(167,139,250,0.30)',
       weeks: [
         { week: 'Week 1', title: 'Supabase & PostgreSQL', desc: 'Database design, tables, relationships, and querying data. How to structure a backend that scales.' },
         { week: 'Week 2', title: 'Authentication & Security', desc: 'User login, JWT tokens, Row-Level Security, and keeping user data safe from day one.' },
@@ -47,8 +43,6 @@ export default function BootcampPage() {
       month: 'Month 3',
       title: 'Mobile — Flutter & Shipping',
       color: '#34D399',
-      colorDim: 'rgba(52,211,153,0.10)',
-      colorGlow: 'rgba(52,211,153,0.30)',
       weeks: [
         { week: 'Week 1', title: 'Flutter Fundamentals', desc: 'Dart basics, widgets, state management, and building your first mobile screen.' },
         { week: 'Week 2', title: 'Connecting Mobile to Backend', desc: 'Integrating your Supabase backend into the Flutter app — auth, data, real-time updates.' },
@@ -61,200 +55,199 @@ export default function BootcampPage() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-          --secondary:    var(--bg);
-          --accent-dim:   color-mix(in srgb, var(--accent) 12%, transparent);
-          --accent-glow:  transparent;
-          --accent-light: var(--accent);
-          --muted-2:      var(--muted);
-          --border-hover: var(--accent);
-          --card-bg:      var(--panel);
-          --green: #34D399;
-        }
-        body { font-family: 'DM Sans', sans-serif; overflow-x: hidden; line-height: 1.6; }
-        .bg-mesh { position: fixed; inset: 0; z-index: 0; background: transparent; }
-        @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+        html { scroll-behavior: smooth; }
+
+        @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+        .bc-fade-1 { animation: fadeUp 0.55s 0.05s ease both; }
+        .bc-fade-2 { animation: fadeUp 0.55s 0.12s ease both; }
+        .bc-fade-3 { animation: fadeUp 0.55s 0.20s ease both; }
+        .bc-fade-4 { animation: fadeUp 0.55s 0.28s ease both; }
+
         section { position: relative; z-index: 1; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 64px; }
-        .section-tag { display: inline-block; font-size: .70rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
-        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.9rem, 3.5vw, 2.9rem); font-weight: 800; line-height: 1.1; letter-spacing: -.025em; color: var(--text); }
 
         /* HERO */
-        .bc-hero { padding-top: 160px; padding-bottom: 80px; }
-        .bc-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 8px; border-radius: 100px; border: 1px solid rgba(52,211,153,0.35); background: rgba(52,211,153,0.08); font-size: .70rem; font-weight: 600; letter-spacing: .10em; text-transform: uppercase; color: var(--green); margin-top: -60px; margin-bottom: 28px; width: fit-content; animation: fadeUp .7s .05s ease both; }
-        .bc-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; flex-shrink: 0; }
-        .bc-headline { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.4rem, 5.5vw, 4.6rem); font-weight: 800; line-height: .95; letter-spacing: -.04em; animation: fadeUp .7s .18s ease both; }
-        .bc-headline .line2 { color: var(--accent); display: block; }
-        .bc-sub { margin-top: 24px; font-size: 1.05rem; color: var(--muted); max-width: 580px; font-weight: 300; line-height: 1.75; animation: fadeUp .7s .30s ease both; }
+        .bc-hero { padding-top: 140px; padding-bottom: 56px; }
+        .bc-hero-eyebrow {
+          display: inline-flex; align-items: center; gap: 8px;
+          padding: 4px 12px 4px 8px; border-radius: 6px;
+          border: 1px solid var(--border); background: var(--panel);
+          margin-bottom: 24px; width: fit-content;
+        }
+        .bc-hero-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ok); flex-shrink: 0; }
+        .bc-headline {
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: clamp(2rem, 5vw, 3.6rem);
+          font-weight: 700; line-height: 1.08; letter-spacing: -0.02em; color: var(--text);
+        }
+        .bc-headline .accent { color: var(--accent); }
+        .bc-sub {
+          margin-top: 18px; font-size: 0.95rem; line-height: 1.75;
+          color: var(--muted); max-width: 560px;
+        }
         .bc-sub strong { color: var(--text); font-weight: 500; }
 
-        /* Hero stats strip */
-        .bc-stats { display: flex; gap: 0; margin-top: 40px; border: 1px solid var(--border); border-radius: 14px; background: var(--card-bg); backdrop-filter: blur(12px); overflow: hidden; animation: fadeUp .7s .40s ease both; width: fit-content; }
-        .bc-stat { padding: 20px 32px; text-align: center; border-right: 1px solid var(--border); }
+        /* Stats strip */
+        .bc-stats { display: flex; gap: 0; margin-top: 32px; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); overflow: hidden; width: fit-content; }
+        .bc-stat { padding: 18px 28px; text-align: center; border-right: 1px solid var(--border); }
         .bc-stat:last-child { border-right: none; }
-        .bc-stat-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text); line-height: 1; }
+        .bc-stat-val { font-family: 'JetBrains Mono', monospace; font-size: 1.25rem; font-weight: 700; color: var(--text); line-height: 1; }
         .bc-stat-val em { color: var(--accent); font-style: normal; }
-        .bc-stat-label { font-size: .70rem; color: var(--muted); margin-top: 5px; letter-spacing: .04em; }
+        .bc-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 0.60rem; color: var(--muted); margin-top: 5px; letter-spacing: 0.04em; }
 
         /* Hero CTA */
-        .bc-hero-actions { display: flex; gap: 14px; margin-top: 40px; flex-wrap: wrap; animation: fadeUp .7s .50s ease both; }
-        .btn-enroll { padding: 15px 36px; background: var(--green); color: #0F172A; border-radius: 8px; font-weight: 700; font-size: .9rem; text-decoration: none; letter-spacing: .02em; transition: all .25s; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-        .btn-enroll:hover { transform: translateY(-2px); }
-        .btn-ghost { padding: 14px 28px; border: 1px solid var(--border); color: var(--text); border-radius: 8px; font-weight: 500; font-size: .9rem; text-decoration: none; transition: all .25s; background: transparent; }
-        .btn-ghost:hover { border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.04); }
+        .bc-hero-actions { display: flex; gap: 10px; margin-top: 32px; flex-wrap: wrap; }
 
         /* FOR WHO */
-        .bc-for { padding: 0 0 80px; }
-        .bc-for-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 48px; align-items: start; }
-        .bc-for-text p { font-size: .95rem; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
+        .bc-for-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 32px; align-items: start; }
+        .bc-for-text p { font-size: 0.9rem; color: var(--muted); line-height: 1.8; margin-bottom: 14px; }
         .bc-for-text p strong { color: var(--text); font-weight: 500; }
-        .bc-for-cards { display: flex; flex-direction: column; gap: 10px; }
-        .bc-who-card { display: flex; gap: 14px; padding: 16px 18px; border-radius: 12px; border: 1px solid var(--border); background: var(--card-bg); transition: all .2s; }
-        .bc-who-card:hover { border-color: var(--border-hover); transform: translateX(4px); }
-        .bc-who-icon { font-size: 1.3rem; flex-shrink: 0; width: 32px; }
-        .bc-who-text h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .88rem; color: var(--text); margin-bottom: 3px; }
-        .bc-who-text p { font-size: .78rem; color: var(--muted); line-height: 1.5; }
+        .bc-for-cards { display: flex; flex-direction: column; gap: 8px; }
+        .bc-who-card { display: flex; gap: 14px; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel); transition: border-color 0.2s; }
+        .bc-who-card:hover { border-color: var(--accent); }
+        .bc-who-icon { font-size: 1.1rem; flex-shrink: 0; width: 28px; }
+        .bc-who-text h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--text); margin-bottom: 3px; }
+        .bc-who-text p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
 
         /* CURRICULUM */
-        .bc-curriculum { padding: 0 0 80px; }
-        .curriculum-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
-        .month-card { border-radius: 18px; border: 1px solid var(--border); background: var(--card-bg); backdrop-filter: blur(12px); overflow: hidden; transition: all .25s; }
-        .month-card:hover { transform: translateY(-4px); border-color: var(--border-hover); box-shadow: 0 16px 48px rgba(0,0,0,.35); }
-        .month-header { padding: 24px 24px 20px; border-bottom: 1px solid var(--border); }
-        .month-label { font-family: 'JetBrains Mono', monospace; font-size: .65rem; font-weight: 600; letter-spacing: .10em; text-transform: uppercase; margin-bottom: 8px; }
-        .month-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.0rem; color: var(--text); line-height: 1.25; }
-        .month-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 14px; }
-        .week-item { display: flex; gap: 12px; }
-        .week-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
-        .week-content {}
-        .week-label { font-family: 'JetBrains Mono', monospace; font-size: .60rem; font-weight: 600; letter-spacing: .08em; margin-bottom: 3px; }
-        .week-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .83rem; color: var(--text); margin-bottom: 3px; }
-        .week-desc { font-size: .75rem; color: var(--muted); line-height: 1.55; }
+        .curriculum-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+        .month-card { border-radius: 10px; border: 1px solid var(--border); background: var(--panel); overflow: hidden; transition: border-color 0.2s; }
+        .month-card:hover { border-color: var(--accent); }
+        .month-header { padding: 20px 20px 16px; border-bottom: 1px solid var(--border); }
+        .month-label { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.08em; margin-bottom: 6px; text-transform: lowercase; }
+        .month-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--text); line-height: 1.25; }
+        .month-body { padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+        .week-item { display: flex; gap: 10px; }
+        .week-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+        .week-label { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.06em; margin-bottom: 2px; }
+        .week-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.82rem; color: var(--text); margin-bottom: 2px; }
+        .week-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
 
         /* WHAT YOU BUILD */
-        .bc-outcomes { padding: 0 0 80px; }
-        .outcomes-inner { border-radius: 20px; border: 1px solid var(--border); background: var(--card-bg); backdrop-filter: blur(16px); padding: 56px 60px; }
-        .outcomes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
-        .outcome-card { padding: 24px; border-radius: 14px; border: 1px solid var(--border); background: rgba(15,23,42,.5); text-align: center; }
-        .outcome-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
-        .outcome-card h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .92rem; color: var(--text); margin-bottom: 6px; }
-        .outcome-card p { font-size: .78rem; color: var(--muted); line-height: 1.55; }
+        .outcomes-inner { border-radius: 10px; border: 1px solid var(--border); background: var(--panel); padding: 44px 48px; }
+        .outcomes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+        .outcome-card { padding: 20px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel-2); text-align: center; }
+        .outcome-icon { font-size: 1.5rem; margin-bottom: 10px; display: block; }
+        .outcome-card h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.88rem; color: var(--text); margin-bottom: 6px; }
+        .outcome-card p { font-size: 0.75rem; color: var(--muted); line-height: 1.55; }
 
         /* PRICING */
-        .bc-pricing { padding: 0 0 80px; }
-        .pricing-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
-        .pricing-card { border-radius: 20px; border: 1px solid var(--border); background: var(--card-bg); backdrop-filter: blur(12px); padding: 36px; position: relative; overflow: hidden; }
+        .pricing-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; }
+        .pricing-card { border-radius: 10px; border: 1px solid var(--border); background: var(--panel); padding: 28px; }
         .pricing-card.featured { border-color: var(--accent); }
-        .pricing-card.featured::before { content: ''; position: absolute; top: -30%; right: -10%; width: 300px; height: 300px; background: transparent; pointer-events: none; }
-        .pricing-badge { display: inline-block; padding: 3px 12px; border-radius: 100px; font-size: .63rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 16px; }
-        .pricing-badge.standard { background: var(--accent-dim); border: 1px solid var(--accent-glow); color: var(--accent-light); }
-        .pricing-badge.best { background: rgba(52,211,153,.10); border: 1px solid rgba(52,211,153,.3); color: var(--green); }
-        .pricing-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
-        .pricing-price { font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--text); line-height: 1; }
-        .pricing-price em { font-size: 1rem; font-style: normal; color: var(--muted); font-weight: 400; }
-        .pricing-desc { font-size: .82rem; color: var(--muted); margin-top: 10px; line-height: 1.65; margin-bottom: 24px; }
-        .pricing-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
-        .pricing-feature { display: flex; align-items: flex-start; gap: 10px; font-size: .82rem; color: var(--muted); }
-        .pricing-feature-check { color: var(--green); flex-shrink: 0; font-weight: 700; }
+        .pricing-badge {
+          display: inline-block; padding: 2px 10px; border-radius: 5px;
+          font-family: 'JetBrains Mono', monospace; font-size: 0.60rem; font-weight: 600;
+          letter-spacing: 0.06em; margin-bottom: 14px;
+        }
+        .pricing-badge.standard { border: 1px solid var(--border); color: var(--muted); background: transparent; }
+        .pricing-badge.best { border: 1px solid var(--accent); color: var(--accent); background: transparent; }
+        .pricing-name { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+        .pricing-price { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: var(--text); line-height: 1; }
+        .pricing-price em { font-size: 0.9rem; font-style: normal; color: var(--muted); font-weight: 400; }
+        .pricing-desc { font-size: 0.80rem; color: var(--muted); margin-top: 10px; line-height: 1.65; margin-bottom: 20px; }
+        .pricing-features { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+        .pricing-feature { display: flex; align-items: flex-start; gap: 8px; font-size: 0.80rem; color: var(--muted); }
+        .pricing-feature-check { color: var(--ok); flex-shrink: 0; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; }
 
         /* CTA */
-        .bc-cta { padding: 0 0 120px; }
-        .bc-cta-inner { border-radius: 24px; border: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(24px); padding: 90px 80px; text-align: center; position: relative; overflow: hidden; }
-        .bc-cta-inner::before { content: ''; position: absolute; top: -60%; left: 50%; transform: translateX(-50%); width: 70%; height: 300px; background: transparent; pointer-events: none; }
-        .bc-cta-inner h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.9rem, 3.5vw, 3rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 16px; }
-        .bc-cta-inner > p { font-size: 1rem; color: var(--muted); max-width: 480px; margin: 0 auto 44px; line-height: 1.75; font-weight: 300; }
-        .cohort-note { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 32px; padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(52,211,153,.3); background: rgba(52,211,153,.08); font-size: .75rem; color: var(--green); }
-        .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .bc-cta-inner { border-radius: 10px; border: 1px solid var(--border); background: var(--panel); padding: 72px 60px; text-align: center; }
+        .bc-cta-inner h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 14px; }
+        .bc-cta-inner > p { font-size: 0.9rem; color: var(--muted); max-width: 480px; margin: 0 auto 32px; line-height: 1.75; }
+        .bc-cta-note {
+          display: inline-flex; align-items: center; gap: 8px;
+          margin-bottom: 24px; padding: 7px 14px;
+          border-radius: 6px; border: 1px solid var(--border);
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.64rem; color: var(--muted);
+        }
+        .bc-cta-note-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ok); flex-shrink: 0; }
+        .cta-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
-        footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 36px 64px; max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-        .footer-left p { font-size: .78rem; color: var(--muted-2); }
+        footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 28px 0; display: flex; align-items: center; justify-content: space-between; }
+        .footer-left p { font-family: 'JetBrains Mono', monospace; font-size: 0.70rem; color: var(--muted); }
         .footer-left p span { color: var(--accent); }
-        .footer-links { display: flex; gap: 28px; }
-        .footer-links a { font-size: .78rem; color: var(--muted-2); text-decoration: none; }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a { font-family: 'JetBrains Mono', monospace; font-size: 0.70rem; color: var(--muted); text-decoration: none; transition: color 0.15s; }
         .footer-links a:hover { color: var(--text); }
 
         @media (max-width: 1024px) {
-          .container { padding: 0 28px; }
           .curriculum-grid { grid-template-columns: 1fr; }
           .outcomes-grid { grid-template-columns: 1fr 1fr; }
           .pricing-inner { grid-template-columns: 1fr; }
-          .bc-for-grid { grid-template-columns: 1fr; gap: 40px; }
-          .outcomes-inner { padding: 40px 32px; }
-          .bc-cta-inner { padding: 64px 40px; }
-          footer { padding: 28px; flex-direction: column; gap: 14px; text-align: center; }
+          .bc-for-grid { grid-template-columns: 1fr; gap: 36px; }
+          .outcomes-inner { padding: 36px 28px; }
+          .bc-cta-inner { padding: 52px 32px; }
+          footer { flex-direction: column; gap: 14px; text-align: center; }
         }
         @media (max-width: 640px) {
-          .container { padding: 0 20px; }
-          .bc-hero { padding-top: 130px; }
-          .bc-headline { font-size: 2.2rem; }
+          .bc-hero { padding-top: 110px; }
+          .bc-headline { font-size: 2rem; }
           .bc-stats { flex-direction: column; width: 100%; }
           .bc-stat { border-right: none; border-bottom: 1px solid var(--border); }
           .bc-stat:last-child { border-bottom: none; }
           .outcomes-grid { grid-template-columns: 1fr; }
-          .pricing-inner { grid-template-columns: 1fr; }
-          .bc-cta-inner { padding: 48px 20px; }
-          .section-title { word-break: break-word; hyphens: auto; }
-          footer { padding: 24px 20px; }
+          .bc-cta-inner { padding: 40px 18px; }
+          .cta-actions { flex-direction: column; align-items: center; }
+          footer { padding: 20px 0; }
         }
       `}</style>
 
-      <div className="bg-mesh" aria-hidden="true" />
-
       {/* HERO */}
       <section>
-        <div className="container bc-hero">
-          <div className="bc-eyebrow"><span className="dot" /> Coming Soon — Be the First to Know</div>
-          <h1 className="bc-headline">
+        <div className="os-container bc-hero">
+          <div className="bc-hero-eyebrow bc-fade-1">
+            <span className="bc-hero-dot" />
+            <span className="os-mono" style={{ fontSize: '0.64rem', color: 'var(--ok)' }}>coming soon — be the first to know</span>
+          </div>
+          <h1 className="bc-headline bc-fade-2">
             AI Builder<br />
-            <span className="line2">Bootcamp.</span>
+            <span className="accent">Bootcamp.</span>
           </h1>
-          <p className="bc-sub">
+          <p className="bc-sub bc-fade-3">
             A <strong>3-month hands-on programme</strong> where you go from zero to shipping a real website, web app, and mobile app — using AI tools the way professionals actually use them.
           </p>
 
-          <div className="bc-stats">
+          <div className="bc-stats bc-fade-4">
             <div className="bc-stat">
               <div className="bc-stat-val">3<em>mo</em></div>
-              <div className="bc-stat-label">Programme length</div>
+              <div className="bc-stat-label">programme length</div>
             </div>
             <div className="bc-stat">
               <div className="bc-stat-val">3</div>
-              <div className="bc-stat-label">Products shipped</div>
+              <div className="bc-stat-label">products shipped</div>
             </div>
             <div className="bc-stat">
               <div className="bc-stat-val">0</div>
-              <div className="bc-stat-label">Experience needed</div>
+              <div className="bc-stat-label">experience needed</div>
             </div>
           </div>
 
-          <div className="bc-hero-actions">
-            <a href="#enroll" className="btn-enroll">Join the Waitlist →</a>
-            <a href="#curriculum" className="btn-ghost">View Curriculum</a>
+          <div className="bc-hero-actions bc-fade-4">
+            <a href="#enroll" className="os-btn os-btn-primary">Join the Waitlist →</a>
+            <a href="#curriculum" className="os-btn">View Curriculum</a>
           </div>
         </div>
       </section>
 
       {/* WHO IS THIS FOR */}
-      <section className="bc-for">
-        <div className="container">
+      <section className="os-section">
+        <div className="os-container">
+          <span className="os-label">// who is this for</span>
+          <h2 className="os-h2">Anyone who wants to build with AI.<br />No experience required.</h2>
           <div className="bc-for-grid">
-            <div>
-              <span className="section-tag">Who Is This For</span>
-              <h2 className="section-title">Anyone who wants to build with AI.<br />No experience required.</h2>
-              <div style={{ marginTop: 24 }}>
-                <p>
-                  You do not need to know how to code to join. You need <strong>curiosity, consistency, and a willingness to build things</strong> that actually work.
-                </p>
-                <p>
-                  By the end of three months, you will have shipped real products to real URLs — not tutorial exercises, not portfolio pieces. <strong>Live products that people can use.</strong>
-                </p>
-                <p>
-                  AI tools have made it possible to build production-grade software without a computer science degree. This bootcamp teaches you how to use those tools the right way — with engineering discipline, not just prompting.
-                </p>
-              </div>
+            <div className="bc-for-text">
+              <p>
+                You do not need to know how to code to join. You need <strong>curiosity, consistency, and a willingness to build things</strong> that actually work.
+              </p>
+              <p>
+                By the end of three months, you will have shipped real products to real URLs — not tutorial exercises, not portfolio pieces. <strong>Live products that people can use.</strong>
+              </p>
+              <p>
+                AI tools have made it possible to build production-grade software without a computer science degree. This bootcamp teaches you how to use those tools the right way — with engineering discipline, not just prompting.
+              </p>
             </div>
             <div className="bc-for-cards">
               {[
@@ -277,10 +270,10 @@ export default function BootcampPage() {
       </section>
 
       {/* CURRICULUM */}
-      <section className="bc-curriculum" id="curriculum">
-        <div className="container">
-          <span className="section-tag">3-Month Curriculum</span>
-          <h2 className="section-title">What you learn.<br />What you ship.</h2>
+      <section className="os-section" id="curriculum" style={{ paddingTop: 0 }}>
+        <div className="os-container">
+          <span className="os-label">// 3-month curriculum</span>
+          <h2 className="os-h2">What you learn. What you ship.</h2>
           <div className="curriculum-grid">
             {curriculum.map(month => (
               <div key={month.month} className="month-card">
@@ -292,7 +285,7 @@ export default function BootcampPage() {
                   {month.weeks.map(w => (
                     <div key={w.week} className="week-item">
                       <div className="week-dot" style={{ background: month.color }} />
-                      <div className="week-content">
+                      <div>
                         <div className="week-label" style={{ color: month.color }}>{w.week}</div>
                         <div className="week-title">{w.title}</div>
                         <div className="week-desc">{w.desc}</div>
@@ -307,11 +300,11 @@ export default function BootcampPage() {
       </section>
 
       {/* WHAT YOU BUILD */}
-      <section className="bc-outcomes">
-        <div className="container">
+      <section className="os-section" style={{ paddingTop: 0 }}>
+        <div className="os-container">
           <div className="outcomes-inner">
-            <span className="section-tag">What You Ship</span>
-            <h2 className="section-title">Three real products.<br />All live by graduation.</h2>
+            <span className="os-label">// what you ship</span>
+            <h2 className="os-h2">Three real products. All live by graduation.</h2>
             <div className="outcomes-grid">
               {[
                 { icon: '🌐', title: 'A Live Website', desc: 'Deployed to a real domain. Built with Next.js. Your first production-grade web presence.' },
@@ -330,13 +323,13 @@ export default function BootcampPage() {
       </section>
 
       {/* PRICING */}
-      <section className="bc-pricing" id="enroll">
-        <div className="container">
-          <span className="section-tag">Pricing</span>
-          <h2 className="section-title">Two ways to join.<br />Same full experience.</h2>
+      <section className="os-section" id="enroll" style={{ paddingTop: 0 }}>
+        <div className="os-container">
+          <span className="os-label">// pricing</span>
+          <h2 className="os-h2">Two ways to join. Same full experience.</h2>
           <div className="pricing-inner">
             <div className="pricing-card">
-              <span className="pricing-badge standard">Monthly</span>
+              <span className="pricing-badge standard">monthly</span>
               <div className="pricing-name">Pay Monthly</div>
               <div className="pricing-price">₦60k <em>/ month</em></div>
               <p className="pricing-desc">₦180k total across 3 months. Full access to everything — spread out to make it easier.</p>
@@ -353,10 +346,10 @@ export default function BootcampPage() {
                   <div key={f} className="pricing-feature"><span className="pricing-feature-check">✓</span>{f}</div>
                 ))}
               </div>
-              <a href="mailto:hello@zolarux.com?subject=AI Builder Bootcamp — Monthly Payment" className="btn-ghost" style={{ display: 'block', textAlign: 'center' }}>Join Waitlist</a>
+              <a href="mailto:hello@zolarux.com?subject=AI Builder Bootcamp — Monthly Payment" className="os-btn" style={{ display: 'block', textAlign: 'center', justifyContent: 'center' }}>Join Waitlist</a>
             </div>
             <div className="pricing-card featured">
-              <span className="pricing-badge best">Save ₦30k</span>
+              <span className="pricing-badge best">save ₦30k</span>
               <div className="pricing-name">Pay Upfront</div>
               <div className="pricing-price">₦150k <em>one-time</em></div>
               <p className="pricing-desc">Pay once and save ₦30k. Exactly the same experience as the monthly plan — just cheaper overall.</p>
@@ -373,39 +366,41 @@ export default function BootcampPage() {
                   <div key={f} className="pricing-feature"><span className="pricing-feature-check">✓</span>{f}</div>
                 ))}
               </div>
-              <a href="mailto:hello@zolarux.com?subject=AI Builder Bootcamp — Upfront Payment" className="btn-enroll" style={{ display: 'block', textAlign: 'center' }}>Join Waitlist →</a>
+              <a href="mailto:hello@zolarux.com?subject=AI Builder Bootcamp — Upfront Payment" className="os-btn os-btn-primary" style={{ display: 'block', textAlign: 'center', justifyContent: 'center' }}>Join Waitlist →</a>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bc-cta">
-        <div className="container">
+      <section className="os-section">
+        <div className="os-container">
           <div className="bc-cta-inner">
-            <div className="cohort-note">
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)', animation: 'pulse 2s infinite', display: 'inline-block' }} />
-              Coming soon — join the waitlist to be notified first
+            <div className="bc-cta-note">
+              <span className="bc-cta-note-dot" />
+              coming soon — join the waitlist to be notified first
             </div>
             <h2>Three months from now,<br />you will have shipped real products.</h2>
             <p>Not certificates. Not tutorials you never finished. Real products, live on the internet, built by you. Drop your email and be the first to know when Cohort 1 opens.</p>
             <div className="cta-actions">
-              <a href="mailto:hello@zolarux.com?subject=AI Builder Bootcamp — Waitlist" className="btn-enroll">Join the Waitlist →</a>
-              <a href="mailto:hello@zolarux.com?subject=AI Builder Bootcamp Question" className="btn-ghost">Ask a Question</a>
+              <a href="mailto:hello@zolarux.com?subject=AI Builder Bootcamp — Waitlist" className="os-btn os-btn-primary">Join the Waitlist →</a>
+              <a href="mailto:hello@zolarux.com?subject=AI Builder Bootcamp Question" className="os-btn">Ask a Question</a>
             </div>
           </div>
         </div>
       </section>
 
       <footer>
-        <div className="footer-left">
-          <p>© 2026 <span>Rex Orokumue</span> · Built with Next.js &amp; intention.</p>
-        </div>
-        <div className="footer-links">
-          <a href="https://x.com/iamrexorokumue">𝕏</a>
-          <a href="https://www.linkedin.com/in/rexorokumue/">LinkedIn</a>
-          <a href="https://github.com/Rex-Orokumue">GitHub</a>
-          <a href="mailto:gorokumue@gmail.com">Email</a>
+        <div className="os-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+          <div className="footer-left">
+            <p>© 2026 <span>Rex Orokumue</span> · Built with Next.js &amp; intention.</p>
+          </div>
+          <div className="footer-links">
+            <a href="https://x.com/iamrexorokumue">𝕏</a>
+            <a href="https://www.linkedin.com/in/rexorokumue/">LinkedIn</a>
+            <a href="https://github.com/Rex-Orokumue">GitHub</a>
+            <a href="mailto:gorokumue@gmail.com">Email</a>
+          </div>
         </div>
       </footer>
     </>
