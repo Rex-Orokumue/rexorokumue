@@ -160,14 +160,14 @@ export const projects: Project[] = [
     ],
 
     outcomes: {
-      headline: 'Live in production. Growing.',
+      headline: 'Live and processing real transactions.',
       metrics: [
-        { value: '27',   label: 'Verified Vendors',  sub: '100% verification rate' },
-        { value: '82',   label: 'Active Products',   sub: '100% activation rate' },
-        { value: '2mo',  label: 'Live in market',    sub: 'Web + app live' },
-        { value: '100%', label: 'Solo build',        sub: 'No co-founder or contractor' },
+        { value: '27+',  label: 'Verified Vendors', sub: '100% verification rate' },
+        { value: '140+', label: 'Active Products',  sub: 'Live on the platform' },
+        { value: '100+', label: 'Transactions',     sub: '₦2M+ processed since 2021' },
+        { value: '99%',  label: 'Satisfaction',     sub: 'Completed-transaction buyers' },
       ],
-      body: 'Zolarux went from idea to live product in under 6 months, built entirely by one person. The platform is active, vendors are onboarded, and the escrow flow is processing real transactions.',
+      body: 'Zolarux has been building since 2021 and went public nationally in February 2025 after a full revamp. Built solo — the platform is live, escrow-backed transactions are processing, and growth is steady.',
     },
 
     nextSteps: [
@@ -247,14 +247,14 @@ export const projects: Project[] = [
     ],
 
     outcomes: {
-      headline: 'Operational efficiency from day one.',
+      headline: 'Internal operations tool — live and in daily use.',
       metrics: [
-        { value: '3',    label: 'Platforms',              sub: 'Mobile · Web · Windows' },
-        { value: '4hrs', label: 'Avg dispute resolution', sub: 'Down from 48hrs' },
-        { value: '100%', label: 'Vendor verification',    sub: '27 of 27 verified' },
-        { value: '1',    label: 'Codebase',               sub: 'All platforms' },
+        { value: '3',  label: 'Platforms',       sub: 'Mobile · Web · Windows' },
+        { value: '1',  label: 'Codebase',        sub: 'All platforms from one Flutter project' },
+        { value: '4',  label: 'Admin modules',   sub: 'Vendors · Orders · Disputes · Health' },
+        { value: 'RT', label: 'Real-time data',  sub: 'Firestore live listeners' },
       ],
-      body: 'The Admin Control Center gave the Zolarux operation a real-time command layer from day one. Vendor verification, dispute resolution, and order management all happen through this dashboard.',
+      body: 'The Admin Control Center is an internal operations tool built exclusively for the Zolarux team. It provides real-time visibility into vendor verification, order pipeline, and platform health — all from a single Flutter codebase across mobile, web, and Windows. Not a public product; no external user metrics.',
     },
 
     nextSteps: [
@@ -340,14 +340,14 @@ export const projects: Project[] = [
     ],
 
     outcomes: {
-      headline: 'Built and ready for deployment.',
+      headline: 'Built — preparing for release.',
       metrics: [
         { value: '6',    label: 'Assessment levels', sub: 'Nursery to SS3' },
         { value: '100%', label: 'Offline capable',   sub: 'No internet needed' },
-        { value: '3',    label: 'Platforms in view', sub: 'Android, iOS, web' },
-        { value: '0',    label: 'Data loss',         sub: 'Offline-first sync' },
+        { value: '3',    label: 'Platforms targeted', sub: 'Android, iOS, web' },
+        { value: '< 2m', label: 'Per-student assessment', sub: 'Designed for classroom speed' },
       ],
-      body: 'EduPanion is built and functional. Currently seeking school partnerships for pilot deployment. The app is ready for real classrooms — it just needs the first school willing to try it.',
+      body: 'EduPanion is a complete Flutter application pending final polish and Play Store release. No users yet — built from an idea to solve a real problem in Nigerian classrooms. The app is functionally complete; the next step is Play Store submission and finding the first pilot school.',
     },
 
     nextSteps: [
@@ -362,10 +362,10 @@ export const projects: Project[] = [
   // ── 4. ESCROWPAY ENGINE ──────────────────────────────────────────────────
   {
     slug:        'escrowpay-engine',
-    name:        'Zolarux FinTech Engine',
-    tagline:     'Double-entry escrow infrastructure for social commerce.',
-    description: 'The financial infrastructure layer powering Zolarux — a double-entry ledger system with atomic transactions, wallet services, and idempotent payment operations.',
-    status:      'design',
+    name:        'EscrowPay',
+    tagline:     'Standalone escrow engine — working backend, frontend in progress.',
+    description: 'A standalone escrow engine built to power Zolarux and potentially other platforms. The Node.js/Express/PostgreSQL backend is built and working; the frontend has not been started yet.',
+    status:      'building',
     heroImage:   '/escrowpay-engine.jpeg',
     category:    'FinTech · Backend · Infrastructure',
     tech:        ['Node.js', 'PostgreSQL', 'Supabase', 'REST API', 'Express'],
@@ -373,17 +373,17 @@ export const projects: Project[] = [
 
     problem: {
       headline: 'Escrow without a proper financial engine is just a promise.',
-      body: 'The current Zolarux escrow flow works — but it is application-level logic sitting on top of a general-purpose database. As transaction volume grows, this approach will hit limits: no audit trail, no double-entry integrity, no idempotency guarantees, no atomic multi-step operations. The EscrowPay Engine is being built to replace this with a proper financial infrastructure layer — one that could eventually power escrow for any Nigerian social commerce platform, not just Zolarux.',
+      body: 'The current Zolarux escrow flow works — but it is application-level logic sitting on top of a general-purpose database. As transaction volume grows, this approach will hit limits: no audit trail, no double-entry integrity, no idempotency guarantees, no atomic multi-step operations. EscrowPay is a standalone escrow engine built to replace this with a proper financial infrastructure layer — one that could eventually power escrow for any Nigerian social commerce platform, not just Zolarux. The backend is complete; a frontend and public release are still ahead.',
     },
 
     role: {
-      summary: 'Sole architect and engineer. Currently in Figma design phase — system architecture, data model, and API contract are defined. Development begins once the design is finalised.',
+      summary: 'Sole architect and engineer. Backend is built and functional — Node.js/Express API, PostgreSQL schema, and core escrow logic. Frontend work has not begun.',
       owned: [
         'System architecture — ledger design, engine separation, API contract',
-        'Figma design — 5 screens covering the core transaction flows',
-        'Database schema — 5 core tables with double-entry integrity',
-        'Engine design — Ledger Engine, Escrow Engine, Wallet Service, Atomic Transactions',
-        'API specification — REST endpoints, request/response contracts, error handling',
+        'PostgreSQL schema — 5 core tables with double-entry integrity',
+        'Node.js/Express backend — REST API, request validation, error handling',
+        'Escrow engine implementation — fund holding, release triggers, dispute states',
+        'Wallet service — balance tracking, atomic credit/debit operations',
         'Idempotency strategy — preventing double-processing under network failures',
       ],
     },
@@ -407,7 +407,7 @@ export const projects: Project[] = [
       {
         src: '/escrowpay-engine.jpeg',
         caption: 'System Architecture Card',
-        description: 'The technical architecture overview showing the four engine layers, core tables, and transaction invariants. Currently in Figma design phase.',
+        description: 'The technical architecture overview showing the four engine layers, core tables, and transaction invariants. Backend is built; frontend and public release are pending.',
         device: 'desktop',
       },
     ],
@@ -421,21 +421,20 @@ export const projects: Project[] = [
     ],
 
     outcomes: {
-      headline: 'In design. Intentionally.',
+      headline: 'Working backend — frontend not yet built, no users yet.',
       metrics: [
-        { value: '5', label: 'Core tables',            sub: 'Schema designed' },
-        { value: '4', label: 'Processing engines',     sub: 'Architecture defined' },
-        { value: '7', label: 'Transaction invariants', sub: 'Correctness rules' },
-        { value: '5', label: 'Figma screens',          sub: 'Design complete' },
+        { value: '5', label: 'Core tables',            sub: 'Schema implemented' },
+        { value: '4', label: 'Processing engines',     sub: 'Backend logic built' },
+        { value: '7', label: 'Transaction invariants', sub: 'Correctness rules enforced' },
+        { value: '0', label: 'Users',                  sub: 'Pre-launch — no frontend yet' },
       ],
-      body: 'The EscrowPay Engine is being built deliberately — architecture first, code second. The Figma design and system architecture are complete. Development starts once the design phase is fully signed off.',
+      body: 'The EscrowPay backend is functionally complete — Node.js/Express API, PostgreSQL schema, escrow state machine, wallet service, and idempotency layer are all built and working. The frontend has not been started. No users yet. Next step is building the frontend and integrating with Zolarux as the primary payment backend.',
     },
 
     nextSteps: [
-      'Complete Figma design for remaining flows — dispute, refund, withdrawal',
-      'Begin PostgreSQL schema implementation',
-      'Build and test the Ledger Engine in isolation',
-      'Integrate with Zolarux marketplace as the payment backend',
+      'Build the frontend — transaction dashboard and payment UI',
+      'Integrate with Zolarux marketplace as the live payment backend',
+      'End-to-end testing across buyer, vendor, and dispute flows',
       'Open-source the engine for other Nigerian social commerce platforms',
     ],
   },
