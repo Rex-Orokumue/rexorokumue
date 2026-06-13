@@ -42,7 +42,7 @@ export const experience: ExperienceItem[] = [
   {
     company: 'Spiexer',
     role: 'Software Engineer',
-    period: 'Present', // TODO: start month
+    period: 'Mar 2026 — Present',
     summary:
       'Owning the full mobile build — frontend and backend — for Skuully, an early-stage school-management platform.',
     points: [
@@ -54,7 +54,7 @@ export const experience: ExperienceItem[] = [
   {
     company: 'EasySpend',
     role: 'Mobile Engineer',
-    period: 'Present', // TODO: start month
+    period: 'Apr 2026 — Present',
     summary:
       'Contributing to a live fintech mobile app — shipping bug fixes and feature tasks across the production codebase.',
     points: [
@@ -66,15 +66,27 @@ export const experience: ExperienceItem[] = [
   {
     company: 'E-technix',
     role: 'Instructor & Platform Developer',
-    period: 'Present', // TODO: dates
+    period: 'May 2026 — Present',
     summary:
-      'Teach data analytics, web, and mobile development; built the entire E-technix training platform from scratch.',
+      'Teach data analytics, web, and mobile development; built the entire E-technix training platform from scratch — live, with active students and trainings ongoing.',
     points: [
       'Built the full training platform: marketing site + student hub with authentication and dashboards.',
       'Instruct students in data analytics, web development, and mobile development.',
     ],
     url: 'https://e-technix.com',
     current: true,
+  },
+  {
+    company: 'Felt Touch Technologies',
+    role: 'WordPress Website Designer',
+    period: '2025 · ~2 months',
+    summary:
+      'Designed and built several small-business websites with WordPress — some still live today.',
+    points: [
+      'Delivered multiple client websites for small businesses on WordPress.',
+      'Several of the sites built remain live in production.',
+    ],
+    current: false,
   },
 ];
 
