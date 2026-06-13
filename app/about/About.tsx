@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 const GlobalStyles = () => (
   <style>{`
@@ -25,25 +25,8 @@ const GlobalStyles = () => (
       overflow-x: hidden;
       line-height: 1.6;
     }
-    .bg-mesh {
-      position: fixed; inset: 0; z-index: 0;
-      background: transparent;
-    }
 
-    @keyframes fadeUp   { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes pulse    { 0%,100% { opacity:1; } 50% { opacity:0.45; } }
-    @keyframes blink    { 0%,100% { opacity:1; } 50% { opacity:0; } }
-
-    /* Typewriter cursor */
-    .tw-cursor {
-      display: inline-block;
-      width: 3px;
-      background: var(--accent);
-      margin-left: 4px;
-      vertical-align: middle;
-      border-radius: 2px;
-      animation: blink 0.75s step-end infinite;
-    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
 
     .fade-up-1 { animation: fadeUp 0.75s 0.05s ease both; }
     .fade-up-2 { animation: fadeUp 0.75s 0.20s ease both; }
@@ -57,400 +40,288 @@ const GlobalStyles = () => (
     .reveal.visible { opacity:1; transform:translateY(0); }
 
     section { position: relative; z-index: 1; }
-    .container { max-width: 1180px; margin: 0 auto; padding: 0 64px; }
-
-    .section-tag {
-      display: inline-block;
-      font-size: 0.70rem; font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 14px;
-    }
-    .section-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1.9rem, 3.5vw, 2.9rem);
-      font-weight: 800; line-height: 1.1;
-      letter-spacing: -0.025em; color: var(--text);
-    }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 34px; background: var(--accent); color: #fff;
-      border-radius: 8px; font-weight: 600; font-size: 0.9rem;
-      text-decoration: none; letter-spacing: 0.02em;
-      transition: all 0.25s;
-      border: 1px solid transparent;
-    }
-    .btn-primary:hover { transform: translateY(-2px); }
-    .btn-ghost {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 13px 30px; border: 1px solid var(--border);
-      color: var(--text); border-radius: 8px;
-      font-weight: 500; font-size: 0.9rem;
-      text-decoration: none; transition: all 0.25s; background: transparent;
-    }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.04); }
 
     /* HERO */
     .about-hero {
-      min-height: 70vh; display: flex; flex-direction: column;
-      justify-content: flex-start;
-      padding-top: 160px; padding-bottom: 100px;
-      margin-top: -60px;
-    }
-    .about-eyebrow {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 6px 16px 6px 10px; border-radius: 100px;
-      border: 1px solid var(--accent-glow); background: var(--accent-dim);
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.10em;
-      text-transform: uppercase; color: var(--accent);
-      margin-bottom: 36px; width: fit-content;
-    }
-    .about-headline {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.2rem, 4vw, 3.4rem);
-      font-weight: 800; line-height: 1.0;
-      letter-spacing: -0.03em; color: var(--text); max-width: 780px;
-    }
-    .about-headline .line-accent {
-      display: block;
-      min-height: 1.1em;
-      color: var(--accent);
+      padding-top: 120px; padding-bottom: 80px;
     }
     .about-intro {
-      margin-top: 32px; font-size: 1.15rem; line-height: 1.8;
+      margin-top: 24px; font-size: 1.05rem; line-height: 1.8;
       color: var(--muted); max-width: 640px; font-weight: 300;
     }
     .about-intro strong { color: var(--text); font-weight: 500; }
     .about-avail {
       display: inline-flex; align-items: center; gap: 10px;
-      margin-top: 40px; padding: 10px 20px; border-radius: 10px;
+      margin-top: 32px; padding: 8px 16px; border-radius: 8px;
       border: 1px solid var(--border); background: var(--card-bg);
-      font-size: 0.80rem; color: var(--muted);
+      font-size: 0.78rem; color: var(--muted);
     }
     .avail-dot {
       width: 7px; height: 7px; border-radius: 50%;
-      background: #34D399; animation: pulse 2s infinite; flex-shrink: 0;
+      background: var(--ok); flex-shrink: 0;
     }
     .about-avail strong { color: var(--text); font-weight: 500; }
 
-    /* WHAT I HELP WITH */
-    .help-section { padding: 120px 0; }
+    /* HELP ITEMS */
     .help-grid {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 64px; margin-top: 56px; align-items: start;
+      gap: 48px; margin-top: 40px; align-items: start;
     }
     .help-left p {
-      font-size: 1.0rem; line-height: 1.85;
-      color: var(--muted); margin-bottom: 20px;
+      font-size: 0.95rem; line-height: 1.85;
+      color: var(--muted); margin-bottom: 16px;
     }
     .help-left p strong { color: var(--text); font-weight: 500; }
-    .help-items { display: flex; flex-direction: column; gap: 12px; }
+    .help-items { display: flex; flex-direction: column; gap: 10px; }
     .help-item {
-      display: flex; align-items: flex-start; gap: 16px;
-      padding: 20px 22px; border-radius: 12px;
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 18px 20px; border-radius: 10px;
       border: 1px solid var(--border); background: var(--card-bg);
-      backdrop-filter: blur(12px); transition: all 0.25s;
+      transition: border-color 0.2s;
     }
-    .help-item:hover { border-color: var(--border-hover); transform: translateX(4px); }
+    .help-item:hover { border-color: var(--border-hover); }
     .help-num {
-      font-family: 'Space Grotesk', sans-serif; font-size: 0.70rem;
-      font-weight: 800; color: var(--accent);
+      font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.68rem;
+      font-weight: 700; color: var(--accent);
       letter-spacing: 0.06em; flex-shrink: 0; padding-top: 2px;
     }
     .help-item-text h4 {
       font-family: 'Space Grotesk', sans-serif; font-weight: 700;
-      font-size: 0.92rem; color: var(--text); margin-bottom: 4px;
+      font-size: 0.90rem; color: var(--text); margin-bottom: 4px;
     }
-    .help-item-text p { font-size: 0.80rem; color: var(--muted); line-height: 1.5; }
+    .help-item-text p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
 
     /* PHILOSOPHY */
-    .philosophy-section { padding: 0 0 120px; }
     .philosophy-inner {
-      border-radius: 20px; border: 1px solid var(--border);
-      background: var(--card-bg); backdrop-filter: blur(16px);
-      padding: 64px; position: relative; overflow: hidden;
-    }
-    .philosophy-inner::before {
-      content: ''; position: absolute; top: -40%; right: -5%;
-      width: 500px; height: 500px;
-      background: transparent;
-      pointer-events: none;
+      border-radius: 12px; border: 1px solid var(--border);
+      background: var(--card-bg);
+      padding: 48px;
     }
     .philosophy-header {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 64px; align-items: start; margin-bottom: 56px;
+      gap: 48px; align-items: start; margin-bottom: 48px;
     }
     .philosophy-header-left p {
-      margin-top: 20px; font-size: 1.05rem; line-height: 1.8; color: var(--muted);
+      margin-top: 16px; font-size: 0.95rem; line-height: 1.8; color: var(--muted);
     }
     .philosophy-header-left p strong { color: var(--text); font-weight: 500; }
-    .philosophy-header-left p + p { margin-top: 16px; }
+    .philosophy-header-left p + p { margin-top: 14px; }
     .philosophy-quote {
-      padding: 28px 32px; border-radius: 14px;
-      border: 1px solid var(--accent-glow); background: var(--accent-dim);
+      padding: 24px 28px; border-radius: 10px;
+      border: 1px solid var(--border); background: var(--card-bg);
       position: relative;
     }
     .philosophy-quote::before {
-      content: '"'; position: absolute; top: -16px; left: 24px;
-      font-family: 'Space Grotesk', sans-serif; font-size: 4rem; font-weight: 800;
-      color: var(--accent); line-height: 1; opacity: 0.4;
+      content: '"'; position: absolute; top: -14px; left: 20px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 3.5rem; font-weight: 800;
+      color: var(--accent); line-height: 1; opacity: 0.35;
     }
     .philosophy-quote p {
-      font-size: 1.05rem; line-height: 1.75; color: var(--text);
+      font-size: 0.95rem; line-height: 1.75; color: var(--text);
       font-weight: 400; font-style: italic;
     }
     .philosophy-quote cite {
-      display: block; margin-top: 16px; font-size: 0.75rem;
+      display: block; margin-top: 14px; font-size: 0.72rem;
       color: var(--accent); font-style: normal;
-      font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      font-weight: 600; letter-spacing: 0.06em;
     }
     .principles-grid {
       display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 16px; padding-top: 48px; border-top: 1px solid var(--border);
+      gap: 14px; padding-top: 40px; border-top: 1px solid var(--border);
     }
     .principle {
-      padding: 24px 20px; border-radius: 12px;
-      border: 1px solid var(--border); background: rgba(15,23,42,0.4);
-      transition: all 0.25s;
+      padding: 20px 18px; border-radius: 10px;
+      border: 1px solid var(--border); background: var(--panel);
+      transition: border-color 0.2s;
     }
-    .principle:hover { border-color: var(--border-hover); transform: translateY(-3px); }
-    .principle-icon { font-size: 1.4rem; margin-bottom: 14px; display: block; }
+    .principle:hover { border-color: var(--border-hover); }
+    .principle-icon { font-size: 1.2rem; margin-bottom: 12px; display: block; }
     .principle h4 {
       font-family: 'Space Grotesk', sans-serif; font-weight: 700;
-      font-size: 0.88rem; color: var(--text); margin-bottom: 8px;
+      font-size: 0.86rem; color: var(--text); margin-bottom: 6px;
     }
-    .principle p { font-size: 0.78rem; line-height: 1.6; color: var(--muted); }
+    .principle p { font-size: 0.76rem; line-height: 1.6; color: var(--muted); }
 
     /* JOURNEY */
-    .journey-section { padding: 0 0 120px; }
     .journey-grid {
       display: grid; grid-template-columns: 1.1fr 1fr;
-      gap: 80px; margin-top: 56px; align-items: start;
+      gap: 64px; margin-top: 40px; align-items: start;
     }
     .journey-text p {
-      font-size: 1.0rem; line-height: 1.85;
-      color: var(--muted); margin-bottom: 20px;
+      font-size: 0.95rem; line-height: 1.85;
+      color: var(--muted); margin-bottom: 16px;
     }
     .journey-text p strong { color: var(--text); font-weight: 500; }
     .journey-milestones { display: flex; flex-direction: column; gap: 0; }
-    .milestone { display: flex; gap: 20px; padding-bottom: 32px; position: relative; }
+    .milestone { display: flex; gap: 18px; padding-bottom: 28px; position: relative; }
     .milestone:last-child { padding-bottom: 0; }
     .milestone-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
     .milestone-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--accent); border: 2px solid var(--accent-glow);
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
       flex-shrink: 0; margin-top: 4px;
     }
     .milestone-line {
       width: 1px; flex: 1;
       background: var(--border);
-      margin-top: 8px; min-height: 32px;
+      margin-top: 6px; min-height: 28px;
     }
     .milestone:last-child .milestone-line { display: none; }
     .milestone-year {
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.10em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 6px;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--accent); margin-bottom: 5px;
     }
     .milestone-content h4 {
       font-family: 'Space Grotesk', sans-serif; font-weight: 700;
-      font-size: 0.90rem; color: var(--text); margin-bottom: 4px;
+      font-size: 0.88rem; color: var(--text); margin-bottom: 4px;
     }
-    .milestone-content p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+    .milestone-content p { font-size: 0.76rem; color: var(--muted); line-height: 1.55; }
 
     /* CURRENT FOCUS */
-    .focus-section { padding: 0 0 120px; }
     .focus-grid {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 24px; margin-top: 52px;
+      gap: 16px; margin-top: 40px;
     }
     .focus-card {
-      padding: 36px; border-radius: 16px;
+      padding: 28px; border-radius: 10px;
       border: 1px solid var(--border); background: var(--card-bg);
-      backdrop-filter: blur(12px); transition: all 0.25s;
-      position: relative; overflow: hidden;
+      transition: border-color 0.2s;
     }
-    .focus-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: var(--border);
-    }
-    .focus-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+    .focus-card:hover { border-color: var(--border-hover); }
     .focus-card-label {
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.66rem; letter-spacing: 0.06em;
+      color: var(--muted); margin-bottom: 12px; display: block;
     }
     .focus-card h3 {
-      font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem;
-      font-weight: 700; color: var(--text); margin-bottom: 12px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem;
+      font-weight: 700; color: var(--text); margin-bottom: 10px;
     }
-    .focus-card p { font-size: 0.85rem; line-height: 1.75; color: var(--muted); }
+    .focus-card p { font-size: 0.83rem; line-height: 1.75; color: var(--muted); }
     .focus-note {
-      margin-top: 24px; padding: 16px 20px; border-radius: 10px;
-      border: 1px solid var(--border); background: rgba(15,23,42,0.5);
-      font-size: 0.82rem; color: var(--muted); line-height: 1.65; font-style: italic;
+      margin-top: 20px; padding: 14px 16px; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--panel);
+      font-size: 0.80rem; color: var(--muted); line-height: 1.65; font-style: italic;
     }
-    .focus-note strong { color: var(--accent-light); font-style: normal; font-weight: 500; }
-
-    /* Metrics row inside focus card */
-    .focus-metrics {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-    .focus-metric {
-      display: flex; flex-direction: column; gap: 4px;
-      padding: 14px 12px; border-radius: 10px;
-      border: 1px solid var(--border); background: rgba(15,23,42,0.5);
-      text-align: center;
-    }
-    .focus-metric-val {
-      font-family: 'Space Grotesk', sans-serif; font-size: clamp(1rem, 2.5vw, 1.3rem);
-      font-weight: 800; color: var(--text); line-height: 1;
-    }
-    .focus-metric-val em { color: var(--accent); font-style: normal; font-size: 0.85em; }
-    .focus-metric-label { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.04em; }
+    .focus-note strong { color: var(--accent); font-style: normal; font-weight: 500; }
 
     /* SELECTED WORK TEASER */
-    .work-teaser-section { padding: 0 0 120px; }
     .work-teaser-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 16px; margin-top: 48px;
+      gap: 14px; margin-top: 40px;
     }
     .work-teaser-card {
-      padding: 28px 24px; border-radius: 14px;
+      padding: 24px 20px; border-radius: 10px;
       border: 1px solid var(--border); background: var(--card-bg);
-      backdrop-filter: blur(12px); text-decoration: none;
-      transition: all 0.25s; display: flex; flex-direction: column; gap: 10px;
+      text-decoration: none;
+      transition: border-color 0.2s; display: flex; flex-direction: column; gap: 8px;
     }
-    .work-teaser-card:hover { border-color: var(--border-hover); transform: translateY(-4px); }
+    .work-teaser-card:hover { border-color: var(--border-hover); }
     .work-teaser-tag {
-      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.10em;
-      text-transform: uppercase; color: var(--accent);
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.64rem; letter-spacing: 0.08em;
+      color: var(--muted);
     }
     .work-teaser-card h3 {
-      font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem;
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.92rem;
       font-weight: 700; color: var(--text); line-height: 1.3;
     }
-    .work-teaser-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; flex: 1; }
+    .work-teaser-card p { font-size: 0.76rem; color: var(--muted); line-height: 1.55; flex: 1; }
     .work-teaser-footer {
       display: flex; align-items: center; justify-content: space-between;
-      padding-top: 14px; border-top: 1px solid var(--border); margin-top: 4px;
+      padding-top: 12px; border-top: 1px solid var(--border); margin-top: 4px;
     }
     .work-teaser-pills { display: flex; gap: 6px; flex-wrap: wrap; }
     .work-teaser-pill {
       padding: 2px 8px; border-radius: 4px;
       background: var(--accent-dim); border: 1px solid var(--accent-glow);
-      font-size: 0.63rem; color: var(--accent-light); font-weight: 500;
+      font-size: 0.62rem; color: var(--accent); font-weight: 500;
     }
-    .work-teaser-arrow { font-size: 0.78rem; color: var(--accent); font-weight: 600; flex-shrink: 0; }
+    .work-teaser-arrow {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.72rem; color: var(--accent); font-weight: 600; flex-shrink: 0;
+    }
 
     /* CORE STACK */
-    .stack-section { padding: 0 0 120px; }
     .stack-grid {
       display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 16px; margin-top: 48px;
+      gap: 14px; margin-top: 40px;
     }
     .stack-group {
-      padding: 28px 24px; border-radius: 14px;
+      padding: 24px 20px; border-radius: 10px;
       border: 1px solid var(--border); background: var(--card-bg);
-      backdrop-filter: blur(12px); transition: all 0.25s;
+      transition: border-color 0.2s;
     }
     .stack-group:hover { border-color: var(--border-hover); }
     .stack-group-label {
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.10em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.64rem; letter-spacing: 0.06em;
+      color: var(--muted); margin-bottom: 14px; display: block;
     }
     .stack-items { display: flex; flex-wrap: wrap; gap: 8px; }
     .stack-pill {
-      padding: 5px 14px; border-radius: 100px;
-      border: 1px solid var(--border); background: rgba(255,255,255,0.03);
-      font-size: 0.78rem; color: var(--muted); font-weight: 500; transition: all 0.2s;
+      padding: 4px 12px; border-radius: 6px;
+      border: 1px solid var(--border); background: var(--panel);
+      font-size: 0.76rem; color: var(--muted); font-weight: 500; transition: border-color 0.2s;
     }
-    .stack-pill:hover { border-color: var(--accent-glow); color: var(--accent-light); }
+    .stack-pill:hover { border-color: var(--accent); color: var(--accent); }
 
     /* CLOSING CTA */
-    .about-cta-section { padding: 0 0 140px; }
     .about-cta-inner {
-      border-radius: 24px; border: 1px solid var(--border);
+      border-radius: 12px; border: 1px solid var(--border);
       background: var(--panel);
-      backdrop-filter: blur(24px); padding: 90px 80px;
+      padding: 64px 56px;
       display: grid; grid-template-columns: 1fr auto;
-      gap: 64px; align-items: center;
-      position: relative; overflow: hidden;
-    }
-    .about-cta-inner::before {
-      content: ''; position: absolute; bottom: -40%; left: -5%;
-      width: 400px; height: 400px;
-      background: transparent;
-      pointer-events: none;
+      gap: 48px; align-items: center;
     }
     .about-cta-text h2 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      font-weight: 800; letter-spacing: -0.025em;
-      line-height: 1.1; margin-bottom: 16px;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 700; letter-spacing: -0.02em;
+      line-height: 1.2; margin-bottom: 14px; color: var(--text);
     }
     .about-cta-text p {
-      font-size: 1.0rem; color: var(--muted);
+      font-size: 0.92rem; color: var(--muted);
       line-height: 1.75; max-width: 480px; font-weight: 300;
     }
-    .about-cta-actions { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
+    .about-cta-actions { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
 
     /* FOOTER */
     footer {
       position: relative; z-index: 1;
       border-top: 1px solid var(--border);
-      padding: 36px 64px; max-width: 1180px; margin: 0 auto;
+      padding: 28px 0; max-width: 1100px; margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .footer-left p { font-size: 0.78rem; color: var(--muted-2); }
+    .footer-left p { font-size: 0.76rem; color: var(--muted); }
     .footer-left p span { color: var(--accent); }
-    .footer-links { display: flex; gap: 28px; }
+    .footer-links { display: flex; gap: 24px; }
     .footer-links a {
-      font-size: 0.78rem; color: var(--muted-2);
+      font-size: 0.76rem; color: var(--muted);
       text-decoration: none; transition: color 0.2s;
     }
     .footer-links a:hover { color: var(--text); }
 
     /* RESPONSIVE */
     @media (max-width: 1024px) {
-      .container { padding: 0 28px; }
-      footer { padding: 28px; flex-direction: column; gap: 16px; text-align: center; }
-      .help-grid { grid-template-columns: 1fr; gap: 48px; }
-      .philosophy-header { grid-template-columns: 1fr; gap: 40px; }
+      .help-grid { grid-template-columns: 1fr; gap: 36px; }
+      .philosophy-header { grid-template-columns: 1fr; gap: 32px; }
       .principles-grid { grid-template-columns: 1fr 1fr; }
-      .journey-grid { grid-template-columns: 1fr; gap: 48px; }
+      .journey-grid { grid-template-columns: 1fr; gap: 40px; }
       .focus-grid { grid-template-columns: 1fr; }
       .stack-grid { grid-template-columns: 1fr 1fr; }
       .work-teaser-grid { grid-template-columns: 1fr 1fr; }
-      .about-cta-inner { grid-template-columns: 1fr; gap: 40px; padding: 56px 40px; }
-      .philosophy-inner { padding: 40px 32px; }
-
-      /* Section top spacing on tablet */
-      .help-section       { padding-top: 100px; }
-      .philosophy-section { padding-top: 100px; }
-      .journey-section    { padding-top: 100px; }
-      .focus-section      { padding-top: 100px; }
-      .stack-section      { padding-top: 100px; }
-      .work-teaser-section { padding-top: 100px; }
-      .about-cta-section  { padding-top: 100px; }
+      .about-cta-inner { grid-template-columns: 1fr; gap: 32px; padding: 48px 32px; }
+      .philosophy-inner { padding: 32px 24px; }
+      footer { padding: 24px 1.25rem; flex-direction: column; gap: 14px; text-align: center; }
     }
     @media (max-width: 640px) {
-      .about-hero { padding-top: 140px; }
-      .about-headline { font-size: 2.2rem; }
+      .about-hero { padding-top: 100px; }
       .principles-grid { grid-template-columns: 1fr; }
       .stack-grid { grid-template-columns: 1fr; }
       .work-teaser-grid { grid-template-columns: 1fr; }
-      .about-cta-inner { padding: 48px 24px; }
-
-      /* Section top spacing on mobile — prevents sections crowding element above */
-      .help-section      { padding-top: 80px; }
-      .philosophy-section { padding-top: 80px; }
-      .journey-section   { padding-top: 80px; }
-      .focus-section     { padding-top: 80px; }
-      .stack-section     { padding-top: 80px; }
-      .work-teaser-section { padding-top: 80px; }
-      .about-cta-section { padding-top: 80px; }
+      .about-cta-inner { padding: 40px 20px; }
     }
   `}</style>
 );
@@ -468,39 +339,6 @@ function useReveal() {
     els.forEach(el => obs.observe(el));
     return () => obs.disconnect();
   }, []);
-}
-
-// Typewriter hook — loops through phrases indefinitely
-function useTypewriter(phrases: string[], typingSpeed = 55, deletingSpeed = 30, pauseMs = 2000) {
-  const [displayed, setDisplayed] = useState('');
-  const [phraseIdx, setPhraseIdx] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    const current = phrases[phraseIdx];
-    const atFull = displayed === current;
-    const atEmpty = displayed === '';
-
-    if (!isDeleting && atFull) {
-      timeout.current = setTimeout(() => setIsDeleting(true), pauseMs);
-    } else if (isDeleting && atEmpty) {
-      setIsDeleting(false);
-      setPhraseIdx(i => (i + 1) % phrases.length);
-    } else {
-      const speed = isDeleting ? deletingSpeed : typingSpeed;
-      timeout.current = setTimeout(() => {
-        setDisplayed(isDeleting
-          ? current.slice(0, displayed.length - 1)
-          : current.slice(0, displayed.length + 1)
-        );
-      }, speed);
-    }
-
-    return () => { if (timeout.current) clearTimeout(timeout.current); };
-  }, [displayed, isDeleting, phraseIdx, phrases, typingSpeed, deletingSpeed, pauseMs]);
-
-  return displayed;
 }
 
 const helpItems = [
@@ -535,28 +373,17 @@ const stackGroups = [
 export default function About() {
   useReveal();
 
-  const twPhrases = [
-    'production-ready software',
-    'scalable mobile apps',
-    'trust-driven platforms',
-    'systems built to last',
-  ];
-  const twText = useTypewriter(twPhrases);
-
   return (
     <>
       <GlobalStyles />
-      <div className="bg-mesh" aria-hidden="true" />
 
       {/* OPENING */}
-      <section>
-        <div className="container about-hero">
-          <div className="about-eyebrow fade-up-1">About Rex</div>
-          <h1 className="about-headline fade-up-2">
+      <section className="os-section">
+        <div className="os-container about-hero">
+          <span className="os-label fade-up-1">// about</span>
+          <h1 className="os-h2 fade-up-2" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800 }}>
             I build reliable,<br />
-            <span className="line-accent">
-              {twText}<span className="tw-cursor" style={{ height: '0.85em' }} />
-            </span>
+            <span style={{ color: 'var(--accent)' }}>production-ready software</span>
             <br />
             for founders who move fast.
           </h1>
@@ -574,11 +401,11 @@ export default function About() {
       </section>
 
       {/* WHAT I HELP WITH */}
-      <section>
-        <div className="container help-section">
+      <section className="os-section">
+        <div className="os-container">
           <div className="reveal">
-            <span className="section-tag">What I Help With</span>
-            <h2 className="section-title">The work I do<br />for clients.</h2>
+            <span className="os-label">// what i do</span>
+            <h2 className="os-h2">The work I do<br />for clients.</h2>
           </div>
           <div className="help-grid">
             <div className="help-left reveal">
@@ -610,13 +437,13 @@ export default function About() {
       </section>
 
       {/* ENGINEERING PHILOSOPHY */}
-      <section>
-        <div className="container philosophy-section">
+      <section className="os-section">
+        <div className="os-container">
           <div className="philosophy-inner reveal">
             <div className="philosophy-header">
               <div className="philosophy-header-left">
-                <span className="section-tag">How I Build</span>
-                <h2 className="section-title">I do not just code features.<br />I think in systems.</h2>
+                <span className="os-label">// how i build</span>
+                <h2 className="os-h2">I do not just code features.<br />I think in systems.</h2>
                 <p>
                   Every technical decision I make is shaped by one question: <strong>will this hold up under
                   real conditions?</strong> Not demo conditions. Not tutorial conditions. Real users, real load,
@@ -624,7 +451,7 @@ export default function About() {
                 </p>
                 <p>
                   That mindset comes from building Zolarux — a product where a bad architectural decision means
-                  a user's money gets stuck, a vendor cannot be verified, or a dispute cannot be resolved. The
+                  a user&apos;s money gets stuck, a vendor cannot be verified, or a dispute cannot be resolved. The
                   stakes taught me to think before I type.
                 </p>
               </div>
@@ -650,18 +477,18 @@ export default function About() {
       </section>
 
       {/* BACKGROUND */}
-      <section>
-        <div className="container journey-section">
+      <section className="os-section">
+        <div className="os-container">
           <div className="reveal">
-            <span className="section-tag">Background</span>
-            <h2 className="section-title">Built by doing,<br />not by watching.</h2>
+            <span className="os-label">// experience</span>
+            <h2 className="os-h2">Built by doing,<br />not by watching.</h2>
           </div>
           <div className="journey-grid">
             <div className="journey-text reveal">
               <p>
                 I am a <strong>self-taught engineer</strong> who learned by shipping real systems — not just
-                completing courses. My education happened in the gap between "this does not work" and "now it
-                does," repeated enough times to build genuine intuition.
+                completing courses. My education happened in the gap between &ldquo;this does not work&rdquo; and &ldquo;now it
+                does,&rdquo; repeated enough times to build genuine intuition.
               </p>
               <p>
                 Over the past few years I have shipped multiple production apps across web and mobile —
@@ -697,15 +524,15 @@ export default function About() {
       </section>
 
       {/* CURRENT FOCUS */}
-      <section>
-        <div className="container focus-section">
+      <section className="os-section">
+        <div className="os-container">
           <div className="reveal">
-            <span className="section-tag">Current Focus</span>
-            <h2 className="section-title">What I bring<br />to a team or project.</h2>
+            <span className="os-label">// current focus</span>
+            <h2 className="os-h2">What I bring<br />to a team or project.</h2>
           </div>
           <div className="focus-grid">
             <div className="focus-card reveal">
-              <div className="focus-card-label">Product Engineering</div>
+              <span className="focus-card-label">// product engineering</span>
               <h3>Building end-to-end systems</h3>
               <p>
                 I design and ship full-stack products — mobile, web, and backend — with a focus on
@@ -717,7 +544,7 @@ export default function About() {
               </div>
             </div>
             <div className="focus-card reveal" style={{ transitionDelay: '0.1s' }}>
-              <div className="focus-card-label">What I Bring</div>
+              <span className="focus-card-label">// what i bring</span>
               <h3>Founder-grade ownership</h3>
               <p>
                 I have shipped production software solo — architecture, implementation, deployment, and
@@ -733,16 +560,16 @@ export default function About() {
       </section>
 
       {/* CORE STACK */}
-      <section>
-        <div className="container stack-section">
+      <section className="os-section">
+        <div className="os-container">
           <div className="reveal">
-            <span className="section-tag">Core Stack</span>
-            <h2 className="section-title">The tools I reach<br />for in production.</h2>
+            <span className="os-label">// core stack</span>
+            <h2 className="os-h2">The tools I reach<br />for in production.</h2>
           </div>
           <div className="stack-grid">
             {stackGroups.map((group, i) => (
               <div key={group.label} className="stack-group reveal" style={{ transitionDelay: `${i * 0.09}s` }}>
-                <div className="stack-group-label">{group.label}</div>
+                <span className="stack-group-label">{group.label.toLowerCase()}</span>
                 <div className="stack-items">
                   {group.items.map(item => (
                     <span key={item} className="stack-pill">{item}</span>
@@ -755,11 +582,11 @@ export default function About() {
       </section>
 
       {/* SELECTED WORK TEASER */}
-      <section>
-        <div className="container work-teaser-section">
+      <section className="os-section">
+        <div className="os-container">
           <div className="reveal">
-            <span className="section-tag">Selected Work</span>
-            <h2 className="section-title">Some of what<br />I have shipped.</h2>
+            <span className="os-label">// selected work</span>
+            <h2 className="os-h2">Some of what<br />I have shipped.</h2>
           </div>
           <div className="work-teaser-grid">
             <a href="/projects/zolarux" className="work-teaser-card reveal">
@@ -780,7 +607,7 @@ export default function About() {
             </a>
             <a href="/projects" className="work-teaser-card reveal" style={{ transitionDelay: '0.08s' }}>
               <span className="work-teaser-tag">Flutter · Dart</span>
-              <h3>EduPanion — Phonics & Literacy Assessment Tool</h3>
+              <h3>EduPanion — Phonics &amp; Literacy Assessment Tool</h3>
               <p>
                 Interactive reading assessment app for primary school students. Offline-first,
                 optimised for low-bandwidth environments.
@@ -813,10 +640,11 @@ export default function About() {
       </section>
 
       {/* CLOSING CTA */}
-      <section>
-        <div className="container about-cta-section">
+      <section className="os-section">
+        <div className="os-container">
           <div className="about-cta-inner reveal">
             <div className="about-cta-text">
+              <span className="os-label">// contact</span>
               <h2>If you are building something ambitious and need an engineer who thinks in systems — let us talk.</h2>
               <p>
                 Open to freelance projects, product consulting, and technical co-founding. Tell me what you are
@@ -824,8 +652,8 @@ export default function About() {
               </p>
             </div>
             <div className="about-cta-actions">
-              <a href="mailto:gorokumue@gmail.com" className="btn-primary">Work With Me</a>
-              <a href="/projects" className="btn-ghost">See My Work →</a>
+              <a href="mailto:gorokumue@gmail.com" className="os-btn os-btn-primary">Work With Me</a>
+              <a href="/projects" className="os-btn">See My Work →</a>
             </div>
           </div>
         </div>
