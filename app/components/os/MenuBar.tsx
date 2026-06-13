@@ -128,8 +128,10 @@ export default function MenuBar() {
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '0.9rem',
-          flexShrink: 0,
+          justifyContent: 'flex-end',
+          gap: '0.75rem',
+          flex: '1 1 auto',
+          minWidth: 0,
           flexWrap: 'wrap',
         }}
       >
