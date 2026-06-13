@@ -67,11 +67,8 @@ export default function IdentityPanel() {
         }}
       >
         {/* resume — primary amber */}
-        {/* TODO: confirm resume PDF exists in /public */}
         <a
-          href="/Rex-Orokumue-Resume.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/resume"
           className="os-mono"
           style={{
             fontSize: '0.68rem',
@@ -85,7 +82,7 @@ export default function IdentityPanel() {
             letterSpacing: '0.02em',
           }}
         >
-          resume ↗
+          resume →
         </a>
 
         {/* email */}

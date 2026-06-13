@@ -163,6 +163,6 @@ function NavBarInner({ pathname }: { pathname: string }) {
 
 export default function NavBar() {
   const pathname = usePathname();
-  if (pathname === '/') return null;
+  if (pathname === '/' || pathname === '/resume') return null;
   return <NavBarInner pathname={pathname} />;
 }

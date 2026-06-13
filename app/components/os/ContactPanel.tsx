@@ -52,11 +52,8 @@ export default function ContactPanel() {
         </a>
 
         {/* resume */}
-        {/* TODO: confirm resume PDF exists in /public */}
         <a
-          href="/Rex-Orokumue-Resume.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/resume"
           className="os-mono"
           style={{
             fontSize: '0.7rem',
@@ -68,7 +65,7 @@ export default function ContactPanel() {
             textDecoration: 'none',
           }}
         >
-          resume ↗
+          resume →
         </a>
 
         {/* TODO: add Cal.com link when available */}
