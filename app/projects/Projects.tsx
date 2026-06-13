@@ -507,10 +507,10 @@ export default function Projects() {
                   </div>
                 </div>
                 <div className="impact-row">
-                  <div className="impact-stat"><span className="impact-val">29</span><span className="impact-label">Verified vendors</span></div>
-                  <div className="impact-stat"><span className="impact-val">2<em>mo</em></span><span className="impact-label">Website live</span></div>
-                  <div className="impact-stat"><span className="impact-val">1<em>mo</em></span><span className="impact-label">App in market</span></div>
-                  <div className="impact-stat"><span className="impact-val">₦<em>growing</em></span><span className="impact-label">Transaction volume</span></div>
+                  <div className="impact-stat"><span className="impact-val">30+</span><span className="impact-label">Verified vendors</span></div>
+                  <div className="impact-stat"><span className="impact-val">140+</span><span className="impact-label">Active products</span></div>
+                  <div className="impact-stat"><span className="impact-val">100+</span><span className="impact-label">Transactions</span></div>
+                  <div className="impact-stat"><span className="impact-val">₦2M<em>+</em></span><span className="impact-label">Processed since 2021</span></div>
                 </div>
                 <div className="stack-row">
                   {['Flutter', 'Dart', 'Supabase', 'PostgreSQL', 'RLS', 'Supabase Auth', 'REST API', 'Vercel'].map(s => (
