@@ -140,6 +140,43 @@ export const promptLab = {
     },
   ] as PromptExample[],
 
+  // "Prompt patterns" — representative prompt STRUCTURES (not verbatim transcripts).
+  // Honest framing: these show the way Rex prompts (constraints, tradeoffs, no fluff).
+  patternsIntro:
+    'Beyond the samples above, these are the prompt structures I reach for. Notice the pattern: real context, hard constraints, a demand for tradeoffs, and an explicit "no fluff" instruction. That instruction discipline is the core of what I teach.',
+  patterns: [
+    {
+      label: 'startup strategy',
+      prompt:
+        'Act as a brutally honest startup advisor. Zolarux started as buyer protection and evolved into trust infrastructure for social commerce in Nigeria (₦2M+ processed). Tell me: what is real vs wishful thinking, whether this is truly scalable or just an operational service, the biggest existential risk, and a "pivot or double down" call. No encouragement — only clarity.',
+    },
+    {
+      label: 'positioning',
+      prompt:
+        'Help me define what Zolarux is NOT, as much as what it is. Compare the marketplace model vs the infrastructure model in plain terms, show where Zolarux fits and where it doesn’t, surface hidden contradictions in my current direction, and give me the cleanest 1–2 sentence positioning statement.',
+    },
+    {
+      label: 'execution systems',
+      prompt:
+        'Design a weekly execution system for someone building a startup solo in Nigeria with limited money and a high-distraction environment. I want a realistic (not idealistic) weekly structure, what to prioritise when everything feels urgent, a "minimum viable productive week", and rules to prevent burnout. No motivational talk — only operational structure.',
+    },
+    {
+      label: 'creator systems',
+      prompt:
+        'Build a content engine for "The Tech Serial" that can run for 6 months without burnout. Constraints: no heavy editing, consistent weekly output, content that feels like a series. Give me a repeatable episode template, a weekly production pipeline, an idea-generation method, and how to repurpose one idea into multiple posts. Think like a system designer, not a content coach.',
+    },
+    {
+      label: 'technical SOP',
+      prompt:
+        'My iPhone XS isn’t detected by iTunes even though the PC chimes on connect. Don’t just give steps — structure it like a diagnostic system: break down failure points (hardware, drivers, cable, mode), rank them by likelihood, give a step-by-step elimination process, and tell me exactly when to stop troubleshooting. Think like a technician, not a support article.',
+    },
+    {
+      label: 'decision frameworks',
+      prompt:
+        'Build me a decision framework that separates reversible vs irreversible decisions, prevents emotional decision-making, gives me a default rule set for common choices, and helps me act faster under uncertainty. Keep it simple enough to use daily.',
+    },
+  ],
+
   // "Published with AI" — verifiable, on-site
   published:
     'Every post on my blog — and several of my LinkedIn posts — were drafted with ChatGPT and Claude, then edited by me.',

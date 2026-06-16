@@ -197,6 +197,38 @@ export default function PromptLabPage() {
         ))}
       </div>
 
+      {/* Prompt patterns */}
+      <section style={{ marginTop: '3rem' }}>
+        <span className="os-label">// prompt patterns</span>
+        <p style={{ margin: '0.6rem 0 1.3rem', maxWidth: '62ch', color: 'var(--text)', fontSize: '0.92rem', lineHeight: 1.65 }}>
+          {promptLab.patternsIntro}
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+          {promptLab.patterns.map((p, i) => (
+            <div key={i} className="os-card" style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
+              <span
+                style={{
+                  ...labelStyle,
+                  color: 'var(--accent)',
+                  border: '1px solid var(--border)',
+                  borderRadius: '4px',
+                  padding: '2px 7px',
+                  alignSelf: 'flex-start',
+                }}
+              >
+                {p.label}
+              </span>
+              <p
+                className="os-mono"
+                style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text)', lineHeight: 1.65, whiteSpace: 'pre-wrap' }}
+              >
+                {p.prompt}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Published with AI + private note */}
       <section className="os-card" style={{ marginTop: '2.5rem' }}>
         <span style={labelStyle}>// published with ai</span>
