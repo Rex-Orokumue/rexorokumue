@@ -25,7 +25,7 @@ export const promptLab = {
   teachVideo: {
     href: 'https://youtube.com/playlist?list=PLdDJ18rc81OxngnEM7Q961AG1vMQ6cRKL',
     label: 'Watch me teach live →',
-    note: 'I run the live training sessions for E-Technix. Here are real recordings of me teaching.',
+    note: 'I run the live training sessions for E-Technix — covering digital, web, mobile, and data skills (not AI-specific). Real proof that I can teach.',
   },
 
   // "What I can teach" — framing for the tutor role
@@ -148,7 +148,7 @@ export const promptLab = {
     {
       label: 'startup strategy',
       prompt:
-        'Act as a brutally honest startup advisor. Zolarux started as buyer protection and evolved into trust infrastructure for social commerce in Nigeria (₦2M+ processed). Tell me: what is real vs wishful thinking, whether this is truly scalable or just an operational service, the biggest existential risk, and a "pivot or double down" call. No encouragement — only clarity.',
+        'Act as a brutally honest startup advisor. Zolarux started as buyer protection and evolved into trust infrastructure for social commerce in Nigeria (₦2M+ processed, now seeking ₦7.4M for a marketplace pilot). Tell me: what is real vs wishful thinking, whether this is truly scalable or just an operational service, the biggest existential risk, and a "pivot or double down" call. No encouragement — only clarity.',
     },
     {
       label: 'positioning',
