@@ -37,12 +37,13 @@ function LiveClock() {
 }
 
 const NAV_LINKS = [
-  { href: '/projects',   label: 'work' },
-  { href: '/about',      label: 'about' },
-  { href: '/blog',       label: 'writing' },
-  { href: '/build-logs', label: 'logs' },
-  { href: '/tech-serial',label: 'serial' },
-  { href: '/bootcamp',   label: 'bootcamp' },
+  { href: '/projects',    label: 'work' },
+  { href: '/prompt-lab',  label: 'lab' },
+  { href: '/about',       label: 'about' },
+  { href: '/blog',        label: 'writing' },
+  { href: '/build-logs',  label: 'logs' },
+  { href: '/tech-serial', label: 'serial' },
+  { href: '/bootcamp',    label: 'bootcamp' },
 ];
 
 export default function MenuBar() {
