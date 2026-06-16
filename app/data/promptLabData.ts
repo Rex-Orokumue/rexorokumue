@@ -2,7 +2,7 @@
 // Real ChatGPT/AI work samples for the Prompt Lab page.
 // REAL content only — excerpts of actual conversations Rex had with ChatGPT.
 
-export type PromptCategory = 'strategy' | 'content' | 'coding';
+export type PromptCategory = 'strategy' | 'content' | 'coding' | 'design';
 
 export interface PromptExample {
   category: PromptCategory;
@@ -13,11 +13,20 @@ export interface PromptExample {
   excerpt?: boolean;       // true if `output` is trimmed
   why: string;             // the teaching note — why the prompt/approach works
   link?: { href: string; label: string };
+  image?: string;          // path under /public for a generated/screenshot image
+  imageAlt?: string;
 }
 
 export const promptLab = {
   intro:
-    'I use ChatGPT and Claude every day — not as a vending machine for answers, but as a strategist, engineer, and writing partner I think out loud with. Below are real, unedited samples across strategy, content, and code.',
+    'I use ChatGPT and Claude every day — not as a vending machine for answers, but as a strategist, engineer, and writing partner I think out loud with. Below are real, unedited samples across strategy, content, design, and code.',
+
+  // The strongest proof for a tutor role: live teaching footage
+  teachVideo: {
+    href: 'https://youtube.com/playlist?list=PLdDJ18rc81OxngnEM7Q961AG1vMQ6cRKL',
+    label: 'Watch me teach live →',
+    note: 'I run the live training sessions for E-Technix. Here are real recordings of me teaching.',
+  },
 
   // "What I can teach" — framing for the tutor role
   teach: [
@@ -97,6 +106,37 @@ export const promptLab = {
       why:
         'I handed it my actual CMS code and HTML conventions, so the output dropped straight into my publishing pipeline — correct slug, excerpt, category, and HTML tags. When you constrain the format precisely, you remove the cleanup step entirely.',
       link: { href: '/blog', label: 'see my AI-assisted blog →' },
+    },
+    {
+      category: 'design',
+      categoryLabel: 'design · image generation',
+      title: 'Generating an on-brand social flyer (Zolarux “Hello June”)',
+      prompt:
+        'We just entered a new month — June 1st. Help me design a flyer we can post on our social platforms.',
+      output:
+        `For a June 1st flyer, I'd avoid the generic "Happy New Month" design every brand posts. Since Zolarux is a trust-focused brand, use the new month to reinforce your positioning.\n\n` +
+        `Headline: "Hello June 👋 — A New Month. A New Opportunity to Trade Safely."\n` +
+        `Layout: white background, soft brand-blue (#4064D7) gradient corners, logo + "JUNE 2026" top, giant "HELLO / JUNE" (JUNE in blue), handshake + shield + payment icons, four feature boxes (Buyer Protection · Verified Vendors · Secure Payments · Trusted Transactions), then CTA.\n` +
+        `Avoid: fireworks, balloons, flowers, generic "Happy New Month" graphics.`,
+      excerpt: true,
+      image: '/prompt-lab/zolarux-june.png',
+      imageAlt: 'Zolarux "Hello June" social flyer generated with ChatGPT',
+      why:
+        'I gave it the brand positioning and explicitly told it what NOT to do ("avoid the generic template"). It returned full art direction — exact hex codes, layout, and what to leave out — then generated the image. Steering taste, not just asking for "a flyer."',
+    },
+    {
+      category: 'design',
+      categoryLabel: 'design · image generation',
+      title: 'Brand-matched hero banner from a reference site (E-Technix)',
+      prompt:
+        'I want a banner image as the hero for this post [pasted the full programme post copy]. Get the design style from https://e-technix.com.',
+      output:
+        `Produced a hero banner matching the E-Technix brand: dark tech-blue background, the programme title "What the Programme Looks Like", the duration/delivery/outcome strip, and Phase 1 (Foundation) → Phase 2 (Specialisation) laid out as numbered blocks — ready to post.`,
+      excerpt: true,
+      image: '/prompt-lab/etechnix-banner.png',
+      imageAlt: 'E-Technix programme banner generated with ChatGPT',
+      why:
+        'I handed it the exact post copy and pointed it at our live site for the visual language. Giving a real reference (brand colors, layout, tone) makes generated assets actually match the brand instead of looking generic.',
     },
   ] as PromptExample[],
 

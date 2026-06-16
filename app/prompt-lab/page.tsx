@@ -52,6 +52,31 @@ export default function PromptLabPage() {
             </li>
           ))}
         </ul>
+
+        {/* Live teaching proof — strongest signal for a tutor role */}
+        <div
+          style={{
+            marginTop: '1.2rem',
+            paddingTop: '1rem',
+            borderTop: '1px solid var(--border)',
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            gap: '0.9rem',
+          }}
+        >
+          <a
+            href={promptLab.teachVideo.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="os-btn os-btn-primary"
+          >
+            ▶ {promptLab.teachVideo.label}
+          </a>
+          <span style={{ color: 'var(--muted)', fontSize: '0.85rem', lineHeight: 1.5, flex: '1 1 14rem' }}>
+            {promptLab.teachVideo.note}
+          </span>
+        </div>
       </section>
 
       {/* Examples */}
@@ -120,6 +145,27 @@ export default function PromptLabPage() {
                 {ex.output}
               </div>
             </div>
+
+            {/* generated image / screenshot */}
+            {ex.image && (
+              <div>
+                <span style={labelStyle}>// generated image</span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={ex.image}
+                  alt={ex.imageAlt ?? ex.title}
+                  loading="lazy"
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    height: 'auto',
+                    marginTop: '0.4rem',
+                    borderRadius: '8px',
+                    border: '1px solid var(--border)',
+                  }}
+                />
+              </div>
+            )}
 
             {/* why it works — teaching note */}
             <div
