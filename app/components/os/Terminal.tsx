@@ -99,7 +99,7 @@ export default function Terminal() {
               <span
                 key={j}
                 className="os-mono"
-                style={{ fontSize: '0.65rem', color: 'var(--muted)', whiteSpace: 'pre' }}
+                style={{ fontSize: '0.65rem', color: 'var(--muted)', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}
               >
                 {line}
               </span>

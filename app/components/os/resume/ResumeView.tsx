@@ -106,7 +106,8 @@ function ResumeTerminal({ onDownload }: { onDownload: () => void }) {
                       : line.includes('● live') || line.includes('● now')
                         ? 'var(--ok)'
                         : 'var(--text)',
-                    whiteSpace: 'pre',
+                    whiteSpace: 'pre-wrap',
+                    overflowWrap: 'anywhere',
                     lineHeight: 1.5,
                   }}
                 >
